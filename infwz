@@ -1,0 +1,5151 @@
+wait(17)
+if game.gameId ~= 985731078 then
+    return
+end
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+local a;
+local b = game:GetService('Players')
+local c = b.LocalPlayer or b:GetPropertyChangedSignal('LocalPlayer'):Wait() or b.LocalPlayer;
+local d = c.UserId;
+local e = game:GetService('HttpService')
+getgenv().plrLink = 'User: [' .. c.DisplayName .. ' (@' .. c.Name .. ')](https://www.roblox.com/users/' .. c.UserId ..
+                        '/profile)'
+local function f()
+    local g = os.date("!*t", os.time())
+    local h, i, j, k, l = g.hour, g.min, g.sec, g.day, g.month;
+    if h < 10 then
+        h = '0' .. h
+    end
+    if i < 10 then
+        i = '0' .. i
+    end
+    if j < 10 then
+        j = '0' .. j
+    end
+    if k < 10 then
+        k = '0' .. k
+    end
+    if l < 10 then
+        l = '0' .. l
+    end
+    return h .. ':' .. i .. ':' .. j .. ' - ' .. k .. '/' .. l .. '/' .. g.year
+end
+local m = {
+    Green = 0x00FF00,
+    Red = 0xFF0000,
+    Black = 0x000000,
+    Cyan = 0x00c8ff,
+    Yellow = 0xffff00,
+    Gold = 0xffd700,
+    Purple = 0x8C00FF,
+    LightPink = 0xff7fff
+}
+task.spawn(function()
+    repeat
+        task.wait()
+    until a;
+    pcall(function()
+        local function n(o, p, q)
+            request({
+                Url = q,
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = e:JSONEncode({
+                    ["embeds"] = {{
+                        ["title"] = 'Infinite | World Zero',
+                        ["description"] = o,
+                        ["type"] = 'rich',
+                        ["color"] = tonumber(p),
+                        ["footer"] = {
+                            ["text"] = f() .. ' UTC'
+                        }
+                    }}
+                })
+            })
+        end
+        local function r()
+            local s = game:HttpGet(peepo)
+            local t = e:JSONDecode(s)
+            return t
+        end
+        local u = r()
+        local v = u[eternal]
+        local w = leviathan[u[blissful:lower()]]
+        local x = plrLink .. '\n' .. eternal:upper() .. ': ``' .. v .. '``\n' .. blissful .. ': ``' .. w .. '``'
+        if identifyexecutor then
+            local y = ({identifyexecutor()})[1]
+            x = x .. '\nExecutor: ``' .. y .. '``'
+        end
+        local z;
+        local A = game:GetService('TextChatService'):WaitForChild('TextChannels'):WaitForChild('RBXGeneral')
+        for B, C in pairs(game:GetService("TextChatService").TextChannels:GetChildren()) do
+            if #C.Name < 6 and C:FindFirstChild(c.Name) then
+                z = C.Name
+            end
+        end
+        if z then
+            local D = game:GetService("ReplicatedStorage").Shared.NewGuildSystem.GetCache:InvokeServer(z)
+            local E;
+            for B, C in D.Members do
+                if tonumber(B) == d then
+                    E = C.Points;
+                    break
+                end
+            end
+            if E then
+                x = x .. '\nGuild Points: ``' .. E .. '`` / ``' .. z .. '``'
+            end
+        end
+        local F = {
+            ['VaneRaid'] = 'VANE_KILLS',
+            ['KrakenRaid'] = 'KRAKEN_KILLS',
+            ['FallenKingRaid'] = 'FALLENKING_KILLS',
+            ['InfiniteTower'] = 'ITF_1',
+            ['NightmareNormal'] = 'N_NP1',
+            ['NightmareChallenge'] = 'C_NP1',
+            ['GuildSeason11'] = 'G_POINTS11'
+        }
+        pcall(function()
+            local function G(H)
+                local I = game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("LeaderboardHookup")
+                    :WaitForChild("GetScore"):InvokeServer(H, 1)
+                return I[1], I[2]
+            end
+            local J, K = G(F.NightmareChallenge)
+            local L, M = G(F.NightmareNormal)
+            local N, O = G(F.InfiniteTower)
+            local P, Q = G(F.KrakenRaid)
+            local R, S = G(F.FallenKingRaid)
+            if J > 0 then
+                x = x .. '\nNM Challenge Completed: ``' .. J .. '`` / ``' .. K .. '``'
+            end
+            if L > 0 then
+                x = x .. '\nNM Normal Completed: ``' .. L .. '`` / ``' .. M .. '``'
+            end
+            if N > 99 then
+                x = x .. '\nInfinite Tower Floor Record: ``' .. N .. '``'
+            end
+            if R > 0 then
+                x = x .. '\nHalloween Raids Completed: ``' .. R .. '`` / ``' .. S .. '``'
+            end
+        end)
+        n(x, olympus and m.Gold or m.Cyan, olympus and cloudy or boink)
+    end)
+end)
+local T = game:GetService("ReplicatedStorage")
+local U = T:WaitForChild('Shared')
+local V = game:GetService('TeleportService')
+local W = true;
+local X;
+local Y = false;
+local Z, _, a0, a1, a2, a3, a4;
+local a5 = false;
+local a6 = isfile and readfile and writefile;
+local a7;
+pcall(function()
+    Y = game:GetService("MarketplaceService"):UserOwnsGamePassAsync(d, 8136250)
+end)
+local a8 = game:GetService('VirtualUser')
+c.Idled:Connect(function()
+    a8:CaptureController()
+    a8:ClickButton2(Vector2.new())
+end)
+local a9 = c.Name;
+local aa = 2727067538;
+local ab = false;
+local ac = {
+    Kicked = false,
+    WasInDungeon = false,
+    Dungeon = false,
+    Difficulty = false,
+    Timestamp = false,
+    RejoinLastDungeon = false,
+    CameFromMenu = false,
+    RejoinLastDungeonThreshold = 1800,
+    Gold = false,
+    LastDungeonCompletion = false,
+    CrossSessionTimestamp = false,
+    CrossSessionGold = false,
+    ForceRestartLastTower = false
+}
+local ad = d .. '_InfiniteWorldZeroData.txt'
+local ae = {21, 23, 27, 29, 34, 43, 39, 38}
+function save()
+    local af;
+    if writefile then
+        af = e:JSONEncode(ac)
+        writefile(ad, af)
+    end
+end
+function load()
+    if readfile and isfile and isfile(ad) then
+        ac = e:JSONDecode(readfile(ad))
+    end
+end
+if game.PlaceId == aa then
+    load()
+    if ac.Kicked or ac.RejoinLastDungeon and tick() - ac.Timestamp <= ac.RejoinLastDungeonThreshold then
+        ac.Kicked = false;
+        ac.CameFromMenu = true;
+        save()
+        local ag = require(c:WaitForChild("PlayerScripts"):WaitForChild("LocalScript"):WaitForChild("Guis")
+            :WaitForChild("CharacterPicker"))
+        local ah = ag:GetSelectedProfile()
+        while not ah do
+            task.wait()
+            ah = ag:GetSelectedProfile()
+        end
+        local ai = ah.GUID.Value;
+        local aj = U:WaitForChild('Teleport'):WaitForChild('JoinGame')
+        aj:FireServer(ai)
+    end
+end
+local ak;
+local al;
+local am;
+local an;
+local ao = {21, 23, 27, 29, 34, 43}
+local ap = {1005, 1006, 1007}
+local aq;
+local ar;
+local as;
+local at;
+local au;
+local av;
+local aw;
+local ax;
+local ay;
+local az;
+local aA;
+local aB = {'Crystal'}
+local aC = {}
+if T:FindFirstChild("ActiveMission") then
+    aq = true;
+    ak = game:GetService("Workspace"):WaitForChild("MissionObjects")
+    al = T:WaitForChild("MissionScripts")
+    am = T:WaitForChild("ActiveMission").Value;
+    ac.Dungeon = T:WaitForChild("ActiveMission").Value;
+    if table.find(ao, am) then
+        at = true
+    elseif am == 38 then
+        au = true
+    elseif am == 39 then
+        av = true
+    else
+        ar = true;
+        an = U.Missions.GetDifficulty:InvokeServer()
+        ac.Difficulty = U.Missions.GetDifficulty:InvokeServer()
+    end
+    if am == 23 then
+        as = true
+    end
+    if table.find(ap, am) then
+        aw = true
+    end
+    if am == 45 then
+        ax = true
+    end
+    if am == 44 then
+        ay = true
+    end
+    if am == 22 then
+        az = true
+    end
+end
+local aD = c.Character or c.CharacterAdded:Wait() or c.Character;
+local aE = aD:WaitForChild('HumanoidRootPart')
+local aF, aG;
+while true do
+    if c.Character and c.Character:FindFirstChild('HealthProperties') then
+        aF = c.Character.HealthProperties;
+        break
+    end
+    task.wait()
+end
+c.CharacterAdded:Connect(function(aH)
+    aD = aH;
+    aE = aD:WaitForChild('HumanoidRootPart')
+    aF = aD:WaitForChild('HealthProperties')
+    aG = aD:WaitForChild('Equipment')
+end)
+local aI = true;
+local aJ = game:GetService("MarketplaceService")
+local aK = debug.getupvalue(require(U.Drops).Start, 4)
+local aL = U:WaitForChild('Drops'):WaitForChild('CoinEvent')
+local aM = c:WaitForChild("PlayerGui"):WaitForChild('Profile')
+local aN = aM:WaitForChild('Currency'):WaitForChild('Gold')
+local aO = aN.Value;
+local aP = aO;
+local aQ = T:WaitForChild('PlayerEquips'):WaitForChild(a9)
+local aR = aQ:WaitForChild('Primary')
+local aS = aQ:WaitForChild('Offhand')
+local aT = aQ:WaitForChild('Armor')
+local aU = U:WaitForChild('ItemUpgrade'):WaitForChild('Upgrade')
+local aV = game:GetService("Workspace"):WaitForChild("Characters")
+local aW = aM:WaitForChild("Class")
+local aX = aW.Value;
+local function aY(aZ)
+    return aX == aZ
+end
+local a_ = U.Missions.GetMissionPrize;
+aG = aD.Equipment;
+local b0 = U:WaitForChild('Combat'):WaitForChild('Skillsets')
+local b1 = 0;
+local b2;
+local b3 = 'RaidChestSilver'
+local b4 = 'RaidChestGold'
+local b5 = false;
+local b6 = U:WaitForChild("Combat"):WaitForChild("Attack")
+local b7 = game:GetService("Workspace"):FindFirstChild("Mobs")
+local b8 = U.Mobs.Mobs;
+local b9 = workspace.Camera;
+local ba;
+local bb;
+local bc = tick()
+local bd = tick()
+local be = {'Piledriver', 'Slap'}
+local bf = 0;
+local bg = 0;
+local bh = 0;
+local bi;
+local bj = {}
+local bk = 1;
+do
+    function resetCamera()
+        local bl = aE and (aE:FindFirstChild("Part") or aE)
+        if bl and not (b9.CameraSubject == bl) then
+            b9.CameraSubject = bl
+        end
+    end
+    function noclip()
+        if aE and aE.CanCollide then
+            aE.CanCollide = false
+        end
+    end
+    function unnoclip()
+        if aE and not aE.CanCollide then
+            aE.CanCollide = true
+        end
+    end
+    function setMobCamera(bm, bn, bo)
+        if not bo or not bm then
+            local bl = bm and bn or aE and (aE:FindFirstChild("Part") or aE)
+            if bl and b9.CameraSubject ~= bl then
+                b9.CameraSubject = bl
+            end
+        else
+            local bp = workspace:FindFirstChild('InfiniteCameraPart')
+            if bp and bp.Position ~= bo then
+                bp.CFrame = CFrame.new(bo)
+            end
+            if not bp then
+                bp = Instance.new('Part')
+                bp.Anchored = true;
+                bp.CanCollide = false;
+                bp.Transparency = 1;
+                bp.Size = Vector3.new(1, 1, 1)
+                bp.Position = bo;
+                bp.Name = 'InfiniteCameraPart'
+                bp.Parent = workspace
+            end
+            if b9.CameraSubject ~= bp then
+                b9.CameraSubject = bp
+            end
+        end
+    end
+    function alive()
+        return aD and aE and aF and aF:FindFirstChild('Health') and aF.Health.Value > 0
+    end
+    function mounted()
+        return aD and aD:FindFirstChild('Properties') and aD.Properties:GetAttribute('Mounted')
+    end
+    function isAlive(bq)
+        return bq and bq.PrimaryPart and bq:FindFirstChild('HealthProperties') and
+                   bq.HealthProperties:FindFirstChild('Health') and bq.HealthProperties.Health.Value > 0
+    end
+    function Mob(o)
+        if b8:FindFirstChild(o) then
+            return require(b8[o])
+        end
+    end
+    function SwitchOffhandPerks(o)
+        U.Settings.OffhandPerksActive:FireServer(o)
+    end
+    function timeElapsed(C)
+        local br = math.floor(C / 3600)
+        local bs = math.floor(C % 3600 / 60)
+        local bt = math.floor(C % 60)
+        if br > 0 then
+            return br .. 'h ' .. bs .. 'm ' .. bt .. 's'
+        end
+        if bs > 0 and br == 0 then
+            return bs .. 'm ' .. bt .. 's'
+        end
+        if br == 0 and bs == 0 then
+            return bt .. 's'
+        end
+    end
+    function ping()
+        return math.round(c:GetNetworkPing() * 1000) .. ' ms'
+    end
+    function ping2()
+        return math.round(game.Stats.PerformanceStats.Ping:GetValue()) .. ' ms'
+    end
+    function nextInTbl(bu, bv)
+        return bu[table.find(bu, bv) + 1] or bu[1]
+    end
+    function formatNumberWithCommas(bw)
+        local bx = tostring(bw)
+        local by;
+        repeat
+            bx, by = string.gsub(bx, "^(-?%d+)(%d%d%d)", '%1,%2')
+        until by == 0;
+        return bx
+    end
+    function getServerGuilds()
+        local bz = game:GetService("TextChatService"):WaitForChild('TextChannels')
+        local bu = {}
+        for B, C in bz:GetChildren() do
+            if #C.Name < 6 and #C:GetChildren() > 0 then
+                table.insert(bu, C.Name)
+            end
+        end
+        table.sort(bu)
+        return bu
+    end
+    function getPlrGuild()
+        local bz = game:GetService("TextChatService"):WaitForChild('TextChannels')
+        local z;
+        for B, C in bz:GetChildren() do
+            if #C.Name < 6 and #C:GetChildren() > 0 and C:FindFirstChild(c.Name) then
+                z = C.Name;
+                break
+            end
+        end
+        return z
+    end
+end
+local bA;
+local bB = 8136250;
+local bC = aM:WaitForChild('Inventory'):WaitForChild('Items')
+local bD = aM:WaitForChild('Inventory'):WaitForChild('Cosmetics')
+local bE = require(U.Missions.MissionData)
+local function bF(bG)
+    return bE[bG].LevelRequirement
+end
+local bH = require(U.Gear.GearPerks)
+local bI = require(U.Items)
+local bJ = require(U.Combat)
+local bK = U.Inventory.EquipItem;
+local bL = true;
+local bM = {}
+local bN = require(U:WaitForChild('Settings'))
+local bO = aM:WaitForChild('Settings')
+local bP;
+local bQ;
+local bR;
+local bS;
+local bT;
+local bU = game:GetService('RunService').Heartbeat;
+local function bV()
+    return bO:GetAttribute('OffhandPerksActive')
+end
+function StartRaid(o, p)
+    U:WaitForChild('Teleport'):WaitForChild('StartRaid'):FireServer(o, p)
+end
+local bW = require(U.Inventory)
+aW:GetPropertyChangedSignal("Value"):Connect(function()
+    aX = aW.Value
+end)
+local bX = 0;
+local bY = 0;
+U.Missions.MissionStart.OnClientEvent:Once(function()
+    ab = true;
+    bX = tick()
+end)
+load()
+if not aq then
+    if ac.Kicked and ac.WasInDungeon or ac.RejoinLastDungeon and tick() - ac.Timestamp <= ac.RejoinLastDungeonThreshold and
+        ac.CameFromMenu or ac.WasInDungeon and ac.Dungeon and table.find(ao, ac.Dungeon) and ac.ForceRestartLastTower then
+        ac.CameFromMenu = false;
+        save()
+        if ac.Dungeon then
+            local bZ = U:WaitForChild('Teleport'):WaitForChild('StartRaid')
+            while true do
+                if table.find(ae, ac.Dungeon) then
+                    bZ:FireServer(ac.Dungeon)
+                else
+                    bZ:FireServer(ac.Dungeon, ac.Difficulty)
+                end
+                task.wait(1)
+            end
+        end
+    else
+        ac.Kicked = false;
+        ac.CameFromMenu = false;
+        ac.WasInDungeon = false;
+        save()
+    end
+elseif aq then
+    bT = getPlrGuild()
+    ac.WasInDungeon = true;
+    ac.Dungeon = am;
+    ac.Difficulty = an;
+    ac.CameFromMenu = false;
+    ac.Timestamp = tick()
+    save()
+end
+local b_ = {
+    [5] = 1,
+    [1] = 5
+}
+local c0 = {'Checkpoint1', 'Checkpoint2', 'Checkpoint3', 'Checkpoint4', 'Checkpoint5', 'Checkpoint6', 'Checkpoint7',
+            'Checkpoint8', 'Checkpoint9', 'Checkpoint10', 'CutsceneTrigger', 'Main', 'CaveTrigger', 'BossIntroTrigger',
+            'TownTalkPart', 'BridgeTrigger', 'BoulderTrigger', 'BoulderStopTrigger', 'Cage1Marker', 'Cage2Marker',
+            'CannonTrigger', 'CastleTrigger', 'WallsCheckpoint', 'HammerReset1', 'WallsTrigger', 'WallsFinalTrigger',
+            'Room1Trigger', 'Room2Trigger', 'Room3Trigger', 'Room4Trigger', 'Room5Trigger', 'Room6Trigger',
+            'TreasureMarker', 'NextCheckpointTrigger', 'PreBridgeTrigger', 'CheckpointTriggers', 'CaveSpawnTrigger',
+            'CliffsideEndTrigger', 'VineRoomTrigger', 'CheckpointTrigger', 'ObbyTrigger', 'BossTrigger', 'DropTrigger',
+            'CastleGateTrigger', 'SceneTrigger', 'OutsideBossTrigger', 'Area1Trigger', 'Area2Trigger', 'Area3Trigger',
+            'FinishRing', 'StartWaveDefense', 'Trigger1', 'Trigger2', 'Trigger3', 'BossCutsceneTrigger', 'FloorTrigger',
+            'BossCutscene', 'BottomElevatorTrigger', 'MiddleElevatorTrigger', 'TopElevatorTrigger', 'ObbyTrigger5',
+            'WaveStarter', 'BossDoorTrigger', 'MinibossExit', 'ArenaEntry0', 'ArenaEntry1', 'ArenaEntry2'}
+if am == 43 then
+    table.remove(c0, table.find(c0, 'WaveStarter'))
+end
+local c1 = {'Scarecrow1', 'Scarecrow2', 'Scarecrow3'}
+local c2 = {
+    DireProblem = {
+        Id = 2,
+        ignoreMob = 'BOSSDireBoarwolf'
+    },
+    KingSlayer = {
+        Id = 4,
+        ignoreMob = 'BOSSKingCrab'
+    },
+    GravetowerDungeon = aY('Demon') and {
+        Id = 6,
+        ignoreMob = 'BOSSTreeEnt',
+        mobWaitTime = 3
+    } or {
+        Id = 6,
+        priorityTbl = {'Pillar', 'BOSSTreeEnt'},
+        mobWaitTbl = {'BOSSTreeEnt'},
+        mobWaitTime = 3
+    },
+    RoughWaters = {
+        Id = 25,
+        ignoreMob = 'DavyJones'
+    },
+    VolcanosShadow = {
+        Id = 13,
+        ignoreMob = 'BOSSCerberus'
+    },
+    KonoHeartlands = {
+        Id = 24,
+        ignoreMob = 'CorruptedGreaterTree'
+    },
+    AetherFortress = {
+        Id = 33,
+        ignoreMob = 'BOSSTreeEnt'
+    },
+    MamaTrauma = {
+        Id = 12,
+        ignoreMob = 'BOSSMamaQuillodile'
+    },
+    TheUnderworld = {
+        Id = 26,
+        ignoreMob = 'HadesCerberus',
+        mobWaitTbl = {'Hades', 'HadesCerberus'},
+        mobWaitTime = 3,
+        alwaysWait = true
+    },
+    VaneEvent = {
+        Id = 44,
+        priorityTbl = {'EVENTBOSSVane'}
+    },
+    ArcaneTower = {
+        Id = 43,
+        priorityTbl = {'Crystal', 'BOSSKandrix'}
+    },
+    RescueInTheRuins = {
+        Id = 30,
+        priorityTbl = {'Alligator', 'Rapigator', 'Sentry', 'HandTower'}
+    },
+    PyramidDungeon = {
+        Id = 18,
+        priorityTbl = {'ScarabGreen', 'BuffCactus', 'HappyCactus', 'RockGolem', 'DesertFlower', 'PoisonCobra',
+                       'GoldCobra'}
+    },
+    ScrapCanyon = {
+        Id = 20,
+        priorityTbl = {'Model', 'BOSSHogRider'}
+    }
+}
+local c3 = 15;
+local c4 = {
+    World1 = {
+        Name = 'World 1',
+        Id = 13,
+        OrderId = 1
+    },
+    World2 = {
+        Name = 'World 2',
+        Id = 19,
+        OrderId = 2
+    },
+    World3 = {
+        Name = 'World 3',
+        Id = 20,
+        OrderId = 3
+    },
+    World4 = {
+        Name = 'World 4',
+        Id = 29,
+        OrderId = 4
+    },
+    World5 = {
+        Name = 'World 5',
+        Id = 31,
+        OrderId = 5
+    },
+    World6 = {
+        Name = 'World 6',
+        Id = 36,
+        OrderId = 6
+    },
+    World7 = {
+        Name = 'World 7',
+        Id = 40,
+        OrderId = 7
+    },
+    World8 = {
+        Name = 'World 8',
+        Id = 45,
+        OrderId = 8
+    },
+    World9 = {
+        Name = 'World 9',
+        Id = 49,
+        OrderId = 9
+    },
+    World10 = {
+        Name = 'World 10',
+        Id = 56,
+        OrderId = 10
+    },
+    TradingHub = {
+        Name = 'Cliffside Marketplace',
+        Id = 44,
+        OrderId = 11
+    },
+    PvpArena = {
+        Name = 'Pvp Arena',
+        Id = 39,
+        OrderId = 12
+    },
+    Baseplate = {
+        Name = 'Baseplate',
+        Id = 26,
+        OrderId = 13
+    },
+    HalloweenHub = {
+        Name = 'Spooky Courtyard',
+        Id = 33,
+        OrderId = 15
+    }
+}
+local c5 = {1, 3, 2, 4, 6, 11, 12, 13, 7, 14, 15, 16, 20, 19, 18, 24, 35, 21, 25, 36, 23, 26, 37, 27, 30, 31, 29, 32,
+            33, 34, 41, 42, 43, 39, 1005, 1006, 1007, 38}
+local c6 = {{
+    Id = 1,
+    Name = "Crabby Crusade",
+    World = 1,
+    Type = 'Dungeon',
+    Code = '1-1'
+}, {
+    Id = 3,
+    Name = "Scarecrow Defense",
+    World = 1,
+    Type = 'Dungeon',
+    Code = '1-2'
+}, {
+    Id = 2,
+    Name = "Dire Problem",
+    World = 1,
+    Type = 'Dungeon',
+    Code = '1-3'
+}, {
+    Id = 4,
+    Name = "Kingslayer",
+    World = 1,
+    Type = 'Dungeon',
+    Code = '1-4'
+}, {
+    Id = 6,
+    Name = "Gravetower Dungeon",
+    World = 1,
+    Type = 'Dungeon',
+    Code = '1-5'
+}, {
+    Id = 11,
+    Name = "Temple of Ruin",
+    World = 2,
+    Type = 'Dungeon',
+    Code = '2-1'
+}, {
+    Id = 12,
+    Name = "Mama Trauma",
+    World = 2,
+    Type = 'Dungeon',
+    Code = '2-2'
+}, {
+    Id = 13,
+    Name = "Volcano's Shadow",
+    World = 2,
+    Type = 'Dungeon',
+    Code = '2-3'
+}, {
+    Id = 7,
+    Name = "Volcano Dungeon",
+    World = 2,
+    Type = 'Dungeon',
+    Code = '2-4'
+}, {
+    Id = 14,
+    Name = "Mountain Pass",
+    World = 3,
+    Type = 'Dungeon',
+    Code = '3-1'
+}, {
+    Id = 15,
+    Name = "Winter Cavern",
+    World = 3,
+    Type = 'Dungeon',
+    Code = '3-2'
+}, {
+    Id = 16,
+    Name = "Winter Dungeon",
+    World = 3,
+    Type = 'Dungeon',
+    Code = '3-3'
+}, {
+    Id = 20,
+    Name = "Scrap Canyon",
+    World = 4,
+    Type = 'Dungeon',
+    Code = '4-1'
+}, {
+    Id = 19,
+    Name = "Deserted Burrowmine",
+    World = 4,
+    Type = 'Dungeon',
+    Code = '4-2'
+}, {
+    Id = 18,
+    Name = "Pyramid Dungeon",
+    World = 4,
+    Type = 'Dungeon',
+    Code = '4-3'
+}, {
+    Id = 24,
+    Name = "Konoh Heartlands",
+    World = 5,
+    Type = 'Dungeon',
+    Code = '5-1'
+}, {
+    Id = 35,
+    Name = "Konoh Inferno",
+    World = 5,
+    Type = 'Dungeon',
+    Code = '5-2',
+    MobCount = 44
+}, {
+    Id = 21,
+    Name = "Prison Tower",
+    World = 5,
+    Type = 'Tower',
+    Code = 'Tower 1'
+}, {
+    Id = 25,
+    Name = "Rough Waters",
+    World = 6,
+    Type = 'Dungeon',
+    Code = '6-1'
+}, {
+    Id = 36,
+    Name = "Treasure Hunt",
+    World = 6,
+    Type = 'Dungeon',
+    Code = '6-2'
+}, {
+    Id = 23,
+    Name = "Atlantis Tower",
+    World = 6,
+    Type = 'Tower',
+    Code = 'Tower 2'
+}, {
+    Id = 26,
+    Name = "The Underworld",
+    World = 7,
+    Type = 'Dungeon',
+    Code = '7-1'
+}, {
+    Id = 37,
+    Name = "The Labyrinth",
+    World = 7,
+    Type = 'Dungeon',
+    Code = '7-2'
+}, {
+    Id = 27,
+    Name = "Mezuvian Tower",
+    World = 7,
+    Type = 'Tower',
+    Code = 'Tower 3'
+}, {
+    Id = 30,
+    Name = "Rescue in the Ruins",
+    World = 8,
+    Type = 'Dungeon',
+    Code = '8-1'
+}, {
+    Id = 31,
+    Name = "Ruin Rush",
+    World = 8,
+    Type = 'Dungeon',
+    Code = '8-2'
+}, {
+    Id = 29,
+    Name = "Oasis Tower",
+    World = 8,
+    Type = 'Tower',
+    Code = 'Tower 4'
+}, {
+    Id = 32,
+    Name = "Treetop Trouble",
+    World = 9,
+    Type = 'Dungeon',
+    Code = '9-1'
+}, {
+    Id = 33,
+    Name = "Aether Fortress",
+    World = 9,
+    Type = 'Dungeon',
+    Code = '9-2'
+}, {
+    Id = 34,
+    Name = "Aether Tower",
+    World = 9,
+    Type = 'Tower',
+    Code = 'Tower 5'
+}, {
+    Id = 41,
+    Name = "Crystal Chaos",
+    World = 10,
+    Type = 'Dungeon',
+    Code = '10-1'
+}, {
+    Id = 42,
+    Name = "Astral Academy",
+    World = 10,
+    Type = 'Dungeon',
+    Code = '10-2'
+}, {
+    Id = 43,
+    Name = "Arcane Tower",
+    World = 10,
+    Type = 'Tower',
+    Code = 'Tower 6'
+}, {
+    Id = 22,
+    Name = "Haunted Event",
+    Type = 'Raid',
+    World = "Spooky Courtyard",
+    Special = true,
+    Code = 'Halloween Raid'
+}, {
+    Id = 17,
+    Name = "Klaus Factory",
+    Type = 'Raid',
+    World = "Holiday Village",
+    Special = true,
+    Code = 'Christmas Raid'
+}, {
+    Id = 38,
+    Name = "Infinite Tower",
+    Type = 'Special',
+    Special = true,
+    Code = 'Special'
+}, {
+    Id = 39,
+    Name = "Celestial Tower",
+    Type = 'Special',
+    Special = true,
+    Code = 'Special'
+}, {
+    Id = 40,
+    Name = "Daily Dungeon",
+    Type = 'Dungeon',
+    Special = true,
+    Code = 'I dont know'
+}, {
+    Id = 44,
+    Name = "Vane's Lair",
+    Type = 'Raid',
+    Special = true,
+    Code = 'Event Raid'
+}, {
+    Id = 45,
+    Name = "The Depths",
+    Type = 'Raid',
+    Special = true,
+    Code = 'Event Raid'
+}}
+local c7 = {
+    Assassin = {
+        DisplayName = 'Shadowblade',
+        Range = 10.5,
+        Type = 'Melee',
+        Primary = 'Longsword',
+        Offhand = 'Longsword',
+        Skills = {{
+            Skill = 'Assassin1',
+            Cooldown = 0.26
+        }, {
+            Skill = 'Assassin2',
+            Cooldown = 0.26
+        }, {
+            Skill = 'Assassin3',
+            Cooldown = 0.26
+        }, {
+            Skill = 'Assassin4',
+            Cooldown = 0.26
+        }, {
+            Skill = 'Assassin5',
+            Cooldown = 0.26
+        }, {
+            Skill = 'Assassin6',
+            Cooldown = 0.26
+        }, {
+            Skill = 'Assassin7',
+            Cooldown = 0.26
+        }, {
+            Skill = 'Assassin8',
+            Cooldown = 0.26
+        }, {
+            Skill = 'ShadowLeap',
+            Cooldown = 3.1,
+            Range = 49
+        }, {
+            Skill = 'ShadowSlash1',
+            Cooldown = 6.1,
+            Range = 59
+        }, {
+            Skill = 'ShadowSlash2',
+            Cooldown = 6.1,
+            Range = 59
+        }, {
+            Skill = b0:WaitForChild('Assassin'):WaitForChild('EventStealthWalk'),
+            Cooldown = 0.25,
+            Type = 'Remote'
+        }, {
+            Skill = b0:WaitForChild('Assassin'):WaitForChild('Ultimate'),
+            Cooldown = 1,
+            Type = 'Remote'
+        }, {
+            Skill = 'RealmOfShadows',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 79
+        }, {
+            Skill = 'ShadowMulti1',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 59
+        }, {
+            Skill = 'ShadowMulti2',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 59
+        }, {
+            Skill = 'ShadowMulti3',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 59
+        }, {
+            Skill = 'ShadowMulti4',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 59
+        }, {
+            Skill = 'ShadowMulti5',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 59
+        }}
+    },
+    MageOfLight = {
+        DisplayName = 'Mage Of Light',
+        Range = 96,
+        Type = 'Ranged',
+        Primary = 'Staff',
+        Skills = {{
+            Skill = 'MageOfLight',
+            Cooldown = 0.28
+        }, {
+            Skill = 'MageOfLightBlast',
+            Cooldown = 0.33
+        }, {
+            Skill = 'MageOfLightCharged',
+            Cooldown = 0.33
+        }, {
+            Skill = 'MageOfLightBlastCharged',
+            Cooldown = 0.33
+        }, {
+            Skill = b0:WaitForChild('MageOfLight'):WaitForChild('HealCircle'),
+            Cooldown = 14.2,
+            Type = 'Heal'
+        }, {
+            Skill = b0:WaitForChild('MageOfLight'):WaitForChild('Barrier'),
+            Args = c,
+            Cooldown = 15.2,
+            Type = 'Heal'
+        }, {
+            Skill = b0:WaitForChild('MageOfLight'):WaitForChild('Ultimate'),
+            Cooldown = 1,
+            Type = 'Heal'
+        }}
+    },
+    Warlord = {
+        DisplayName = 'Warlord',
+        Range = 19.5,
+        Type = 'Melee',
+        Primary = 'Greataxe',
+        Offhand = 'Shield',
+        Skills = {{
+            Skill = 'Warlord1',
+            Cooldown = 0.42,
+            Type = 'Ranged',
+            MeleeOnBoss = true,
+            BossRange = 14.5
+        }, {
+            Skill = 'Warlord2',
+            Cooldown = 0.42,
+            Type = 'Ranged',
+            MeleeOnBoss = true,
+            BossRange = 14.5
+        }, {
+            Skill = 'Warlord3',
+            Cooldown = 0.42,
+            Type = 'Ranged',
+            MeleeOnBoss = true,
+            BossRange = 14.5
+        }, {
+            Skill = 'Warlord4',
+            Cooldown = 0.42,
+            Type = 'Ranged',
+            MeleeOnBoss = true,
+            BossRange = 14.5
+        }, {
+            Skill = 'ChainsOfWar',
+            Cooldown = 8,
+            Range = 69,
+            Type = 'Ranged'
+        }, {
+            Skill = 'BlockingWarlord',
+            Cooldown = 2.5,
+            Type = 'Ranged',
+            MeleeOnBoss = true,
+            BossRange = 14.5
+        }, {
+            Skill = 'Piledriver1',
+            Cooldown = 5.1,
+            Range = 12,
+            Type = 'Ranged'
+        }, {
+            Skill = 'Piledriver2',
+            Cooldown = 6.1,
+            Range = 12,
+            Type = 'Ranged'
+        }, {
+            Skill = 'Piledriver3',
+            Cooldown = 7.1,
+            Range = 12,
+            Type = 'Ranged'
+        }, {
+            Skill = 'WarlordUltimate1',
+            Cooldown = 31,
+            Range = 59,
+            Type = 'Ranged'
+        }, {
+            Skill = 'WarlordUltimate2',
+            Cooldown = 31,
+            Range = 59,
+            Type = 'Ranged'
+        }, {
+            Skill = 'WarlordUltimate3',
+            Cooldown = 31,
+            Range = 59,
+            Type = 'Ranged'
+        }, {
+            Skill = 'WarlordUltimate4',
+            Cooldown = 31,
+            Range = 59,
+            Type = 'Ranged'
+        }, {
+            Skill = 'WarlordUltimate5',
+            Cooldown = 31,
+            Range = 59,
+            Type = 'Ranged'
+        }}
+    },
+    Paladin = {
+        DisplayName = 'Paladin',
+        Range = 14,
+        Type = 'Melee',
+        Primary = 'Longsword',
+        Offhand = 'Shield',
+        Skills = {{
+            Skill = 'BlockingPaladin',
+            Cooldown = 0.37,
+            Range = 9
+        }, {
+            Skill = 'Paladin1',
+            Cooldown = 0.52
+        }, {
+            Skill = 'Paladin2',
+            Cooldown = 0.52
+        }, {
+            Skill = 'Paladin3',
+            Cooldown = 0.52
+        }, {
+            Skill = 'Paladin4',
+            Cooldown = 0.52
+        }, {
+            Skill = 'LightPaladin1',
+            Cooldown = 0.52,
+            Range = 19
+        }, {
+            Skill = 'LightPaladin2',
+            Cooldown = 0.52,
+            Range = 19
+        }, {
+            Skill = 'LightPaladin3',
+            Cooldown = 0.52,
+            Range = 19
+        }, {
+            Skill = 'LightPaladin4',
+            Cooldown = 0.52,
+            Range = 19
+        }, {
+            Skill = 'LightThrust1',
+            Cooldown = 9,
+            Range = 19
+        }, {
+            Skill = 'LightThrust2',
+            Cooldown = 9,
+            Range = 19
+        }, {
+            Skill = b0:WaitForChild('Paladin'):WaitForChild('GuildedLight'),
+            Cooldown = 15.2,
+            Type = 'Heal'
+        }}
+    },
+    Berserker = {
+        DisplayName = 'Berserker',
+        Range = 19.5,
+        Type = 'Melee',
+        Primary = 'Greataxe',
+        Offhand = 'Greataxe',
+        Skills = {{
+            Skill = 'Berserker1',
+            Cooldown = 0.51,
+            Type = 'Ranged'
+        }, {
+            Skill = 'Berserker2',
+            Cooldown = 0.51,
+            Type = 'Ranged'
+        }, {
+            Skill = 'Berserker3',
+            Cooldown = 0.51,
+            Type = 'Ranged'
+        }, {
+            Skill = 'Berserker4',
+            Cooldown = 0.51,
+            Type = 'Ranged'
+        }, {
+            Skill = 'Berserker5',
+            Cooldown = 0.51,
+            Type = 'Ranged'
+        }, {
+            Skill = 'Berserker6',
+            Cooldown = 0.51,
+            Type = 'Ranged'
+        }, {
+            Skill = 'AggroSlam',
+            Cooldown = 5.2,
+            Range = 39,
+            Type = 'Ranged'
+        }, {
+            Skill = 'GigaSpin1',
+            Cooldown = 7.2,
+            Range = 16
+        }, {
+            Skill = 'GigaSpin2',
+            Cooldown = 7.2,
+            Range = 16
+        }, {
+            Skill = 'GigaSpin3',
+            Cooldown = 7.2,
+            Range = 16
+        }, {
+            Skill = 'GigaSpin4',
+            Cooldown = 7.2,
+            Range = 16
+        }, {
+            Skill = 'GigaSpin5',
+            Cooldown = 7.2,
+            Range = 16
+        }, {
+            Skill = 'GigaSpin6',
+            Cooldown = 7.2,
+            Range = 16
+        }, {
+            Skill = 'GigaSpin7',
+            Cooldown = 7.2,
+            Range = 16
+        }, {
+            Skill = 'GigaSpin8',
+            Cooldown = 7.2,
+            Range = 16
+        }, {
+            Skill = 'Fissure1',
+            Cooldown = 10.2,
+            Range = 9
+        }, {
+            Skill = 'Fissure2',
+            Cooldown = 10.2,
+            Range = 9
+        }, {
+            Skill = 'FissureErupt1',
+            Cooldown = 10.2,
+            Range = 9
+        }, {
+            Skill = 'FissureErupt2',
+            Cooldown = 10.2,
+            Range = 9
+        }, {
+            Skill = 'FissureErupt3',
+            Cooldown = 10.2,
+            Range = 9
+        }, {
+            Skill = 'FissureErupt4',
+            Cooldown = 10.2,
+            Range = 9
+        }, {
+            Skill = 'FissureErupt5',
+            Cooldown = 10.2,
+            Range = 9
+        }, {
+            Skill = 'FissureErupt6',
+            Cooldown = 10.2,
+            Range = 9
+        }, {
+            Skill = 'FissureErupt7',
+            Cooldown = 10.2,
+            Range = 9
+        }, {
+            Skill = 'FissureErupt8',
+            Cooldown = 10.2,
+            Range = 9
+        }, {
+            Skill = b0:WaitForChild('Berserker'):WaitForChild('Ultimate'),
+            Cooldown = 1,
+            Type = 'Remote'
+        }}
+    },
+    Guardian = {
+        DisplayName = 'Guardian',
+        Range = 14.5,
+        Type = 'Melee',
+        Primary = 'Greatsword',
+        Skills = {{
+            Skill = 'Guardian1',
+            Cooldown = 0.6
+        }, {
+            Skill = 'Guardian2',
+            Cooldown = 0.6
+        }, {
+            Skill = 'Guardian3',
+            Cooldown = 0.6
+        }, {
+            Skill = 'Guardian4',
+            Cooldown = 0.6
+        }, {
+            Skill = 'RockSpikes1',
+            Cooldown = 6.1,
+            Range = 29,
+            Type = 'Ranged'
+        }, {
+            Skill = 'RockSpikes2',
+            Cooldown = 6.1,
+            Range = 31,
+            Type = 'Ranged'
+        }, {
+            Skill = 'RockSpikes3',
+            Cooldown = 6.1,
+            Range = 34,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SlashFury1',
+            Cooldown = 7.1,
+            Range = 44,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SlashFury2',
+            Cooldown = 7.1,
+            Range = 44,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SlashFury3',
+            Cooldown = 7.1,
+            Range = 44,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SlashFury4',
+            Cooldown = 7.1,
+            Range = 44,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SlashFury5',
+            Cooldown = 7.1,
+            Range = 44,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SlashFury6',
+            Cooldown = 7.1,
+            Range = 44,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SlashFury7',
+            Cooldown = 7.1,
+            Range = 44,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SlashFury8',
+            Cooldown = 7.1,
+            Range = 44,
+            Type = 'Ranged'
+        }, {
+            Skill = b0:WaitForChild('Guardian'):WaitForChild('AggroDraw'),
+            Cooldown = 14.5,
+            Type = 'Remote'
+        }, {
+            Skill = 'SwordPrison1',
+            Cooldown = 30.2,
+            Range = 120,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SwordPrison2',
+            Cooldown = 30.2,
+            Range = 120,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SwordPrison3',
+            Cooldown = 30.2,
+            Range = 120,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SwordPrison4',
+            Cooldown = 30.2,
+            Range = 120,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SwordPrison5',
+            Cooldown = 30.2,
+            Range = 120,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SwordPrison6',
+            Cooldown = 30.2,
+            Range = 120,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SwordPrison7',
+            Cooldown = 30.2,
+            Range = 120,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SwordPrison8',
+            Cooldown = 30.2,
+            Range = 120,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SwordPrison9',
+            Cooldown = 30.2,
+            Range = 120,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SwordPrison10',
+            Cooldown = 30.2,
+            Range = 120,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SwordPrison11',
+            Cooldown = 30.2,
+            Range = 120,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SwordPrison12',
+            Cooldown = 30.2,
+            Range = 120,
+            Type = 'Ranged'
+        }}
+    },
+    Demon = {
+        DisplayName = 'Demon',
+        Range = 12,
+        Type = 'Ranged',
+        Primary = 'Scythe',
+        Skills = {{
+            Skill = 'Demon1',
+            Cooldown = 0.85
+        }, {
+            Skill = 'Demon2',
+            Cooldown = 0.85
+        }, {
+            Skill = 'Demon3',
+            Cooldown = 0.85
+        }, {
+            Skill = 'Demon4',
+            Cooldown = 1.2
+        }, {
+            Skill = 'Demon5',
+            Cooldown = 1.2
+        }, {
+            Skill = 'Demon6',
+            Cooldown = 1.2
+        }, {
+            Skill = 'Demon7',
+            Cooldown = 1.5
+        }, {
+            Skill = 'Demon8',
+            Cooldown = 1.5
+        }, {
+            Skill = 'Demon9',
+            Cooldown = 1.5
+        }, {
+            Skill = 'Demon10',
+            Cooldown = 1.85
+        }, {
+            Skill = 'Demon11',
+            Cooldown = 1.85
+        }, {
+            Skill = 'Demon12',
+            Cooldown = 1.85
+        }, {
+            Skill = 'Demon13',
+            Cooldown = 2.15
+        }, {
+            Skill = 'Demon14',
+            Cooldown = 2.15
+        }, {
+            Skill = 'Demon15',
+            Cooldown = 2.15
+        }, {
+            Skill = 'Demon16',
+            Cooldown = 2.55
+        }, {
+            Skill = 'Demon17',
+            Cooldown = 2.55
+        }, {
+            Skill = 'Demon18',
+            Cooldown = 2.55
+        }, {
+            Skill = 'Demon19',
+            Cooldown = 2.85
+        }, {
+            Skill = 'Demon20',
+            Cooldown = 2.85
+        }, {
+            Skill = 'Demon21',
+            Cooldown = 2.85
+        }, {
+            Skill = 'Demon22',
+            Cooldown = 3.2
+        }, {
+            Skill = 'Demon23',
+            Cooldown = 3.2
+        }, {
+            Skill = 'Demon24',
+            Cooldown = 3.2
+        }, {
+            Skill = 'Demon25',
+            Cooldown = 3.5
+        }, {
+            Skill = 'Demon26',
+            Cooldown = 3.5
+        }, {
+            Skill = 'Demon27',
+            Cooldown = 3.5
+        }, {
+            Skill = 'DemonDPS1',
+            Cooldown = 0.85,
+            Range = 12
+        }, {
+            Skill = 'DemonDPS2',
+            Cooldown = 1.2,
+            Range = 12
+        }, {
+            Skill = 'DemonDPS3',
+            Cooldown = 1.5,
+            Range = 12
+        }, {
+            Skill = 'DemonDPS4',
+            Cooldown = 1.85,
+            Range = 12
+        }, {
+            Skill = 'DemonDPS5',
+            Cooldown = 2.15,
+            Range = 12
+        }, {
+            Skill = 'DemonDPS6',
+            Cooldown = 2.55,
+            Range = 12
+        }, {
+            Skill = 'DemonDPS7',
+            Cooldown = 2.9,
+            Range = 12
+        }, {
+            Skill = 'DemonDPS8',
+            Cooldown = 3.3,
+            Range = 12
+        }, {
+            Skill = 'DemonDPS9',
+            Cooldown = 3.6,
+            Range = 12
+        }, {
+            Skill = 'ScytheThrowDPS1',
+            Cooldown = 5.5,
+            Type = 'Ranged',
+            Range = 71
+        }, {
+            Skill = 'ScytheThrowDPS2',
+            Cooldown = 5.5,
+            Type = 'Ranged',
+            Range = 71
+        }, {
+            Skill = 'ScytheThrowDPS3',
+            Cooldown = 5.5,
+            Type = 'Ranged',
+            Range = 71
+        }, {
+            Skill = 'ScytheThrow1',
+            Cooldown = 5.5,
+            Type = 'Ranged',
+            Range = 88
+        }, {
+            Skill = 'ScytheThrow2',
+            Cooldown = 5.5,
+            Type = 'Ranged',
+            Range = 88
+        }, {
+            Skill = 'ScytheThrow3',
+            Cooldown = 5.5,
+            Type = 'Ranged',
+            Range = 88
+        }, {
+            Skill = 'ScytheThrow4',
+            Cooldown = 5.5,
+            Type = 'Ranged',
+            Range = 88
+        }, {
+            Skill = 'ScytheThrow5',
+            Cooldown = 5.5,
+            Type = 'Ranged',
+            Range = 88
+        }, {
+            Skill = 'ScytheThrow6',
+            Cooldown = 5.5,
+            Type = 'Ranged',
+            Range = 88
+        }, {
+            Skill = 'ScytheThrow7',
+            Cooldown = 5.5,
+            Type = 'Ranged',
+            Range = 88
+        }, {
+            Skill = 'ScytheThrow8',
+            Cooldown = 5.5,
+            Type = 'Ranged',
+            Range = 88
+        }, {
+            Skill = 'DemonLifeStealDPS',
+            Cooldown = 8.2,
+            Type = 'Ranged',
+            Range = 56
+        }, {
+            Skill = b0:WaitForChild('Demon'):WaitForChild('Ultimate'),
+            Cooldown = 1,
+            Type = 'Remote'
+        }, {
+            Skill = 'DemonSoulDPS1',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 26
+        }, {
+            Skill = 'DemonSoulDPS2',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 26
+        }, {
+            Skill = 'DemonSoulDPS3',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 26
+        }}
+    },
+    Swordmaster = {
+        DisplayName = 'Swordmaster',
+        Range = 12,
+        Type = 'Melee',
+        Primary = 'Longsword',
+        Skills = {{
+            Skill = 'Swordmaster1',
+            Cooldown = 0.34
+        }, {
+            Skill = 'Swordmaster2',
+            Cooldown = 0.34
+        }, {
+            Skill = 'Swordmaster3',
+            Cooldown = 0.34
+        }, {
+            Skill = 'Swordmaster4',
+            Cooldown = 0.34
+        }, {
+            Skill = 'Swordmaster5',
+            Cooldown = 0.34
+        }, {
+            Skill = 'Swordmaster6',
+            Cooldown = 0.34
+        }, {
+            Skill = 'CrescentStrike1',
+            Cooldown = 5.2
+        }, {
+            Skill = 'CrescentStrike2',
+            Cooldown = 5.2
+        }, {
+            Skill = 'CrescentStrike3',
+            Cooldown = 5.2
+        }, {
+            Skill = 'CrescentStrike4',
+            Cooldown = 5.2
+        }, {
+            Skill = 'CrescentStrike5',
+            Cooldown = 5.2
+        }, {
+            Skill = 'Leap',
+            Cooldown = 8.2,
+            Range = 14
+        }}
+    },
+    Mage = {
+        DisplayName = 'Arcane Mage',
+        Range = 99,
+        Type = 'Ranged',
+        Primary = 'Staff',
+        Skills = {{
+            Skill = 'Mage1',
+            Cooldown = 0.33
+        }, {
+            Skill = 'Mage2',
+            Cooldown = 0.33
+        }, {
+            Skill = 'Mage3',
+            Cooldown = 0.33
+        }, {
+            Skill = 'ArcaneBlast',
+            Cooldown = 5.2,
+            Range = 42
+        }, {
+            Skill = 'ArcaneBlastAOE',
+            Cooldown = 5.2,
+            Range = 42
+        }, {
+            Skill = 'ArcaneWave1',
+            Cooldown = 8.2,
+            Range = 36
+        }, {
+            Skill = 'ArcaneWave2',
+            Cooldown = 8.2,
+            Range = 36
+        }, {
+            Skill = 'ArcaneWave3',
+            Cooldown = 8.2,
+            Range = 36
+        }, {
+            Skill = 'ArcaneWave4',
+            Cooldown = 8.2,
+            Range = 36
+        }, {
+            Skill = 'ArcaneWave5',
+            Cooldown = 8.2,
+            Range = 36
+        }, {
+            Skill = 'ArcaneWave6',
+            Cooldown = 8.2,
+            Range = 36
+        }, {
+            Skill = 'ArcaneWave7',
+            Cooldown = 8.2,
+            Range = 36
+        }, {
+            Skill = 'ArcaneWave8',
+            Cooldown = 8.2,
+            Range = 36
+        }, {
+            Skill = 'ArcaneWave9',
+            Cooldown = 8.2,
+            Range = 36
+        }, {
+            Skill = 'ArcaneWave10',
+            Cooldown = 8.2,
+            Range = 36
+        }, {
+            Skill = 'ArcaneWave11',
+            Cooldown = 8.2,
+            Range = 36
+        }, {
+            Skill = 'ArcaneWave12',
+            Cooldown = 8.2,
+            Range = 36
+        }}
+    },
+    Defender = {
+        DisplayName = 'Defender',
+        Range = 12,
+        Type = 'Melee',
+        Primary = 'Greataxe',
+        Skills = {{
+            Skill = 'Defender1',
+            Cooldown = 0.66
+        }, {
+            Skill = 'Defender2',
+            Cooldown = 0.66
+        }, {
+            Skill = 'Defender3',
+            Cooldown = 0.66
+        }, {
+            Skill = 'Defender4',
+            Cooldown = 0.66
+        }, {
+            Skill = 'Defender5',
+            Cooldown = 0.66
+        }, {
+            Skill = 'Groundbreaker',
+            Cooldown = 5.1,
+            Range = 9
+        }, {
+            Skill = 'Spin1',
+            Cooldown = 8.1,
+            Range = 10
+        }, {
+            Skill = 'Spin2',
+            Cooldown = 8.1,
+            Range = 10
+        }, {
+            Skill = 'Spin3',
+            Cooldown = 8.1,
+            Range = 10
+        }, {
+            Skill = 'Spin4',
+            Cooldown = 8.1,
+            Range = 10
+        }}
+    },
+    DualWielder = {
+        DisplayName = 'Dual Wielder',
+        Range = 12,
+        Type = 'Melee',
+        Primary = 'Longsword',
+        Offhand = 'Longsword',
+        Skills = {{
+            Skill = 'DualWield1',
+            Cooldown = 0.55
+        }, {
+            Skill = 'DualWield2',
+            Cooldown = 0.55
+        }, {
+            Skill = 'DualWield3',
+            Cooldown = 0.55
+        }, {
+            Skill = 'DualWield4',
+            Cooldown = 0.55
+        }, {
+            Skill = 'DualWield5',
+            Cooldown = 0.75
+        }, {
+            Skill = 'DualWield6',
+            Cooldown = 0.75
+        }, {
+            Skill = 'DualWield7',
+            Cooldown = 0.75
+        }, {
+            Skill = 'DualWield8',
+            Cooldown = 0.75
+        }, {
+            Skill = 'DualWield9',
+            Cooldown = 0.75
+        }, {
+            Skill = 'DualWield10',
+            Cooldown = 0.75
+        }, {
+            Skill = b0:WaitForChild('DualWielder'):WaitForChild('AttackBuff'),
+            Cooldown = 12.2,
+            Type = 'Remote'
+        }, {
+            Skill = 'DashStrike',
+            Cooldown = 6.2
+        }, {
+            Skill = 'CrossSlash1',
+            Cooldown = 8.2,
+            Type = 'Ranged',
+            Range = 47
+        }, {
+            Skill = 'CrossSlash2',
+            Cooldown = 8.2,
+            Type = 'Ranged',
+            Range = 47
+        }, {
+            Skill = 'CrossSlash3',
+            Cooldown = 8.2,
+            Type = 'Ranged',
+            Range = 47
+        }, {
+            Skill = 'CrossSlash4',
+            Cooldown = 8.2,
+            Type = 'Ranged',
+            Range = 47
+        }, {
+            Skill = 'CrossSlash5',
+            Cooldown = 8.2,
+            Type = 'Ranged',
+            Range = 47
+        }, {
+            Skill = 'CrossSlash6',
+            Cooldown = 8.2,
+            Type = 'Ranged',
+            Range = 47
+        }, {
+            Skill = 'CrossSlash7',
+            Cooldown = 8 - 2,
+            Type = 'Ranged',
+            Range = 47
+        }, {
+            Skill = 'CrossSlash8',
+            Cooldown = 8.2,
+            Type = 'Ranged',
+            Range = 47
+        }, {
+            Skill = 'CrossSlash9',
+            Cooldown = 8.2,
+            Type = 'Ranged',
+            Range = 47
+        }, {
+            Skill = 'CrossSlash10',
+            Cooldown = 8.2,
+            Type = 'Ranged',
+            Range = 47
+        }, {
+            Skill = b0:WaitForChild('DualWielder'):WaitForChild('Ultimate'),
+            Cooldown = 31,
+            Type = 'Remote'
+        }, {
+            Skill = 'DualWieldUltimateHit1',
+            Cooldown = 31
+        }, {
+            Skill = 'DualWieldUltimateHit2',
+            Cooldown = 31
+        }, {
+            Skill = 'DualWieldUltimateHit3',
+            Cooldown = 31
+        }, {
+            Skill = 'DualWieldUltimateHit4',
+            Cooldown = 31
+        }, {
+            Skill = 'DualWieldUltimateHit5',
+            Cooldown = 31
+        }, {
+            Skill = 'DualWieldUltimateHit6',
+            Cooldown = 31
+        }, {
+            Skill = 'DualWieldUltimateHit7',
+            Cooldown = 31
+        }, {
+            Skill = 'DualWieldUltimateHit8',
+            Cooldown = 31
+        }, {
+            Skill = 'DualWieldUltimateSlam',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSlam1',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSlam2',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSlam3',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword1',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword2',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword3',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword4',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword5',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword6',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword7',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword8',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword9',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword10',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword11',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword12',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword13',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword14',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword15',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }, {
+            Skill = 'DualWieldUltimateSword16',
+            Cooldown = 31,
+            Type = 'Ranged',
+            Range = 17
+        }}
+    },
+    IcefireMage = {
+        DisplayName = 'Elementalist',
+        Range = 93,
+        Type = 'Ranged',
+        Primary = 'Staff',
+        Skills = {{
+            Skill = 'IcefireMage1',
+            Cooldown = 0.33
+        }, {
+            Skill = 'IcefireMage2',
+            Cooldown = 0.33
+        }, {
+            Skill = 'IcefireMage3',
+            Cooldown = 0.33
+        }, {
+            Skill = 'IcySpikes1',
+            Cooldown = 6.2,
+            Range = 36
+        }, {
+            Skill = 'IcySpikes2',
+            Cooldown = 6.2,
+            Range = 36
+        }, {
+            Skill = 'IcySpikes3',
+            Cooldown = 6.2,
+            Range = 36
+        }, {
+            Skill = 'IcySpikes4',
+            Cooldown = 6.2,
+            Range = 36
+        }, {
+            Skill = 'IcySpikes5',
+            Cooldown = 6.2,
+            Range = 36
+        }, {
+            Skill = 'IcefireMageFireball',
+            Cooldown = 10.2
+        }, {
+            Skill = 'IcefireMageFireballBlast',
+            Cooldown = 10.2
+        }, {
+            Skill = 'LightningStrike1',
+            Cooldown = 15.2,
+            Range = 46
+        }, {
+            Skill = 'LightningStrike2',
+            Cooldown = 15.2,
+            Range = 46
+        }, {
+            Skill = 'LightningStrike3',
+            Cooldown = 15.2,
+            Range = 46
+        }, {
+            Skill = 'LightningStrike4',
+            Cooldown = 15.2,
+            Range = 46
+        }, {
+            Skill = 'LightningStrike5',
+            Cooldown = 15.2,
+            Range = 46
+        }, {
+            Skill = 'IcefireMageUltimateFrost',
+            Cooldown = 31,
+            Range = 56
+        }, {
+            Skill = 'IcefireMageUltimateMeteor1',
+            Cooldown = 31,
+            Range = 56
+        }, {
+            Skill = 'IcefireMageUltimateMeteor2',
+            Cooldown = 31,
+            Range = 56
+        }, {
+            Skill = 'IcefireMageUltimateMeteor3',
+            Cooldown = 31,
+            Range = 56
+        }, {
+            Skill = 'IcefireMageUltimateMeteor4',
+            Cooldown = 31,
+            Range = 56
+        }, {
+            Skill = 'IcefireMageUltimateMeteor5',
+            Cooldown = 31,
+            Range = 56
+        }, {
+            Skill = 'IcefireMageUltimateMeteor6',
+            Cooldown = 31,
+            Range = 56
+        }, {
+            Skill = 'IcefireMageUltimateMeteor7',
+            Cooldown = 31,
+            Range = 56
+        }, {
+            Skill = 'IcefireMageUltimateMeteor8',
+            Cooldown = 31,
+            Range = 56
+        }, {
+            Skill = 'IcefireMageUltimateMeteor9',
+            Cooldown = 31,
+            Range = 56
+        }, {
+            Skill = 'IcefireMageUltimateMeteor10',
+            Cooldown = 31,
+            Range = 56
+        }}
+    },
+    Dragoon = {
+        DisplayName = 'Dragoon',
+        Range = 12,
+        Type = 'Ranged',
+        Primary = 'Spear',
+        Skills = {{
+            Skill = 'Dragoon1',
+            Cooldown = 0.45,
+            Type = 'Melee'
+        }, {
+            Skill = 'Dragoon2',
+            Cooldown = 0.45,
+            Type = 'Melee'
+        }, {
+            Skill = 'Dragoon3',
+            Cooldown = 0.45,
+            Type = 'Melee'
+        }, {
+            Skill = 'Dragoon4',
+            Cooldown = 0.45,
+            Type = 'Melee'
+        }, {
+            Skill = 'Dragoon5',
+            Cooldown = 0.45,
+            Type = 'Melee'
+        }, {
+            Skill = 'Dragoon6',
+            Cooldown = 0.45,
+            Type = 'Melee'
+        }, {
+            Skill = 'DragoonDash',
+            Cooldown = 6.2,
+            Range = 17
+        }, {
+            Skill = 'DragoonCross1',
+            Cooldown = 6.2,
+            Range = 17
+        }, {
+            Skill = 'DragoonCross2',
+            Cooldown = 6.2,
+            Range = 17
+        }, {
+            Skill = 'DragoonCross3',
+            Cooldown = 6.2,
+            Range = 17
+        }, {
+            Skill = 'DragoonCross4',
+            Cooldown = 6.2,
+            Range = 17
+        }, {
+            Skill = 'DragoonCross5',
+            Cooldown = 6.2,
+            Range = 17
+        }, {
+            Skill = 'DragoonCross6',
+            Cooldown = 6.2,
+            Range = 17
+        }, {
+            Skill = 'DragoonCross7',
+            Cooldown = 6.2,
+            Range = 17
+        }, {
+            Skill = 'DragoonCross8',
+            Cooldown = 6.2,
+            Range = 17
+        }, {
+            Skill = 'DragoonCross9',
+            Cooldown = 6.2,
+            Range = 17
+        }, {
+            Skill = 'DragoonCross10',
+            Cooldown = 6.2,
+            Range = 17
+        }, {
+            Skill = 'MultiStrike1',
+            Cooldown = 6.2,
+            Type = 'Melee',
+            Range = 18
+        }, {
+            Skill = 'MultiStrike2',
+            Cooldown = 6.2,
+            Type = 'Melee',
+            Range = 18
+        }, {
+            Skill = 'MultiStrike3',
+            Cooldown = 6.2,
+            Type = 'Melee',
+            Range = 18
+        }, {
+            Skill = 'MultiStrike4',
+            Cooldown = 6.2,
+            Type = 'Melee',
+            Range = 18
+        }, {
+            Skill = 'MultiStrike5',
+            Cooldown = 6.2,
+            Type = 'Melee',
+            Range = 18
+        }, {
+            Skill = 'MultiStrikeDragon1',
+            Cooldown = 6.2,
+            Range = 57
+        }, {
+            Skill = 'MultiStrikeDragon2',
+            Cooldown = 6.2,
+            Range = 57
+        }, {
+            Skill = 'MultiStrikeDragon3',
+            Cooldown = 6.2,
+            Range = 57
+        }, {
+            Skill = 'DragoonFall',
+            Cooldown = 8.2,
+            Range = 5
+        }, {
+            Skill = b0:WaitForChild('Dragoon'):WaitForChild('Ultimate'),
+            Cooldown = 1,
+            Type = 'Remote'
+        }, {
+            Skill = 'DragoonUltimate',
+            Cooldown = 31,
+            Range = 46
+        }, {
+            Skill = 'UltimateDragon1',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon2',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon3',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon4',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon5',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon6',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon7',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon8',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon9',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon10',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon11',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon12',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon13',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon14',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon15',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon16',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon17',
+            Cooldown = 31,
+            Range = 94
+        }, {
+            Skill = 'UltimateDragon18',
+            Cooldown = 31,
+            Range = 94
+        }}
+    },
+    Archer = {
+        DisplayName = 'Archer',
+        Range = 79,
+        Type = 'Ranged',
+        Primary = 'Bow',
+        Skills = {{
+            Skill = 'Archer',
+            Cooldown = 0.47
+        }, {
+            Skill = 'PiercingArrow1',
+            Cooldown = 5.2,
+            Range = 99
+        }, {
+            Skill = 'PiercingArrow2',
+            Cooldown = 5.2,
+            Range = 99
+        }, {
+            Skill = 'PiercingArrow3',
+            Cooldown = 5.2,
+            Range = 99
+        }, {
+            Skill = 'PiercingArrow4',
+            Cooldown = 5.2,
+            Range = 99
+        }, {
+            Skill = 'PiercingArrow5',
+            Cooldown = 5.2,
+            Range = 99
+        }, {
+            Skill = 'PiercingArrow6',
+            Cooldown = 5.2,
+            Range = 99
+        }, {
+            Skill = 'PiercingArrow7',
+            Cooldown = 5.2,
+            Range = 99
+        }, {
+            Skill = 'PiercingArrow8',
+            Cooldown = 5.2,
+            Range = 99
+        }, {
+            Skill = 'PiercingArrow9',
+            Cooldown = 5.2,
+            Range = 99
+        }, {
+            Skill = 'SpiritBomb',
+            Cooldown = 10.2,
+            Range = 208
+        }, {
+            Skill = 'MortarStrike1',
+            Cooldown = 12.2,
+            Range = 59
+        }, {
+            Skill = 'MortarStrike2',
+            Cooldown = 12.2,
+            Range = 76
+        }, {
+            Skill = 'MortarStrike3',
+            Cooldown = 12.2,
+            Range = 93
+        }, {
+            Skill = 'MortarStrike4',
+            Cooldown = 12.2,
+            Range = 110
+        }, {
+            Skill = 'MortarStrike5',
+            Cooldown = 12.2,
+            Range = 127
+        }, {
+            Skill = 'MortarStrike6',
+            Cooldown = 12.2,
+            Range = 144
+        }, {
+            Skill = 'MortarStrike7',
+            Cooldown = 12.2,
+            Range = 161
+        }, {
+            Skill = 'MortarStrike8',
+            Cooldown = 12.2,
+            Range = 179
+        }, {
+            Skill = 'HeavenlySword1',
+            Cooldown = 31,
+            Range = 143
+        }, {
+            Skill = 'HeavenlySword2',
+            Cooldown = 31,
+            Range = 99
+        }, {
+            Skill = 'HeavenlySword3',
+            Cooldown = 31,
+            Range = 99
+        }, {
+            Skill = 'HeavenlySword4',
+            Cooldown = 31,
+            Range = 99
+        }, {
+            Skill = 'HeavenlySword5',
+            Cooldown = 31,
+            Range = 99
+        }, {
+            Skill = 'HeavenlySword6',
+            Cooldown = 31,
+            Range = 99
+        }}
+    },
+    Summoner = {
+        DisplayName = 'Summoner',
+        Range = 82,
+        Type = 'Ranged',
+        Primary = 'Staff',
+        Skills = {{
+            Skill = 'Summoner1',
+            Cooldown = 0.55
+        }, {
+            Skill = 'Summoner2',
+            Cooldown = 0.75
+        }, {
+            Skill = 'Summoner3',
+            Cooldown = 1.05
+        }, {
+            Skill = 'Summoner4',
+            Cooldown = 1.3
+        }, {
+            Skill = 'SoulHarvest1',
+            Cooldown = 1.1,
+            Type = 'Melee',
+            Range = 16
+        }, {
+            Skill = 'SoulHarvest2',
+            Cooldown = 1.1,
+            Type = 'Melee',
+            Range = 21
+        }, {
+            Skill = 'SoulHarvest3',
+            Cooldown = 1.1,
+            Type = 'Melee',
+            Range = 21
+        }, {
+            Skill = 'SoulHarvest4',
+            Cooldown = 1.1,
+            Type = 'Melee',
+            Range = 21
+        }, {
+            Skill = 'SoulHarvest5',
+            Cooldown = 1.1,
+            Type = 'Melee',
+            Range = 21
+        }, {
+            Skill = b0:WaitForChild('Summoner'):WaitForChild('SoulHarvest'),
+            Cooldown = 10.2,
+            Type = 'Remote',
+            Args = "MobPosition",
+            Range = 39
+        }, {
+            Skill = b0:WaitForChild('Summoner'):WaitForChild('Summon'),
+            Cooldown = 0.5,
+            Type = 'Remote'
+        }, {
+            Skill = b0:WaitForChild('Summoner'):WaitForChild('Ultimate'),
+            Cooldown = 1,
+            Type = 'Remote'
+        }}
+    },
+    Necromancer = {
+        DisplayName = 'Necromancer',
+        Range = 14,
+        Type = 'Melee',
+        Primary = 'Scythe',
+        Skills = {{
+            Skill = 'NecroDPS1',
+            Cooldown = 0.8
+        }, {
+            Skill = 'NecroDPS2',
+            Cooldown = 1.2
+        }, {
+            Skill = 'NecroDPS3',
+            Cooldown = 1.5
+        }, {
+            Skill = 'NecroDPS4',
+            Cooldown = 1.9
+        }, {
+            Skill = 'NecroDPS5',
+            Cooldown = 2.2
+        }, {
+            Skill = 'NecroDPS6',
+            Cooldown = 2.5
+        }, {
+            Skill = 'NecroDPS7',
+            Cooldown = 2.8
+        }, {
+            Skill = 'NecroDPS8',
+            Cooldown = 3.2
+        }, {
+            Skill = 'NecroDPS9',
+            Cooldown = 3.5
+        }, {
+            Skill = 'SpiritExplosion0',
+            Cooldown = 2.25,
+            Range = 17,
+            Type = 'Self'
+        }, {
+            Skill = 'SpiritExplosion1',
+            Cooldown = 2.25,
+            Range = 17,
+            Type = 'Self'
+        }, {
+            Skill = 'SpiritExplosion2',
+            Cooldown = 3,
+            Range = 18,
+            Type = 'Self'
+        }, {
+            Skill = 'SpiritExplosion3',
+            Cooldown = 3.25,
+            Range = 21,
+            Type = 'Self'
+        }, {
+            Skill = 'SpiritExplosion4',
+            Cooldown = 4,
+            Range = 24,
+            Type = 'Self'
+        }, {
+            Skill = 'TombstoneRise1',
+            Cooldown = 4.2,
+            Range = 18
+        }, {
+            Skill = 'TombstoneRise2',
+            Cooldown = 4.2,
+            Range = 18
+        }, {
+            Skill = 'TombstoneRise3',
+            Cooldown = 4.2,
+            Range = 18
+        }, {
+            Skill = 'TombstoneRise4',
+            Cooldown = 4.2,
+            Range = 18
+        }, {
+            Skill = 'TombstoneRise5',
+            Cooldown = 4.2,
+            Range = 18
+        }, {
+            Skill = 'SpiritCavern1',
+            Cooldown = 10.2,
+            Range = 140,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SpiritCavern2',
+            Cooldown = 10.2,
+            Range = 140,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SpiritCavern3',
+            Cooldown = 10.2,
+            Range = 140,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SpiritCavern4',
+            Cooldown = 10.2,
+            Range = 140,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SpiritCavern5',
+            Cooldown = 10.2,
+            Range = 140,
+            Type = 'Ranged'
+        }, {
+            Skill = 'SpiritCavern6',
+            Cooldown = 10.2,
+            Range = 140,
+            Type = 'Ranged'
+        }, {
+            Skill = 'UltScytheDrop',
+            Cooldown = 30,
+            Range = 98,
+            Type = 'Ranged'
+        }, {
+            Skill = b0:WaitForChild('Necromancer'):WaitForChild('Ultimate'),
+            Cooldown = 31,
+            Type = 'Remote'
+        }}
+    },
+    MageOfShadows = {
+        DisplayName = 'Mage Of Shadows',
+        Range = 99,
+        Type = 'Ranged',
+        Primary = 'Staff',
+        Skills = {{
+            Skill = 'MageOfShadows',
+            Cooldown = 0.275
+        }, {
+            Skill = 'MageOfShadowsBlast',
+            Cooldown = 0.3
+        }, {
+            Skill = 'MageOfShadowsCharged',
+            Cooldown = 0.31
+        }, {
+            Skill = 'MageOfShadowsBlastCharged',
+            Cooldown = 0.31
+        }, {
+            Skill = 'BighShadowOrb1',
+            Cooldown = 0.33
+        }, {
+            Skill = 'BighShadowOrb2',
+            Cooldown = 0.33
+        }, {
+            Skill = 'BighShadowOrb3',
+            Cooldown = 0.33
+        }, {
+            Skill = 'MageOfShadowsDamageCircle',
+            Cooldown = 0.33
+        }, {
+            Skill = b0:WaitForChild('MageOfShadows'):WaitForChild('ShadowChains'),
+            Cooldown = 6,
+            Type = 'Remote',
+            Args = 'mobTbl'
+        }, {
+            Skill = b0:WaitForChild('MageOfShadows'):WaitForChild('Ultimate'),
+            Cooldown = 2,
+            Type = 'Remote'
+        }}
+    },
+    Hunter = {
+        DisplayName = 'Hunter',
+        Range = 99,
+        Type = 'Ranged',
+        Primary = 'Bow',
+        Skills = {{
+            Skill = 'Hunter',
+            Cooldown = 0.5
+        }}
+    }
+}
+local c8 = Instance.new('Folder')
+c8.Name = 'SummonFolder'
+c8.Parent = Workspace;
+local c9 = Instance.new('Folder')
+c9.Name = 'infiniteboy'
+c9.Parent = Workspace;
+local ca;
+if av then
+    ca = Instance.new('Part')
+    ca.Name = 'InfiniteKillPart'
+    ca.Size = Vector3.new(50, 20, 50)
+    ca.Position = Vector3.new(10000, 10000, 10000)
+    ca.Anchored = true;
+    ca.Transparency = 0;
+    ca.Material = 'SmoothPlastic'
+    ca.BrickColor = BrickColor.new('Cyan')
+    ca.Parent = workspace
+end
+local cb = 'https://raw.githubusercontent.com/infinitekill/General/main/'
+local cc;
+local cd;
+if a6 then
+    local function ce(cf, cg)
+        local ch, ci = pcall(function()
+            return readfile(cg)
+        end)
+        if ch and not UpdateLib then
+            return loadstring(ci)()
+        else
+            ci = game:HttpGet(cf)
+            writefile(cg, ci)
+            return loadstring(ci)()
+        end
+    end
+    bi = ce(cb .. 'Linoria', 'LinoriaV6.lua')
+    cc = ce(cb .. 'LinoriaThemeManager', 'LinoriaThemeManagerV5.lua')
+    cd = ce(cb .. 'LinoriaSaveManager', 'LinoriaSaveManagerV5.lua')
+else
+    bi = loadstring(game:HttpGet(cb .. 'Linoria'))()
+    cc = loadstring(game:HttpGet(cb .. 'LinoriaThemeManager'))()
+    cd = loadstring(game:HttpGet(cb .. 'LinoriaSaveManager'))()
+end
+a = true;
+local function cj(msg)
+    warn('[Infinite]: ' .. msg)
+end
+local function ck(cl)
+    local bt, cm = pcall(cl)
+    if not bt and cm then
+        cj(cm)
+    end
+end
+local function cn(msg)
+    print(msg)
+    ck(function()
+        bi:Notify(msg)
+    end)
+end
+local function co(cp, cq)
+    local H = c.PlayerGui.MissionObjective.MissionObjective.Label;
+    H.Text = cp;
+    H.Overlay.Text = cp;
+    if cq then
+        H.ZIndex = 30;
+        H.Overlay.ZIndex = 31
+    end
+end
+local function cr()
+    local H = c.PlayerGui.MissionObjective.MissionObjective.Label;
+    H.Text = ''
+    H.Overlay.Text = ''
+end
+local function cs()
+    return c7[aX] and c7[aX].Type == 'Ranged'
+end
+local ct = game:GetService('GuiService')
+local cu;
+cu = ct.ErrorMessageChanged:Connect(function(msg)
+    if ct:GetErrorCode() == Enum.ConnectionError.DisconnectLuaKick or ct:GetErrorCode() ==
+        Enum.ConnectionError.DisconnectConnectionLost or msg:lower():find("exploit") then
+        cu:Disconnect()
+        ac.Kicked = true;
+        save()
+        if msg:lower():find("exploit") then
+            local cv = 'Killaura Delay: ``' .. Options.KillauraDelay.Value .. '``\nClass: ``' .. c7[aX].DisplayName ..
+                           '``\nPing: ``' .. ping2() .. '``'
+            if aq then
+                cv = cv .. '\nCode: ``' .. codeStr .. '``\nMission: ``' .. missionName .. '``'
+            end
+            cv = cv .. '\n' .. plrLink;
+            request({
+                Url = boink2,
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = e:JSONEncode({
+                    ["embeds"] = {{
+                        ["title"] = 'Exploit Kick',
+                        ["description"] = cv,
+                        ["type"] = 'rich',
+                        ["color"] = tonumber(m.LightPink),
+                        ["footer"] = {
+                            ["text"] = f() .. ' UTC'
+                        }
+                    }}
+                })
+            })
+        end
+        V:Teleport(aa, c)
+    end
+end)
+local cw = bi:CreateWindow({
+    Title = bausha,
+    Center = false,
+    AutoShow = true,
+    TabPadding = 8,
+    MenuFadeTime = 0
+})
+local cx = {
+    Main = cw:AddTab('Main'),
+    Teleports = cw:AddTab('Teleports'),
+    ['Settings'] = cw:AddTab('Settings')
+}
+local cy = cx.Main:AddLeftTabbox('farmmm')
+local cz = cy:AddTab('Farm')
+local cA = cy:AddTab('Settings')
+local cB = cy:AddTab('Sell')
+local cC = cy:AddTab('Weapons')
+local cD = cx.Main:AddRightTabbox('box')
+local cE = cD:AddTab('Visual')
+local cF = cD:AddTab('Webhook')
+local cG = cD:AddTab('Misc')
+local cH = cD:AddTab('Gui')
+local cI = cx.Main:AddRightTabbox('temp')
+local cJ = cI:AddTab('Stats')
+local cK = cx.Teleports:AddLeftGroupbox('Worlds')
+local cL = cx.Teleports:AddRightGroupbox('Towers')
+local cM = cx.Teleports:AddRightGroupbox('Nightmare Dungeons')
+do
+    cz:AddToggle('Killaura', {
+        Text = 'Killaura',
+        Default = false
+    })
+    cz:AddSlider('KillauraDelay', {
+        Text = 'Delay',
+        Default = 0,
+        Min = 0,
+        Max = 1,
+        Rounding = 2,
+        HideMax = true,
+        Compact = true
+    })
+    cz:AddToggle('Autofarm', {
+        Text = 'Autofarm',
+        Default = false
+    })
+    cz:AddSlider('Offset', {
+        Text = 'Offset',
+        Default = cs() and 50 or 6,
+        Min = 0,
+        Max = aq and (cs() and 75 or 25) or 75,
+        Rounding = 1,
+        Compact = true
+    })
+    cz:AddSlider('healPercent', {
+        Text = 'Heal At',
+        Default = 30,
+        Min = 0,
+        Max = 100,
+        Rounding = 0,
+        HideMax = true,
+        Compact = true,
+        Suffix = '% HP'
+    })
+    cz:AddSlider('resumePercent', {
+        Text = 'Resume At',
+        Default = 100,
+        Min = 0,
+        Max = 100,
+        Rounding = 0,
+        HideMax = true,
+        Compact = true,
+        Suffix = '% HP'
+    })
+    cz:AddToggle('CollectDrops', {
+        Text = 'Collect Drops',
+        Default = false
+    })
+    cz:AddToggle('RestartDungeon', {
+        Text = 'Restart Dungeon',
+        Default = false
+    })
+    cz:AddToggle('nightmareLoop', {
+        Text = 'Nightmare Loop',
+        Default = false
+    })
+    cz:AddToggle('NextDungeon', {
+        Text = 'Next Dungeon',
+        Default = false
+    })
+    cz:AddToggle('PerkSwitcher', {
+        Text = 'Auto Switch Perks',
+        Default = false,
+        Tooltip = 'Enables Primary Perks on Mobs, and Offhand Perks on Bosses'
+    })
+    cz:AddToggle('autoEquipBestwWep', {
+        Text = 'Auto Equip Best Weapon/Armor',
+        Default = false
+    })
+    cz:AddToggle('mobCamera', {
+        Text = 'Mob POV',
+        Default = false
+    })
+    cz:AddSlider('FastSprint', {
+        Text = 'Sprint Speed',
+        Default = 28,
+        Min = 28,
+        Max = 200,
+        Rounding = 0,
+        Compact = true
+    })
+    cz:AddButton({
+        Text = 'Restart Dungeon',
+        Func = function()
+            if aq then
+                StartRaid(am, an)
+            end
+        end,
+        DoubleClick = false
+    })
+    cA:AddSlider('dungeonRestartTimer', {
+        Text = 'Restart Dungeon Delay',
+        Default = 0,
+        Min = 0,
+        Max = 300,
+        Rounding = 0,
+        HideMax = true,
+        Suffix = ' seconds',
+        Compact = true
+    })
+    cA:AddSlider('towerRestartTimer', {
+        Text = 'Restart Tower Delay',
+        Default = 0,
+        Min = 0,
+        Max = 30,
+        Rounding = 0,
+        HideMax = true,
+        Suffix = ' seconds',
+        Compact = true
+    })
+    cA:AddSlider('dungeonStartTimer', {
+        Text = 'Dungeon Start Delay',
+        Default = 0,
+        Min = 0,
+        Max = 300,
+        Rounding = 0,
+        HideMax = true,
+        Suffix = ' seconds',
+        Compact = true
+    })
+    cA:AddSlider('towerStartTimer', {
+        Text = 'Tower Start Delay',
+        Default = 0,
+        Min = 0,
+        Max = 600,
+        Rounding = 0,
+        HideMax = true,
+        Suffix = ' seconds',
+        Compact = true
+    })
+    Options.dungeonStartTimer:OnChanged(function(cN)
+        bf = bf + 1
+    end)
+    Options.towerStartTimer:OnChanged(function(cN)
+        bg = bg + 1
+    end)
+    cA:AddSlider('timeoutTimer', {
+        Text = 'Dungeon Timeout',
+        Default = 120,
+        Min = 10,
+        Max = 300,
+        Rounding = 0,
+        HideMax = true,
+        Suffix = ' seconds',
+        Tooltip = 'Restart dungeon if no damage has been done within the specified time period',
+        Compact = true
+    })
+    cA:AddToggle('restartAfterFloors', {
+        Text = 'Inf Tower Smart Restart',
+        Tooltip = 'Restarts Infinite Floor after specified amount of floors are completed',
+        Default = false
+    })
+    cA:AddInput('completedInfiniteTowerFloors', {
+        Text = 'Floors',
+        Default = 31,
+        Numeric = true,
+        Finished = true
+    })
+    cA:AddToggle('ignoreCannon', {
+        Text = 'Ignore Cannon (Atlantis Tower)',
+        Default = false
+    })
+    cA:AddToggle('skipScarecrowNm', {
+        Text = 'Skip Scarecrow Defense (NM Loop)',
+        Default = false
+    })
+    cA:AddToggle('rejoinDungeon', {
+        Text = 'Rejoin Last Dungeon',
+        Tooltip = 'Automatically starts the last dungeon started within your desired time limit',
+        Default = false
+    })
+    Toggles.rejoinDungeon:OnChanged(function(cO)
+        ac.RejoinLastDungeon = cO;
+        save()
+    end)
+    local cP = {
+        ['30 minutes'] = 1800,
+        ['3 hours'] = 10800,
+        ['12 hours'] = 43200,
+        ['24 hours'] = 86400,
+        ['Infinite'] = 999999999
+    }
+    cA:AddDropdown('rjdLimit', {
+        Text = 'Rejoin Last Dungeon Limit',
+        Values = {'30 minutes', '3 hours', '12 hours', '24 hours', 'Infinite'},
+        Default = '30 minutes',
+        AllowNull = false,
+        Multi = false
+    })
+    Options.rjdLimit:OnChanged(function(cO)
+        ac.RejoinLastDungeonThreshold = cP[cO]
+        save()
+    end)
+    cA:AddToggle('forceRestartLastTower', {
+        Text = 'Force Restart Last Tower',
+        Tooltip = 'Restart the Tower when going back to town (willingly or by force)',
+        Default = false
+    })
+    Toggles.forceRestartLastTower:OnChanged(function(cO)
+        ac.ForceRestartLastTower = cO;
+        save()
+    end)
+    cA:AddSlider('playerCountKick', {
+        Text = 'Mission PlayerCount Kick',
+        Default = 6,
+        Min = 2,
+        Max = 6,
+        Rounding = 0,
+        HideMax = true,
+        Tooltip = 'Disconnect from the game if player count reaches the threshold in mission',
+        Compact = true
+    })
+    task.spawn(function()
+        while aq do
+            if #b:GetPlayers() >= Options.playerCountKick.Value then
+                task.wait(0.5)
+                c:Kick('Someone might have joined your mission!')
+                break
+            end
+            task.wait()
+        end
+    end)
+    cC:AddInput('mobWepId', {
+        Numeric = false,
+        Finished = true,
+        Text = 'Current Mob Weapon'
+    })
+    cC:AddInput('bossWepId', {
+        Numeric = false,
+        Finished = true,
+        Text = 'Current Boss Weapon'
+    })
+    cC:AddButton({
+        Text = 'Set Current Primary for Mobs',
+        Tooltip = 'Killaura will auto equip this weapon when targeting mobs',
+        Func = function()
+            local cQ = aR and aR:GetChildren()[1]
+            local cR = cQ and cQ.ID.Value;
+            if cR then
+                Options.mobWepId:SetValue(cR)
+                cn('Set ' .. bI[cQ.Name].DisplayKey .. ' as your Mob weapon!')
+            else
+                cn('No suitable Primary Weapon Detected')
+            end
+        end,
+        DoubleClick = false
+    })
+    cC:AddButton({
+        Text = 'Set Current Primary for Bosses',
+        Tooltip = 'Killaura will auto equip this weapon when targeting bosses',
+        Func = function()
+            local cQ = aR and aR:GetChildren()[1]
+            local cR = cQ and cQ.ID.Value;
+            if cR then
+                Options.bossWepId:SetValue(cR)
+                cn('Set ' .. bI[cQ.Name].DisplayKey .. ' as your Boss weapon!')
+            else
+                cn('No suitable Primary Weapon Detected')
+            end
+        end,
+        DoubleClick = false
+    })
+    cC:AddButton({
+        Text = 'Reset Selected Weapons',
+        Func = function()
+            Options.mobWepId:SetValue('')
+            Options.bossWepId:SetValue('')
+            cn('Selected weapons reset!')
+        end,
+        DoubleClick = false
+    })
+    cF:AddInput('dungeonHook', {
+        Numeric = false,
+        Finished = true,
+        Text = 'Mission Webhook',
+        Tooltip = 'Put your own webhook link to log mission completions/fails'
+    })
+    cF:AddInput('drophook', {
+        Numeric = false,
+        Finished = true,
+        Text = 'Drop Webhook',
+        Tooltip = 'Put your own webhook link to log T5 drops'
+    })
+    cF:AddInput('dropHookRoleId', {
+        Numeric = false,
+        Finished = true,
+        Text = 'Custom Role ID for DropHook',
+        Tooltip = 'Mention your chosen role instead of @everyone when getting a desired perk T5'
+    })
+    cF:AddToggle('anonHook', {
+        Text = 'Anonymous Webhook',
+        Tooltip = "Won't show your User Info in the webhook",
+        Default = false
+    })
+end
+do
+    cB:AddDropdown('AutoSellTbl', {
+        Text = 'Auto Sell Tiers',
+        Values = {1, 2, 3, 4, 5},
+        AllowNull = true,
+        Multi = true
+    })
+    cB:AddButton({
+        Text = 'Sell All',
+        Tooltip = 'Sells all weapons and armors of selected tiers',
+        Func = function()
+            local cS = {}
+            for B, C in pairs(bC:GetChildren()) do
+                local cT = bI[C.Name]
+                if (cT.Type == 'Weapon' or cT.Type == 'Armor') and Options.AutoSellTbl.Value[bW:GetItemTier(C)] and
+                    not C:FindFirstChild('Locked') then
+                    table.insert(cS, C)
+                end
+            end
+            if #cS > 0 then
+                cn('Sold ' .. #cS .. ' items')
+                U.Drops.SellItems:InvokeServer(cS)
+            end
+        end,
+        DoubleClick = true
+    })
+    cB:AddToggle('autoSellAll', {
+        Text = 'Auto Sell All',
+        Tooltip = "Failsafe incase auto sell doesn't sell in time at the end of a mission",
+        Default = false
+    })
+    Toggles.autoSellAll:OnChanged(function(cN)
+        if cN then
+            local cS = {}
+            for B, C in pairs(bC:GetChildren()) do
+                local cT = bI[C.Name]
+                if (cT.Type == 'Weapon' or cT.Type == 'Armor') and Options.AutoSellTbl.Value[bW:GetItemTier(C)] and
+                    not C:FindFirstChild('Locked') then
+                    table.insert(cS, C)
+                end
+            end
+            if #cS > 0 then
+                cn('Sold ' .. #cS .. ' items')
+                U.Drops.SellItems:InvokeServer(cS)
+            end
+        end
+    end)
+    cB:AddToggle('autoSellEggs', {
+        Text = 'Auto Sell Eggs',
+        Default = false
+    })
+    local cU = {
+        ['Giga Slime Head'] = 'GigaSlimeHead',
+        ['Night Terror Hood'] = 'NightTerrorHood',
+        ['Flame Demon Hood'] = 'FlameDemonHood',
+        ['Mezuvian Helmet'] = 'SpartanHelmet',
+        ['Angel Hood'] = 'AngelHood',
+        ['Angel Halo'] = 'AngelHalo',
+        ['Angelic Wings'] = 'AngelicWings',
+        ["Taurha's Staff"] = 'TaurhaStaff',
+        ['Aether Crown'] = 'AetherCrown',
+        ['Aether Helmet'] = 'W9T5Helmet'
+    }
+    local cV = {}
+    for B, C in cU do
+        table.insert(cV, B)
+    end
+    table.sort(cV)
+    cB:AddDropdown('autoSellCosmetics', {
+        Text = 'Auto Sell Cosmetics',
+        Values = cV,
+        AllowNull = true,
+        Multi = true
+    })
+    cB:AddButton({
+        Text = 'Sell All Cosmetics',
+        Tooltip = 'Sells all selected Cosmetics',
+        Func = function()
+            local cS = {}
+            for B, C in pairs(bD:GetChildren()) do
+                local cT = bI[C.Name]
+                if Options.autoSellCosmetics.Value[cT.DisplayKey] and not C:FindFirstChild('Locked') then
+                    table.insert(cS, C)
+                end
+            end
+            if #cS > 0 then
+                cn('Sold ' .. #cS .. ' Cosmetics')
+                U.Drops.SellItems:InvokeServer(cS)
+            end
+        end,
+        DoubleClick = true
+    })
+    cB:AddDivider()
+    cB:AddToggle('smartPerkSell', {
+        Text = 'Smart T5 Auto Sell',
+        Default = false,
+        Tooltip = 'Do NOT enable this until you have turned all of your desired perks slider atleast 1 higher than lowest value'
+    })
+    local cW = {}
+    for B, C in pairs(bH) do
+        table.insert(cW, C.DisplayName)
+    end
+    table.sort(cW)
+    for B = 1, #cW do
+        for cX, cY in pairs(bH) do
+            if cW[B] == cY.DisplayName then
+                cB:AddSlider(cX, {
+                    Text = cY.DisplayName,
+                    Default = math.round(cY.StatRange[1] * 100),
+                    Min = math.round(cY.StatRange[1] * 100),
+                    Max = math.round(cY.StatRange[2] * 100),
+                    Rounding = 0,
+                    HideMax = true,
+                    Compact = true,
+                    Suffix = '%'
+                })
+            end
+        end
+    end
+end
+do
+    function PlayerTp(o, cZ, c_, d0)
+        if alive() then
+            aE.CFrame = CFrame.new(o + Vector3.new(cZ, c_, d0))
+        end
+    end
+    function SmartPlayerTp(bo, d1)
+        if not alive() then
+            return
+        end
+        noclip()
+        aE.Velocity = Vector3.new()
+        if aD:FindFirstChild("Collider") then
+            aD.Collider.Velocity = Vector3.new()
+        end
+        if d1 then
+            aE.CFrame = CFrame.lookAt(bo.Position, Vector3.new(d1.Position.x, bo.Position.y, d1.Position.z))
+        else
+            aE.CFrame = bo
+        end
+    end
+    cE:AddToggle('NVD', {
+        Text = 'No Visual Damage',
+        Default = true
+    })
+    cE:AddToggle('rendering', {
+        Text = 'Disable 3D Rendering',
+        Default = false
+    })
+    Toggles.rendering:OnChanged(function(cO)
+        cloneref(game:GetService("RunService")):Set3dRenderingEnabled(not cO)
+    end)
+    cE:AddToggle('autoHide', {
+        Text = 'Hide GUI On Execution',
+        Default = false
+    })
+    cG:AddButton({
+        Text = 'Upgrade Equipped Items',
+        Func = function()
+            local d2 = {aR:GetChildren()[1], aS:GetChildren()[1], aT:GetChildren()[1]}
+            for d3, d4 in d2 do
+                task.spawn(function()
+                    if d4 and d4:FindFirstChild('UpgradeLimit') and d4.UpgradeLimit.Value ~= 0 then
+                        local d5 = aN.Value;
+                        local d6 = tick()
+                        while task.wait(0.1) do
+                            if d4:FindFirstChild('Upgrade') and d4.Upgrade.Value == d4.UpgradeLimit.Value then
+                                break
+                            else
+                                aU:FireServer(d4)
+                                if aN.Value ~= d5 then
+                                    d5 = aN.Value;
+                                    d6 = tick()
+                                end
+                                if tick() - d6 >= 2 then
+                                    break
+                                end
+                            end
+                        end
+                    end
+                end)
+            end
+        end,
+        DoubleClick = true
+    })
+    cG:AddButton({
+        Text = 'Discover Dungeons (BLATANT)',
+        Func = function()
+            if alive() and not aq then
+                local d7 = Workspace.PhysicalDungeonLocations;
+                for B, C in pairs(d7:GetChildren()) do
+                    U.Teleport.WaystoneTeleport:FireServer(1)
+                    aE:GetPropertyChangedSignal("Position"):Once(function()
+                        PlayerTp(C.Ring.Position, 0, 10, 0)
+                    end)
+                    wait(1)
+                end
+            end
+        end,
+        DoubleClick = true
+    })
+    local d8 = false;
+    local d9 = true;
+    if olympus then
+        cG:AddButton({
+            Text = 'Dex Explorer',
+            Func = function()
+                if not d8 then
+                    d8 = true;
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua"))()
+                end
+            end,
+            DoubleClick = true
+        })
+    end
+end
+do
+    local da = 5;
+    local db = {
+        Bank = {
+            DisplayName = 'Bank',
+            CodeName = 'Bank',
+            OrderId = 1
+        },
+        ZeroAltar = {
+            DisplayName = 'Zero Altar',
+            CodeName = 'Fusion',
+            OrderId = 2
+        },
+        UpgradeMenu = {
+            DisplayName = 'Upgrade',
+            CodeName = 'ItemUpgrade',
+            OrderId = 3
+        },
+        DungeonMenu = {
+            DisplayName = 'Dungeon Menu',
+            CodeName = 'MissionSelect',
+            OrderId = 4
+        },
+        Inventory = {
+            DisplayName = 'Inventory',
+            CodeName = 'Inventory',
+            OrderId = 5
+        },
+        AdminItemPanel = {
+            DisplayName = 'Admin Item Panel',
+            CodeName = 'AdminItemPanel',
+            OrderId = 5
+        }
+    }
+    local function dc(o)
+        setthreadcontext(2)
+        require(T.Client.Gui):Get(o):Open()
+    end
+    for B = 1, da do
+        for dd, de in pairs(db) do
+            if de.OrderId == B then
+                cH:AddButton({
+                    Text = de.DisplayName,
+                    Func = function()
+                        dc(de.CodeName)
+                    end,
+                    DoubleClick = false
+                })
+            end
+        end
+    end
+    cH:AddInput('marketFilter', {
+        Numeric = false,
+        Finished = true,
+        Text = 'Market Filter'
+    })
+    cH:AddButton({
+        Text = 'Open All Markets',
+        Func = function()
+            task.spawn(function()
+                setthreadcontext(2)
+                local df = require(game.ReplicatedStorage.Client.Gui):Get("Shop")
+                local dg = getfenv(df.Open).BuildShop;
+                pcall(df.Open, df, game)
+                for B, C in pairs(getupvalue(dg, 1)) do
+                    C:Destroy()
+                end
+                for B, C in pairs(getupvalue(dg, 2)) do
+                    C:Disconnect()
+                end
+                local dh = {}
+                local di = {}
+                local dj = T:WaitForChild("PlayerShops")
+                for B, dk in pairs(b:GetPlayers()) do
+                    local dl = dj:FindFirstChild(dk.Name) and dj[dk.Name]:FindFirstChild("SellShop")
+                    if dl and dl:FindFirstChild("Active") and dl.Active.Value then
+                        setupvalue(dg, 1, {})
+                        setupvalue(dg, 2, {})
+                        dg(dk)
+                        for B, C in pairs(getupvalue(dg, 1)) do
+                            C.Title.Text = C.Title.Text .. " (" .. dk.Name .. ")"
+                            C.Title.Overlay.Text = C.Title.Text;
+                            table.insert(dh, C)
+                        end
+                        for B, C in pairs(getupvalue(dg, 2)) do
+                            table.insert(di, C)
+                        end
+                    end
+                end
+                if Options.marketFilter.Value and #Options.marketFilter.Value > 0 then
+                    for B, C in pairs(dh) do
+                        if not C.Title.Text:lower():find(Options.marketFilter.Value:lower()) then
+                            C:Destroy()
+                        end
+                    end
+                end
+                table.sort(dh, function(dm, dn)
+                    local dp =
+                        dm:FindFirstChild('Cost') and dm.Cost:FindFirstChild('Overlay') and #dm.Cost.Overlay.Text > 0 and
+                            dm.Cost.Overlay.Text:gsub(",", "") and tonumber(dm.Cost.Overlay.Text:gsub(",", "")) or 0;
+                    local dq =
+                        dn:FindFirstChild('Cost') and dn.Cost:FindFirstChild('Overlay') and #dn.Cost.Overlay.Text > 0 and
+                            dn.Cost.Overlay.Text:gsub(",", "") and tonumber(dn.Cost.Overlay.Text:gsub(",", "")) or 0;
+                    return dp > dq
+                end)
+                setupvalue(dg, 1, dh)
+                setupvalue(dg, 2, di)
+                getupvalue(df.Init, 1).Title.Text = "All Shops"
+                getupvalue(df.Init, 1).Title.Overlay.Text = "All Shops"
+            end)
+        end,
+        DoubleClick = false
+    })
+end
+do
+    local dr = cJ:AddLabel('Gold Gain: ' .. aN.Value - aO)
+    local ds = cJ:AddLabel('Gold Rate: N/A')
+    local dt = true;
+    getgenv().sessionTick = tick()
+    local du;
+    local dv;
+    local dw = false;
+    local dx = cJ:AddLabel('Total Gold: ' .. formatNumberWithCommas(aN.Value))
+    local dy = cJ:AddLabel('Session Time: 0s')
+    cJ:AddDivider()
+    local dz = ac.CrossSessionTimestamp or tick()
+    local dA = cJ:AddLabel('Cross-Session Time: ' .. timeElapsed(tick() - dz))
+    local dB = cJ:AddLabel('CS Gold Gain: ' ..
+                               formatNumberWithCommas(ac.CrossSessionGold and aP - ac.CrossSessionGold or 0))
+    local dC = ac.CrossSessionGold or aP;
+    cJ:AddButton({
+        Text = 'Reset Cross-Session Time',
+        Func = function()
+            dz = tick()
+            ac.CrossSessionTimestamp = dz;
+            save()
+        end,
+        DoubleClick = true
+    })
+    cJ:AddButton({
+        Text = 'Reset Cross-Session Gold',
+        Func = function()
+            dC = aP;
+            ac.CrossSessionGold = dC;
+            save()
+            dB:SetText('CS Gold Gain: 0')
+        end,
+        DoubleClick = true
+    })
+    local dD;
+    if not ac.CrossSessionTimestamp then
+        ac.CrossSessionTimestamp = dz;
+        dD = true
+    end
+    if not ac.CrossSessionGold then
+        ac.CrossSessionGold = dC;
+        dD = true
+    end
+    if dD then
+        save()
+    end
+    task.spawn(function()
+        while true do
+            if aN.Value ~= aP then
+                aP = aN.Value;
+                if not dt then
+                    ds:SetText('Gold Rate: ' .. math.floor((aP - dv) / (tick() - du) * 600) / 10 .. '/min')
+                end
+                if dt then
+                    dt = false;
+                    dw = true;
+                    du = tick()
+                    dv = aP
+                end
+                dr:SetText('Gold Gained: ' .. formatNumberWithCommas(aP - aO))
+                dx:SetText('Total Gold: ' .. formatNumberWithCommas(aP))
+                dB:SetText('CS Gold Gain: ' .. formatNumberWithCommas(aP - dC))
+            end
+            task.wait()
+        end
+    end)
+    task.spawn(function()
+        while true do
+            task.wait(1)
+            dy:SetText('Session Time: ' .. timeElapsed(tick() - sessionTick))
+            dA:SetText('Cross-Session Time: ' .. timeElapsed(tick() - dz))
+        end
+    end)
+end
+do
+    for B = 1, c3 do
+        for dd, dE in pairs(c4) do
+            if dE.OrderId == B then
+                cK:AddButton({
+                    Text = dE.Name,
+                    Func = function()
+                        U.Teleport.TeleportToHub:FireServer(dE.Id)
+                    end,
+                    DoubleClick = false
+                })
+            end
+        end
+    end
+end
+do
+    for B, C in pairs(ao) do
+        local dF = bE[C]
+        cL:AddButton({
+            Text = dF.NameTag .. ' T' .. B,
+            Func = function()
+                StartRaid(C)
+            end,
+            DoubleClick = false
+        })
+    end
+end
+do
+    local dG;
+    for B, C in pairs(ap) do
+        local dF = bE[C]
+        local dH = string.gsub(dF.NameTag, '%(NIGHTMARE%) ', '')
+        cM:AddButton({
+            Text = dH .. ' ' .. dF.DisplayWorldID .. '-' .. dF.WorldMissionID,
+            Func = function()
+                StartRaid(C, dG)
+            end,
+            DoubleClick = false
+        })
+    end
+    cM:AddToggle('ChallengeMode', {
+        Text = 'Challenge Mode',
+        Default = true
+    })
+    Toggles.ChallengeMode:OnChanged(function(cO)
+        if cO then
+            dG = 5
+        else
+            dG = 1
+        end
+    end)
+end
+local dI = Vector3.new(2000, 2000, 2000)
+local dJ = Vector3.new()
+local dK;
+local dL;
+do
+    function MobTeleport()
+        task.spawn(function()
+            local dM;
+            local dN;
+            local dO;
+            while Toggles.Autofarm.Value and not b5 do
+                for B, C in pairs(b7:GetChildren()) do
+                    if isAlive(C) then
+                        if mobWaitTbl and table.find(mobWaitTbl, C.Name) and (not dO or alwaysWait) then
+                            task.wait(waittime)
+                            dO = true
+                        end
+                        local Z = C.PrimaryPart;
+                        if not dN then
+                            dN = true
+                        end
+                        while isAlive(C) and Toggles.Autofarm.Value and W and not b5 do
+                            bS = C;
+                            dM = Z.Position;
+                            if bQ then
+                                resetCamera()
+                            else
+                                setMobCamera(Toggles.mobCamera.Value, Z)
+                            end
+                            dK = (Z.Size.Y / 2 + Options.Offset.Value) * (cs() and 1 or -1)
+                            dL = CFrame.new(Z.Position +
+                                                (table.find(aC, C) and dJ or Vector3.new(0, dK, 0) + (bQ and dI or dJ))) +
+                                     Z.CFrame.lookVector * 2;
+                            SmartPlayerTp(dL, Z)
+                            bU:Wait()
+                        end
+                    end
+                end
+                bS = nil;
+                resetCamera()
+                unnoclip()
+                if au and W and dN then
+                    SmartPlayerTp(CFrame.new(10000, 10000, 10000))
+                end
+                task.wait()
+            end
+            if dM and au then
+                SmartPlayerTp(CFrame.new(dM + Vector3.new(0, 10, 0)))
+            end
+        end)
+    end
+    function MobTeleportIgnore(dP, mobWaitTbl, waittime, alwaysWait)
+        local dO;
+        task.spawn(function()
+            while Toggles.Autofarm.Value do
+                for B, C in pairs(b7:GetChildren()) do
+                    if isAlive(C) then
+                        if C.Name ~= dP or C.Name == dP and b1 == 1 then
+                            if mobWaitTbl and table.find(mobWaitTbl, C.Name) and (not dO or alwaysWait) then
+                                task.wait(waittime)
+                                dO = true
+                            end
+                            local Z = C.PrimaryPart;
+                            while isAlive(C) and Toggles.Autofarm.Value and W and
+                                (C.Name ~= dP or C.Name == dP and b1 == 1) do
+                                bS = C;
+                                if bQ then
+                                    resetCamera()
+                                else
+                                    setMobCamera(Toggles.mobCamera.Value, Z)
+                                end
+                                dK = (Z.Size.Y / 2 + Options.Offset.Value) * (cs() and 1 or -1)
+                                dL = CFrame.new(Z.Position +
+                                                    (table.find(aC, C) and dJ or Vector3.new(0, dK, 0) +
+                                                        (bQ and dI or dJ))) + Z.CFrame.lookVector * 2;
+                                SmartPlayerTp(dL, Z)
+                                bU:Wait()
+                            end
+                        end
+                    end
+                end
+                bS = nil;
+                resetCamera()
+                unnoclip()
+                task.wait()
+            end
+        end)
+    end
+    function MobTeleportPriority(dQ, mobWaitTbl, waittime, alwaysWait)
+        local dR, dS;
+        task.spawn(function()
+            while Toggles.Autofarm.Value do
+                local dT = false;
+                local dU = {}
+                for B, C in b7:GetChildren() do
+                    if isAlive(C) then
+                        table.insert(dU, C)
+                    end
+                end
+                for B = 1, #dQ do
+                    for d3, Mob in dU do
+                        if Mob.Name == dQ[B] then
+                            dT = true;
+                            dR, dS = Mob, Mob.Name;
+                            break
+                        end
+                    end
+                    if dT then
+                        break
+                    end
+                end
+                if not dT and dU[1] then
+                    dR, dS = dU[1], dU[1].Name
+                end
+                task.wait()
+            end
+        end)
+        task.spawn(function()
+            local dO;
+            while Toggles.Autofarm.Value do
+                if isAlive(dR) and W then
+                    local dV = dR.PrimaryPart;
+                    bS = dR;
+                    if mobWaitTbl and table.find(mobWaitTbl, dS) and (not dO or alwaysWait) then
+                        task.wait(waittime)
+                        dO = true
+                    end
+                    if bQ then
+                        resetCamera()
+                    else
+                        setMobCamera(Toggles.mobCamera.Value, dV)
+                    end
+                    dK = (dV.Size.Y / 2 + Options.Offset.Value) * (cs() and 1 or -1)
+                    dL = CFrame.new(dV.Position +
+                                        (table.find(aC, dR) and dJ or Vector3.new(0, dK, 0) + (bQ and dI or dJ))) +
+                             dV.CFrame.lookVector * 2;
+                    SmartPlayerTp(dL, dV)
+                else
+                    bS = nil;
+                    resetCamera()
+                    unnoclip()
+                end
+                bU:Wait()
+            end
+        end)
+    end
+    function AutoCheckpoint()
+        task.spawn(function()
+            while Toggles.Autofarm.Value do
+                if alive() then
+                    for B, C in pairs(workspace:GetDescendants()) do
+                        if C and C.Name == "TouchInterest" and C.Parent and
+                            (table.find(c0, C.Parent.Name) or C.Parent.Parent and table.find(c0, C.Parent.Parent.Name)) then
+                            task.spawn(function()
+                                C.Parent.CanCollide = false;
+                                C.Parent.Anchored = true;
+                                C.Parent.Transparency = 1;
+                                C.Parent.CFrame = CFrame.new(aE.Position)
+                                task.wait(0.25)
+                                if C and C.Parent then
+                                    C.Parent.CFrame = CFrame.new(Vector3.new(0, 0, 0))
+                                end
+                            end)
+                        end
+                    end
+                end
+                task.wait(0.5)
+                if ax then
+                    break
+                end
+            end
+        end)
+    end
+    function MobCounter()
+        task.spawn(function()
+            while Toggles.Autofarm.Value do
+                b2 = 0;
+                for B, C in pairs(b7:GetChildren()) do
+                    if isAlive(C) then
+                        b2 = b2 + 1
+                    end
+                end
+                if b1 ~= b2 then
+                    b1 = b2
+                end
+                task.wait()
+            end
+        end)
+    end
+    function AntiFling()
+        if Toggles.Autofarm.Value then
+            task.spawn(function()
+                bP = nil;
+                while Toggles.Autofarm.Value and not b5 do
+                    if bS and bS.PrimaryPart and bS.PrimaryPart.Position then
+                        bP = ax and CFrame.new(Vector3.new(324, 60, -134)) or
+                                 CFrame.new(bS.PrimaryPart.Position + Vector3.new(0, 5, 0))
+                    end
+                    if bP and b1 == 0 then
+                        local dW = tick()
+                        while tick() - dW <= 0.1 and b1 == 0 do
+                            SmartPlayerTp(bP)
+                            bU:Wait()
+                        end
+                        bP = nil
+                    end
+                    task.wait()
+                end
+                if not Toggles.Autofarm.Value and not b5 then
+                    if bP then
+                        local dW = tick()
+                        while tick() - dW <= 0.1 do
+                            SmartPlayerTp(bP)
+                            bU:Wait()
+                        end
+                        bP = nil
+                    end
+                end
+            end)
+        end
+    end
+    function sell(o)
+        if Toggles.Autofarm.Value then
+            U.Drops.SellItems:InvokeServer({o})
+        end
+    end
+end
+if notadding then
+    local function dX(o, p)
+        if aD then
+            aG:SetAttribute(o, p)
+        end
+    end
+    local function dY(cZ, c_, d0)
+        Color3.fromRGB(cZ, c_, d0)
+    end
+    local dZ = {
+        Red = Color3.fromRGB(255, 0, 0),
+        Black = Color3.fromRGB(0, 0, 0),
+        White = Color3.fromRGB(255, 255, 255),
+        Green = Color3.fromRGB(0, 255, 0),
+        Pink = Color3.fromRGB(255, 0, 255),
+        Cyan = Color3.fromRGB(0, 255, 255),
+        Purple = Color3.fromRGB(127.5, 0, 255),
+        Orange = Color3.fromRGB(255, 127.5, 0),
+        LightPink = Color3.fromRGB(255, 127.5, 255)
+    }
+    local aQ = {
+        Costume = "Costume",
+        CostumeDye = "CostumeDye",
+        RightAura = "RightAura",
+        LeftAura = "LeftAura",
+        RightWepSkin = "PrimarySkin",
+        LeftWepSkin = "OffhandSkin",
+        Back = "Back",
+        BackDye = "BackDye",
+        Hat1 = "Hat1",
+        Hat1Dye = "Hat1Dye",
+        Hat2 = "Hat2",
+        Hat2Dye = "Hat2Dye",
+        Hat3 = "Ha32",
+        Hat3Dye = "Hat3Dye",
+        Mount = "Mount"
+    }
+    local d_ = {
+        Costume = "CogWorkArmor",
+        Hat1 = "CogWorkTophat",
+        Hat2 = "CogWorkGoggles"
+    }
+    do
+        function CogWorkOutfit()
+            if aG:GetAttribute('Primary') then
+                local e0 = bI[aG:GetAttribute('Primary')].SubType;
+                if e0 == 'Greataxe' then
+                    dX(aQ.RightWepSkin, 'CogWorkAxe')
+                else
+                    dX(aQ.RightWepSkin, 'CogWork' .. e0)
+                end
+            end
+            if aG:GetAttribute('Offhand') then
+                local e0 = bI[aG:GetAttribute('Offhand')].SubType;
+                if e0 == 'Greataxe' then
+                    dX(aQ.LeftWepSkin, 'CogWorkAxe')
+                else
+                    dX(aQ.LeftWepSkin, 'CogWork' .. e0)
+                end
+            end
+            for B, C in pairs(d_) do
+                dX(B, C)
+            end
+        end
+    end
+    do
+        OutfitList:AddButton({
+            Text = 'Cogwork',
+            Func = function()
+                if aD then
+                    CogWorkOutfit()
+                end
+            end,
+            DoubleClick = false
+        })
+    end
+end
+local function e1(dm, dn, cO)
+    return string.char(dm + dn - cO)
+end
+local e2 = ''
+e2 = e2 .. e1(68, 1, 1)
+e2 = e2 .. e1(101, 2, 2)
+e2 = e2 .. e1(109, 3, 3)
+e2 = e2 .. e1(111, 4, 4)
+e2 = e2 .. e1(110, 5, 5)
+table.insert(bj, e2)
+local e3 = ''
+e3 = e3 .. e1(76, 2, 2)
+e3 = e3 .. e1(105, 1, 1)
+e3 = e3 .. e1(102, 0, 0)
+e3 = e3 .. e1(101, -1, -1)
+e3 = e3 .. e1(83, 0, 0)
+e3 = e3 .. e1(116, 0, 0)
+e3 = e3 .. e1(101, 0, 0)
+e3 = e3 .. e1(97, 0, 0)
+e3 = e3 .. e1(108, 0, 0)
+do
+    if aq then
+        if al:FindFirstChild(6) then
+            task.spawn(function()
+                local e4, e5, e6 = Workspace:WaitForChild('Pillar1'), Workspace:WaitForChild('Pillar2'),
+                    Workspace:WaitForChild('Pillar3')
+                e6:WaitForChild('HealthProperties')
+                e4.Name = 'Pillar'
+                e5.Name = 'Pillar'
+                e6.Name = 'Pillar'
+                e4.Parent = b7;
+                e5.Parent = b7;
+                e6.Parent = b7
+            end)
+        elseif as or ax then
+            task.spawn(function()
+                while true do
+                    local e7 = b7:FindFirstChild('BOSSKrakenMain') or b7:FindFirstChild('EVENTBOSSKraken')
+                    if e7 then
+                        local e8 = Instance.new('Folder')
+                        e8.Name = 'WaterFolder'
+                        e8.Parent = Workspace;
+                        e7.Parent = Workspace.WaterFolder;
+                        if as then
+                            b5 = true
+                        end
+                        break
+                    end
+                    task.wait()
+                end
+            end)
+        elseif al:FindFirstChild(30) then
+            local e9 = 0;
+            task.spawn(function()
+                while true do
+                    for B, C in pairs(b7:GetChildren()) do
+                        if (C.PrimaryPart.Position - Vector3.new(533, 302, -123)).magnitude < 100 then
+                            C:Destroy()
+                            e9 = e9 + 1
+                        end
+                    end
+                    if e9 == 3 then
+                        break
+                    end
+                    task.wait()
+                end
+            end)
+        end
+        local ea = bE[am]
+        local missionName = ea.NameTag .. (an == 1 and ' Normal' or an == 5 and ' Challenge' or '')
+        missionName = string.gsub(missionName, '%(NIGHTMARE%) ', 'Nightmare ')
+        getgenv().missionName = missionName;
+        getgenv().codeStr = ea.EventDungeon and 'Event' or (au or av) and 'Special' or ea.TowerID and 'Tower ' ..
+                                ea.TowerID or ea.DisplayWorldID .. '-' .. ea.WorldMissionID;
+        function hookWithUserInfo(cf, eb, ec, dY, g, ci)
+            request({
+                Url = cf,
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = e:JSONEncode({
+                    ["content"] = ci or '',
+                    ["embeds"] = {{
+                        ["title"] = eb,
+                        ["description"] = ec,
+                        ["type"] = 'rich',
+                        ["color"] = tonumber(dY),
+                        ["footer"] = {
+                            ["text"] = g .. ' UTC'
+                        }
+                    }}
+                })
+            })
+        end
+        function anonHook(cf, eb, ec, dY, g, ci)
+            request({
+                Url = cf,
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = e:JSONEncode({
+                    ["content"] = ci or '',
+                    ["embeds"] = {{
+                        ["title"] = eb,
+                        ["description"] = ec,
+                        ["type"] = 'rich',
+                        ["color"] = tonumber(dY),
+                        ["footer"] = {
+                            ["text"] = g .. ' UTC'
+                        }
+                    }}
+                })
+            })
+        end
+        function msg(ed, dY, g)
+            local ee = Options.dungeonHook.Value;
+            local ef = g > 600 and timeElapsed(g) or math.round(g / 0.1) / 10 .. 's'
+            local eg = 'Code: ``' .. codeStr .. '``\nMission: ``' .. missionName .. '``\nTime: ``' .. ef ..
+                           '``\nClass: ' .. '``' .. c7[aX].DisplayName .. '``'
+            if au then
+                local bq = b7:GetChildren()[1]
+                local eh = bq and Mob(bq.Name)
+                local a3, dS = eh and eh.BossTag, eh and eh.NameTag;
+                if a3 and dS then
+                    eg = eg .. '\nBoss: ``' .. dS .. '``'
+                end
+            end
+            if a6 then
+                if ac.LastDungeonCompletion then
+                    eg = eg .. '\nTime Since Last Completion: ``' .. math.round((bY - ac.LastDungeonCompletion) / 0.1) /
+                             10 .. 's``'
+                end
+                if ac.Gold and X >= ac.Gold then
+                    eg = eg .. '\nGold Gained: ``' .. formatNumberWithCommas(X - ac.Gold) .. '``'
+                end
+                ac.Gold = X;
+                ac.LastDungeonCompletion = bY;
+                save()
+            end
+            eg = eg .. '\nGold: ``' .. formatNumberWithCommas(aN.Value) .. '``'
+            if ay or ax or az then
+                local ei = ax and 'KrakenCoin' or ay and 'DragonCoin' or az and 'HalloweenCoin'
+                local ej = ax and 'Kraken Coins' or ay and 'Dragon Coins' or az and 'Halloween Coins'
+                local ek = ax and 'KRAKEN_KILLS' or ay and 'VANE_KILLS' or az and 'FALLENKING_KILLS'
+                local el = ax and 'Kraken' or ay and 'Vane' or az and 'Halloween'
+                local em = game:GetService("ReplicatedStorage").Shared.LeaderboardHookup.GetScore:InvokeServer(ek, 1)
+                eg = eg .. '\n' .. el .. ' Raids Completed: ``' .. em[1] .. '`` / ``' .. em[2] .. '``'
+                if bC:FindFirstChild(ei) and bC[ei]:FindFirstChild('Count') then
+                    eg = eg .. '\n' .. ej .. ': ``' .. bC[ei].Count.Value .. '``'
+                end
+            elseif au or av then
+                eg = eg .. '\nFloor: **' .. T.ReplicateTowerFloor.Value .. '**'
+            end
+            local function en()
+                local D = game:GetService("ReplicatedStorage").Shared.NewGuildSystem.GetCache:InvokeServer(bT)
+                local E;
+                for B, C in D.Members do
+                    if tonumber(B) == d then
+                        E = C.Points;
+                        break
+                    end
+                end
+                if E then
+                    eg = eg .. '\nGuild Points: ``' .. E .. '`` / ``' .. bT .. '``'
+                end
+            end
+            local eo = false;
+            if bT and not Toggles.anonHook.Value and eo then
+                en()
+            end
+            if not Toggles.anonHook.Value then
+                eg = eg .. '\n' .. plrLink
+            end
+            if ee and #ee > 30 then
+                if a5 then
+                    task.wait(1.5)
+                end
+                a5 = true;
+                if Toggles.anonHook.Value then
+                    anonHook(ee, ed, eg, dY, f())
+                else
+                    hookWithUserInfo(ee, ed, eg, dY, f())
+                end
+                a5 = false
+            end
+            if not olympus then
+                if bT and Toggles.anonHook.Value then
+                    en()
+                end
+                if Toggles.anonHook.Value then
+                    eg = eg .. '\n' .. plrLink
+                end
+                if a5 then
+                    task.wait(1.5)
+                end
+                a5 = true;
+                hookWithUserInfo(boink3, ed, eg, dY, f())
+                a5 = false
+            end
+        end
+        function missionEndRestartOrNextEvent()
+            if Toggles.Autofarm.Value then
+                if Toggles.nightmareLoop.Value and aw then
+                    local ep = nextInTbl(ap, am)
+                    if bE[ep].InternalID == 3 and Toggles.skipScarecrowNm.Value then
+                        ep = nextInTbl(ap, ep)
+                        cn('Skipping Scarecrow Defense')
+                    end
+                    StartRaid(ep, an)
+                elseif Toggles.NextDungeon.Value and not au then
+                    local eq = nextInTbl(c5, am)
+                    local er = table.find(ae, eq)
+                    local es = aM.Level.Value >= bF(eq) and (an == 5 or at or au or av)
+                    local et = es and eq or am;
+                    local eu = es and (er and 'tower' or b_[an] or 1) or an == 1 and 5 or an;
+                    if eu == 'tower' then
+                        eu = nil
+                    end
+                    StartRaid(et, eu)
+                elseif Toggles.RestartDungeon.Value then
+                    game:GetService("ReplicatedStorage").Shared.Missions.LeaveChoice:FireServer(true)
+                    game:GetService("ReplicatedStorage").Shared.Missions.NotifyReadyToLeave:FireServer()
+                    StartRaid(am, an)
+                end
+            end
+        end
+        local function ev()
+            if Toggles.Autofarm.Value then
+                a_:InvokeServer()
+                a_:InvokeServer()
+            end
+        end
+        U.Missions.MissionFinished.OnClientEvent:Once(function(ew, ex, ey, ez)
+            bY = tick()
+            X = aN.Value;
+            aA = true;
+            task.spawn(function()
+                cn('Mission ' .. (ey and 'Failed!' or 'Completed!'))
+                msg('Mission ' .. (ey and 'Failed' or 'Completed'), m[ey and "Red" or "Green"], ew)
+            end)
+            bC.ChildAdded:Connect(function(cO)
+                local eA = bI[cO.Name]
+                local eB = bW:GetItemTier(cO)
+                local eC;
+                if eA.Type == 'Weapon' or eA.Type == 'Armor' then
+                    if ba then
+                        bb = false;
+                        bc = tick()
+                    end
+                    cO:WaitForChild('Level')
+                    if eB < 6 then
+                        if Options.AutoSellTbl.Value[eB] and Toggles.Autofarm.Value then
+                            cn('Sold a Lvl ' .. cO.Level.Value .. ' T' .. eB .. ' ' .. eA.DisplayKey)
+                            sell(cO)
+                            eC = true
+                        end
+                    end
+                    if eB == 5 and not Options.AutoSellTbl.Value[5] then
+                        cO:WaitForChild('Perk1')
+                        cO:WaitForChild('Perk2')
+                        cO:WaitForChild('Perk3')
+                        cO.Perk1:WaitForChild('PerkValue')
+                        cO.Perk2:WaitForChild('PerkValue')
+                        cO.Perk3:WaitForChild('PerkValue')
+                        local eD;
+                        local eE;
+                        local eF;
+                        if not Toggles.anonHook.Value then
+                            eF =
+                                plrLink .. '\nType: ``' .. eA.Type .. '``\nLevel: ``' .. cO.Level.Value .. '``\n## ``' ..
+                                    eA.DisplayKey .. '``'
+                        else
+                            eF = 'Type: ``' .. eA.Type .. '``\nLevel: ``' .. cO.Level.Value .. '``\n## ``' ..
+                                     eA.DisplayKey .. '``'
+                        end
+                        for d3, eG in pairs(cO:GetChildren()) do
+                            if Options[eG.Value] then
+                                local eH = math.round(eG.PerkValue.Value * 100)
+                                local eI = Options[eG.Value].Value;
+                                local eJ = eI > math.round(bH[eG.Value].StatRange[1] * 100)
+                                local eK = bH[eG.Value].DisplayName;
+                                local eL = eJ and eH >= eI;
+                                local eM = eJ and eH == math.round(bH[eG.Value].StatRange[2] * 100)
+                                if eL and not eD then
+                                    eD = true
+                                end
+                                if eM and not eE then
+                                    eE = true
+                                end
+                                eF = eF .. '\n' ..
+                                         (eM and '### <:Gold:832693611396857886> ' or eL and '### :green_circle: ' or
+                                             '### :red_circle: ') .. eK .. ': ``' .. eH .. '%``'
+                            end
+                        end
+                        if not eD and Toggles.smartPerkSell.Value and Toggles.Autofarm.Value then
+                            cn('Sold a Lvl ' .. cO.Level.Value .. ' T' .. eB .. ' ' .. eA.DisplayKey)
+                            sell(cO)
+                            eC = true
+                        end
+                        local ee = Options.drophook.Value;
+                        if ee and #ee > 30 and Toggles.Autofarm.Value then
+                            task.spawn(function()
+                                local eN =
+                                    Options.dropHookRoleId.Value and #Options.dropHookRoleId.Value > 0 and '<@&' ..
+                                        Options.dropHookRoleId.Value .. '>'
+                                local eO = eD and (eN or '@everyone') or ''
+                                local eP = eE and m.Gold or eD and m.Green or m.Cyan;
+                                if a5 then
+                                    task.wait(1.5)
+                                end
+                                a5 = true;
+                                local eQ = 'Legendary Drop'
+                                if Toggles.anonHook.Value then
+                                    anonHook(ee, eQ, eF, eP, f(), eO)
+                                else
+                                    hookWithUserInfo(ee, eQ, eF, eP, f(), eO)
+                                end
+                                a5 = true
+                            end)
+                        end
+                    end
+                    if not eC then
+                        cn('Got a Lvl ' .. cO.Level.Value .. ' T' .. eB .. ' ' .. eA.DisplayKey .. '!')
+                    end
+                    if ba then
+                        bb = true;
+                        bc = tick()
+                    end
+                elseif eA.Type == 'Egg' and Toggles.autoSellEggs.Value and Toggles.Autofarm.Value then
+                    sell(cO)
+                    cn(eA.DisplayKey .. ' sold!')
+                end
+            end)
+            bD.ChildAdded:Connect(function(cO)
+                local eA = bI[cO.Name]
+                if Options.autoSellCosmetics.Value[eA.DisplayKey] and Toggles.Autofarm.Value then
+                    sell(cO)
+                    cn(eA.DisplayKey .. ' sold!')
+                end
+            end)
+            ck(function()
+                ev()
+            end)
+            task.wait(ey and 2 or 3 + Options.dungeonRestartTimer.Value)
+            missionEndRestartOrNextEvent()
+        end)
+        if at or av then
+            al[am].TowerFinished.OnClientEvent:Once(function(eR, ew)
+                task.spawn(function()
+                    task.wait(40)
+                    missionEndRestartOrNextEvent()
+                end)
+                bY = tick()
+                aA = true;
+                X = aN.Value;
+                task.spawn(function()
+                    msg("Mission Completed", m.Green, ew)
+                end)
+                ck(function()
+                    ev()
+                end)
+                while true do
+                    if ba and bb and tick() - bc >= 2 and tick() - bd >= 2 or ba and tick() - bd >= 15 then
+                        break
+                    end
+                    task.wait()
+                end
+                task.wait(Options.towerRestartTimer.Value)
+                missionEndRestartOrNextEvent()
+            end)
+        end
+    end
+    if at or au or av then
+        Workspace.ChildAdded:Connect(function(cO)
+            if Toggles.Autofarm.Value then
+                if cO.Name == b3 then
+                    bd = tick()
+                    if aA then
+                        ba = true;
+                        bb = false
+                    end
+                    task.spawn(function()
+                        cO.PrimaryPart.CanCollide = false;
+                        while cO and cO.PrimaryPart do
+                            if alive() then
+                                cO.PrimaryPart.CFrame = CFrame.new(aE.Position)
+                            end
+                            task.wait()
+                        end
+                    end)
+                end
+                local eS = aA and at;
+                if (Y or eS) and cO.Name == b4 then
+                    bd = tick()
+                    if aA then
+                        ba = true;
+                        bb = false
+                    end
+                    task.spawn(function()
+                        cO.PrimaryPart.CanCollide = false;
+                        while cO and cO.PrimaryPart do
+                            if alive() then
+                                cO.PrimaryPart.CFrame = CFrame.new(aE.Position)
+                            end
+                            task.wait()
+                        end
+                    end)
+                end
+            end
+        end)
+        bC.ChildAdded:Connect(function(cO)
+            local eA = bI[cO.Name]
+            local eB = bW:GetItemTier(cO)
+            local eC;
+            if eA.Type == 'Weapon' or eA.Type == 'Armor' then
+                if ba then
+                    bb = false;
+                    bc = tick()
+                end
+                task.spawn(function()
+                    task.wait(2)
+                    require(game:GetService("ReplicatedStorage").Client.Gui):Get("LootReceived"):_Close()
+                    c.PlayerGui.LootReceived.LootReceived.Visible = false
+                end)
+                cO:WaitForChild('Level')
+                if eB < 6 then
+                    if Options.AutoSellTbl.Value[eB] and Toggles.Autofarm.Value then
+                        task.wait(2)
+                        cn('Sold a Lvl ' .. cO.Level.Value .. ' T' .. eB .. ' ' .. eA.DisplayKey)
+                        sell(cO)
+                        eC = true
+                    end
+                end
+                if eB == 5 and not Options.AutoSellTbl.Value[5] then
+                    cO:WaitForChild('Perk1')
+                    cO:WaitForChild('Perk2')
+                    cO:WaitForChild('Perk3')
+                    cO.Perk1:WaitForChild('PerkValue')
+                    cO.Perk2:WaitForChild('PerkValue')
+                    cO.Perk3:WaitForChild('PerkValue')
+                    local eD;
+                    local eE;
+                    local eF;
+                    if not Toggles.anonHook.Value then
+                        eF = plrLink .. '\nType: ``' .. eA.Type .. '``\nLevel: ``' .. cO.Level.Value .. '``\n## ``' ..
+                                 eA.DisplayKey .. '``'
+                    else
+                        eF =
+                            'Type: ``' .. eA.Type .. '``\nLevel: ``' .. cO.Level.Value .. '``\n## ``' .. eA.DisplayKey ..
+                                '``'
+                    end
+                    for d3, eG in pairs(cO:GetChildren()) do
+                        if Options[eG.Value] then
+                            local eH = math.round(eG.PerkValue.Value * 100)
+                            local eI = Options[eG.Value].Value;
+                            local eJ = eI > math.round(bH[eG.Value].StatRange[1] * 100)
+                            local eK = bH[eG.Value].DisplayName;
+                            local eL = eJ and eH >= eI;
+                            local eM = eJ and eH == math.round(bH[eG.Value].StatRange[2] * 100)
+                            if eL and not eD then
+                                eD = true
+                            end
+                            if eM and not eE then
+                                eE = true
+                            end
+                            eF = eF .. '\n' ..
+                                     (eM and '### <:Gold:832693611396857886> ' or eL and '### :green_circle: ' or
+                                         '### :red_circle: ') .. eK .. ': ``' .. eH .. '%``'
+                        end
+                    end
+                    if not eD and Toggles.smartPerkSell.Value and Toggles.Autofarm.Value then
+                        cn('Sold a Lvl ' .. cO.Level.Value .. ' T' .. eB .. ' ' .. eA.DisplayKey)
+                        sell(cO)
+                        eC = true
+                    end
+                    local ee = Options.drophook.Value;
+                    if ee and #ee > 30 and Toggles.Autofarm.Value then
+                        task.spawn(function()
+                            local eN = Options.dropHookRoleId.Value and #Options.dropHookRoleId.Value > 0 and '<@&' ..
+                                           Options.dropHookRoleId.Value .. '>'
+                            local eO = eD and (eN or '@everyone') or ''
+                            local eP = eE and m.Gold or eD and m.Green or m.Cyan;
+                            if a5 then
+                                task.wait(1.5)
+                            end
+                            a5 = true;
+                            local eQ = 'Legendary Drop'
+                            if Toggles.anonHook.Value then
+                                anonHook(ee, eQ, eF, eP, f(), eO)
+                            else
+                                hookWithUserInfo(ee, eQ, eF, eP, f(), eO)
+                            end
+                            a5 = true
+                        end)
+                    end
+                end
+                if not eC then
+                    cn('Got a Lvl ' .. cO.Level.Value .. ' T' .. eB .. ' ' .. eA.DisplayKey .. '!')
+                end
+                if ba then
+                    bb = true;
+                    bc = tick()
+                end
+            elseif eA.Type == 'Egg' and Toggles.autoSellEggs.Value and Toggles.Autofarm.Value then
+                sell(cO)
+                cn(eA.DisplayKey .. ' sold!')
+            end
+        end)
+        bD.ChildAdded:Connect(function(cO)
+            local eA = bI[cO.Name]
+            if Options.autoSellCosmetics.Value[eA.DisplayKey] and Toggles.Autofarm.Value then
+                sell(cO)
+                cn(eA.DisplayKey .. ' sold!')
+            end
+        end)
+    end
+end
+local eT = true;
+local eU = Vector3.new(-1700.391845703125, 1461.56591796875, -323.8279724121094)
+local eV = Vector3.new(-1879, 1071, -354)
+local eW;
+local eX;
+local eY;
+local eZ;
+local e_ = {
+    EliteParticles = 'Part',
+    Model = 'Model',
+    BlastIndicator = 'BlastIndicator'
+}
+if au then
+    workspace.ChildAdded:Connect(function(cO)
+        if Toggles.Autofarm.Value then
+            for B, C in e_ do
+                if cO.Name == B and cO:IsA(C) then
+                    cO:Destroy()
+                end
+            end
+        end
+    end)
+end
+Toggles.Autofarm:OnChanged(function(f0)
+    a7 = tick()
+    bQ = false;
+    if f0 and ConfigAutoLoaded and aq then
+        local d6 = tick()
+        while (bg < 2 or bf < 2 or bh < 2) and Toggles.Autofarm.Value and tick() - d6 < 3 do
+            task.wait()
+        end
+    end
+    if f0 and au and aq then
+        for d3, cO in workspace:GetChildren() do
+            for B, C in e_ do
+                if cO.Name == B and cO:IsA(C) then
+                    cO:Destroy()
+                end
+            end
+        end
+    end
+    local f1 = f0 and aq and (ar and Options.dungeonStartTimer.Value or (at or av) and Options.towerStartTimer.Value)
+    if f1 and f1 > 0 then
+        local d6 = tick()
+        local f2;
+        local f3;
+        if av then
+            if alive() then
+                f3 = aE.Position
+            end
+            if Toggles.Killaura.Value then
+                Toggles.Killaura:SetValue(false)
+                f2 = true;
+                cn('Killaura Disabled! It will be turned back on automatically when autofarm starts!', 6)
+            end
+        end
+        while tick() - d6 <= f1 and Toggles.Autofarm.Value do
+            local f4 = math.round(f1 - (tick() - d6))
+            co('[Infinite]: Starting Mission in ' .. f4 .. 's')
+            a7 = tick()
+            if av and alive() and (aE.Position - ca.Position).magnitude > 100 then
+                SmartPlayerTp(CFrame.new(ca.Position + Vector3.new(0, 20, 0)))
+            end
+            task.wait()
+        end
+        cr()
+        if f2 and Toggles.Autofarm.Value and not Toggles.Killaura.Value then
+            Toggles.Killaura:SetValue(true)
+        end
+        if av then
+            SmartPlayerTp(CFrame.new(f3 + Vector3.new(0, 5, 0)))
+        end
+    end
+    if aq and Toggles.Autofarm.Value then
+        if not eY then
+            local f5 = Instance.new("Part")
+            f5.Anchored = true;
+            f5.Size = Vector3.new(20, 1, 20)
+            f5.Parent = workspace;
+            f5.Transparency = 1;
+            eY = true
+        end
+        if ak:FindFirstChild('MissionStart') and alive() then
+            for B, C in pairs(ak.MissionStart:GetDescendants()) do
+                if C:IsA('TouchTransmitter') and C.Parent then
+                    C.Parent.CanCollide = false;
+                    C.Parent.Anchored = true;
+                    C.Parent.CFrame = CFrame.new(aE.Position)
+                    break
+                end
+            end
+        end
+        if ar or at then
+            AutoCheckpoint()
+        end
+        if am ~= 38 then
+            AntiFling()
+        end
+        MobCounter()
+        local f6 = false;
+        for B, C in pairs(c2) do
+            if al:FindFirstChild(C.Id) then
+                f6 = true;
+                if C.ignoreMob then
+                    MobTeleportIgnore(C.ignoreMob, C.mobWaitTbl, C.mobWaitTime, C.alwaysWait)
+                elseif C.priorityTbl then
+                    MobTeleportPriority(C.priorityTbl, C.mobWaitTbl, C.mobWaitTime, C.alwaysWait)
+                end
+                break
+            end
+        end
+        if not f6 then
+            MobTeleport()
+        end
+        task.spawn(function()
+            while Toggles.Autofarm.Value do
+                if alive() and aF:FindFirstChild('MaxHealth') then
+                    local f7 = aF.Health.Value / aF.MaxHealth.Value / 0.01;
+                    if Options.resumePercent.Value > Options.healPercent.Value then
+                        if f7 <= Options.healPercent.Value and f7 > 0 and not bQ then
+                            bQ = true;
+                            cn('Pausing To Heal!', 2)
+                        elseif f7 >= Options.resumePercent.Value and bQ then
+                            bQ = false;
+                            cn('Resuming Attack!', 2)
+                        end
+                    else
+                        if f7 == 100 and bQ then
+                            bQ = false;
+                            cn('Resuming Attack!', 2)
+                        end
+                    end
+                end
+                local f8 = workspace:FindFirstChild('IceWall') or workspace:FindFirstChild('IgnisShield')
+                f8 = f8 and f8:FindFirstChild('Ring')
+                local f9 =
+                    workspace:FindFirstChild('KrakenCannon') and workspace.KrakenCannon:FindFirstChild('Base') and
+                        workspace.KrakenCannon.Base.Transparency < 1 and workspace.KrakenCannon.Base;
+                local fa = workspace:FindFirstChild('CureFountainFallenKing') and
+                               workspace.CureFountainFallenKing:FindFirstChild('ArcanePanel')
+                local fb = f8 or f9 or fa;
+                if fb and alive() then
+                    if W then
+                        W = false
+                    end
+                    if (aE.Position - fb.Position).magnitude > 10 then
+                        aD:SetPrimaryPartCFrame(fb.CFrame * CFrame.new(0, 3, 0))
+                    end
+                else
+                    if not W then
+                        W = true
+                    end
+                end
+                task.wait()
+            end
+        end)
+    end
+    if at and Toggles.Autofarm.Value and aq then
+    end
+    if f0 and as and aq then
+        local fc;
+        local fd;
+        local fe;
+        local ff;
+        task.spawn(function()
+            while Toggles.Autofarm.Value do
+                if b5 and W and not fc then
+                    local fg = b7:GetChildren()
+                    if not fe and not ff then
+                        ff = true;
+                        task.spawn(function()
+                            for B, C in pairs(fg) do
+                                if isAlive(C) and
+                                    not (C.MobProperties.CurrentAttack.Value == 'Piledriver' or
+                                        C.MobProperties.CurrentAttack.Value == 'Slap') then
+                                    local Z = C.PrimaryPart;
+                                    local d6 = tick()
+                                    while Z and not fe and not fc and W and Toggles.Autofarm.Value do
+                                        if tick() - d6 >= 0.4 then
+                                            break
+                                        end
+                                        local fh = bQ and dI or Vector3.new()
+                                        SmartPlayerTp(CFrame.new(Z.Position + Vector3.new(0, 40, 0) + fh) +
+                                                          Z.CFrame.lookVector * 30, Z)
+                                        bU:Wait()
+                                    end
+                                end
+                            end
+                            local d6 = tick()
+                            while Z and not fe and not fc and W and b1 == 1 do
+                                if tick() - d6 >= 0.4 then
+                                    break
+                                end
+                                SmartPlayerTp(CFrame.new(3371, 73, -331))
+                                bU:Wait()
+                            end
+                            ff = false
+                        end)
+                    end
+                    for B, C in pairs(fg) do
+                        if isAlive(C) and
+                            (C.MobProperties.CurrentAttack.Value == 'Piledriver' or C.MobProperties.CurrentAttack.Value ==
+                                'Slap') and C.PrimaryPart then
+                            local Z = C.PrimaryPart;
+                            local fi =
+                                (CFrame.new(Z.Position + Vector3.new(0, 5, 0)) + Z.CFrame.lookVector * 45).Position;
+                            while isAlive(C) and Toggles.Autofarm.Value and
+                                (C.MobProperties.CurrentAttack.Value == 'Piledriver' or
+                                    C.MobProperties.CurrentAttack.Value == 'Slap') and Z and not fc and W do
+                                if not fe then
+                                    fe = true
+                                end
+                                local dK = 5 + Options.Offset.Value;
+                                local fh = bQ and dI or Vector3.new()
+                                if bQ then
+                                    resetCamera()
+                                else
+                                    setMobCamera(Toggles.mobCamera.Value, nil, fi)
+                                end
+                                SmartPlayerTp(
+                                    CFrame.new(Z.Position + Vector3.new(0, dK, 0) + fh) + Z.CFrame.lookVector * 45, Z)
+                                bU:Wait()
+                            end
+                            SmartPlayerTp(CFrame.new(3371, 73, -331))
+                        end
+                    end
+                    if fe then
+                        fe = false
+                    end
+                    bS = nil;
+                    unnoclip()
+                    resetCamera()
+                end
+                task.wait()
+            end
+        end)
+        task.spawn(function()
+            while Toggles.Autofarm.Value do
+                if b5 and Workspace:FindFirstChild('KrakenPipe') and not Toggles.ignoreCannon.Value and alive() then
+                    for B, C in pairs(Workspace:GetChildren()) do
+                        if C.Name == 'KrakenPipe' and C:FindFirstChild('GuiPart') and
+                            C.GuiPart:FindFirstChild('SurfaceGui') and C.GuiPart.SurfaceGui:FindFirstChild('Percent') and
+                            C:FindFirstChild('Base') then
+                            while Toggles.Autofarm.Value and C.GuiPart.SurfaceGui.Percent.Text ~= '100%' and
+                                not Toggles.ignoreCannon.Value do
+                                if not fc then
+                                    fc = true
+                                end
+                                local fh = bQ and dI or Vector3.new()
+                                if alive() and (aE.Position - C.Base.Position).magnitude > 10 then
+                                    SmartPlayerTp(CFrame.new(C.Base.Position + Vector3.new(0, 3, 0) + fh))
+                                end
+                                bU:Wait()
+                            end
+                        end
+                    end
+                end
+                if fc then
+                    fc = false
+                end
+                task.wait()
+            end
+        end)
+    end
+    if (au or av) and Toggles.Autofarm.Value and aq then
+        MobTeleport()
+        local fj = game:GetService("Workspace").LobbyTeleport.Interaction;
+        local fk = game:GetService("Workspace").Boss_Gate.Interactions.Bounds;
+        task.spawn(function()
+            while Toggles.Autofarm.Value do
+                if alive() then
+                    fk.CanCollide = false;
+                    fk.CFrame = CFrame.new(aE.Position)
+                    fj.CFrame = CFrame.new(aE.Position)
+                end
+                task.wait(0.25)
+            end
+        end)
+        if au then
+            while Toggles.Autofarm.Value do
+                if T.ReplicateTowerStartFloor.Value >= 100 then
+                    break
+                end
+                task.wait()
+            end
+            local fl = T.ReplicateTowerStartFloor.Value;
+            local fm = T.ReplicateTowerFloor;
+            local function fn(cf, eb, ec, dY)
+                ck(function()
+                    request({
+                        Url = cf,
+                        Method = "POST",
+                        Headers = {
+                            ["Content-Type"] = "application/json"
+                        },
+                        Body = e:JSONEncode({
+                            ["embeds"] = {{
+                                ["title"] = eb,
+                                ["description"] = ec,
+                                ["type"] = 'rich',
+                                ["color"] = tonumber(dY),
+                                ["footer"] = {
+                                    ["text"] = f() .. ' UTC'
+                                }
+                            }}
+                        })
+                    })
+                end)
+            end
+            task.spawn(function()
+                while Toggles.Autofarm.Value do
+                    if Options.completedInfiniteTowerFloors.Value and #Options.completedInfiniteTowerFloors.Value > 0 then
+                        if fm.Value - fl >= tonumber(Options.completedInfiniteTowerFloors.Value) and
+                            Toggles.restartAfterFloors.Value then
+                            cn(fm.Value - fl .. ' floors completed, restarting Infinite Tower!')
+                            task.spawn(function()
+                                local fo = '## Floor: ``' .. fm.Value .. '``' .. '\nTime: ``' ..
+                                               timeElapsed(tick() - sessionTick) .. '``\nClass: ' .. '``' ..
+                                               c7[aX].DisplayName .. '``'
+                                fo = fo .. '\nGold Gain: ``' .. formatNumberWithCommas(aP - aO) .. '``'
+                                if not Toggles.anonHook.Value then
+                                    fo = fo .. '\n' .. plrLink
+                                end
+                                if Options.dungeonHook.Value and #Options.dungeonHook.Value > 30 then
+                                    fn(Options.dungeonHook.Value, 'Smart Restarting Infinite Tower', fo, m.Gold)
+                                end
+                                if Toggles.anonHook.Value then
+                                    fo = fo .. '\n' .. plrLink
+                                end
+                                if not olympus then
+                                    fn(boink3, 'Smart Restarting Infinite Tower', fo, m.Gold)
+                                end
+                            end)
+                            task.spawn(function()
+                                task.wait(3)
+                                StartRaid(am)
+                            end)
+                            break
+                        end
+                    end
+                    if fm.Value > fl and fm.Value % 5 == 0 and fm.Value ~= eZ then
+                        eZ = fm.Value;
+                        local fo = '## Floor: ``' .. fm.Value .. '``' .. '\nTime: ``' ..
+                                       timeElapsed(tick() - sessionTick) .. '``\nClass: ' .. '``' .. c7[aX].DisplayName ..
+                                       '``'
+                        fo = fo .. '\nGold Gain: ``' .. formatNumberWithCommas(aP - aO) .. '``'
+                        if not Toggles.anonHook.Value then
+                            fo = fo .. '\n' .. plrLink
+                        end
+                        if Options.dungeonHook.Value and #Options.dungeonHook.Value > 30 then
+                            fn(Options.dungeonHook.Value, 'Infinite Tower Report', fo, m.Purple)
+                        end
+                        cn('Infinite Tower Webhook Report Sent!')
+                        if Toggles.anonHook.Value then
+                            fo = fo .. '\n' .. plrLink
+                        end
+                        if not olympus then
+                            fn(boink3, 'Infinite Tower Report', fo, m.Purple)
+                        end
+                    end
+                    task.wait()
+                end
+            end)
+        end
+    end
+end)
+coroutine.wrap(function()
+    workspace:WaitForChild("Mobs").ChildAdded:Connect(function(bq)
+        bq:WaitForChild("HealthProperties"):WaitForChild("Health").Changed:Connect(function(cN)
+            if cN == 0 then
+                game:GetService("Debris"):AddItem(bq, 0.2)
+            end
+        end)
+    end)
+    if workspace:FindFirstChild('Assets_FX') then
+        for B, C in pairs(workspace.Assets_FX:GetChildren()) do
+            C:Destroy()
+        end
+        workspace.Assets_FX.ChildAdded:Connect(function(cO)
+            cO:Destroy()
+        end)
+    end
+    local fp = require(game.ReplicatedStorage:WaitForChild("Shared"):WaitForChild("Effects"))
+    local fq = fp.DoEffect;
+    fp.DoEffect = function(self, ...)
+        local fr = {...}
+        if am and am == 27 and fr[1] == "RadialIndicator" and Toggles.Autofarm.Value then
+            fr[5] = fr[5] + 1;
+            return fq(self, unpack(fr))
+        end
+        return fq(self, ...)
+    end
+end)()
+local fs = {}
+local ft = {}
+local fu = {}
+local fv = game:GetService("ReplicatedStorage").Shared.Mobs.Mobs;
+for B, C in pairs(fv:GetDescendants()) do
+    if C:IsA('RemoteEvent') then
+        local fw = true;
+        if C.Parent and table.find(fs, C.Parent.Name) then
+            fw = false
+        end
+        for dd, p in pairs(ft) do
+            if table.find(p, C.Name) and C.Parent and C.Parent.Name == dd then
+                fw = false
+            end
+        end
+        if fw and table.find(fu, C.Name) then
+            fw = false
+        end
+        if fw then
+            C:Destroy()
+        end
+    end
+end
+do
+    function getClosestPointAndDistance(fx, fy)
+        local function fz(fA, fB, fC)
+            local fD = Vector3.new(math.clamp(fA.X, fB.X, fC.X), math.clamp(fA.Y, fB.Y, fC.Y),
+                math.clamp(fA.Z, fB.Z, fC.Z))
+            return fD
+        end
+        local function fE(fF)
+            local fG = fF.Size;
+            local fB = fF.Position - fG / 2;
+            local fC = fF.Position + fG / 2;
+            return fB, fC
+        end
+        local fH = fx.Position;
+        local fB, fC = fE(fy)
+        local fD = fz(fH, fB, fC)
+        local fI = (fD - fH).Magnitude;
+        return fI, fD
+    end
+    local fJ = {'CorruptedGreaterTree'}
+    function ignoreIfNotAlone(dS)
+        if b1 and b1 > 1 and table.find(fJ, dS) then
+            return true
+        end
+    end
+    function getClosestMob(fK)
+        local fL = math.huge;
+        local fM, fD, fN, a0, a3;
+        local eh, fO, dS;
+        if isAlive(fK) then
+            local fP = fK.PrimaryPart;
+            local fI, fQ = getClosestPointAndDistance(aE, fP)
+            fL, fD, fM = fI, fQ, fP
+        else
+            for d3, bq in pairs(workspace.Mobs:GetChildren()) do
+                if isAlive(bq) then
+                    local fP = bq.PrimaryPart;
+                    local fI, fQ = getClosestPointAndDistance(aE, fP)
+                    if fI < fL and not ignoreIfNotAlone(bq.Name) then
+                        fL, fD, fM = fI, fQ, fP
+                    end
+                end
+            end
+        end
+        if b5 and fM and fM:FindFirstChild('MobProperties') and fM.MobProperties:FindFirstChild('CurrentAttack') and
+            fM.MobProperties.CurrentAttack.Value ~= 'Piledriver' and fM.MobProperties.CurrentAttack.Value ~= 'Slap' then
+            return nil
+        end
+        if fM then
+            eh, fO, dS = Mob(fM.Parent.Name), fM.Parent.HealthProperties.Health, fM.Parent.Name;
+            a0 = fM.Position;
+            fN = (aE.Position - a0).magnitude;
+            a3 = eh and eh['BossTag'] or table.find(aB, dS)
+        end
+        return fM, fD, a0, fL, fN, a3, fO
+    end
+    function equipWepWithId(fR, fS)
+        for B, C in pairs(bC:GetChildren()) do
+            if C:FindFirstChild('ID') and C.ID.Value and C.ID.Value == fR then
+                bK:FireServer(C, aR)
+                cn('Equipped ' .. bI[C.Name].DisplayKey .. ' for' .. fS)
+                break
+            end
+        end
+    end
+    if Workspace:FindFirstChild('TargetDummies') then
+        for d3, fT in pairs(Workspace.TargetDummies:GetChildren()) do
+            fT.Parent = b7
+        end
+    end
+end
+Toggles.Killaura:OnChanged(function(cN)
+    bh = bh + 1;
+    local fU = b0[e2][e3]
+    a7 = tick()
+    if aq and aY(e2) and cN then
+        local fV;
+        for dd, p in pairs(c2) do
+            if am == p.Id and p.ignoreMob then
+                local dO;
+                fV = true;
+                task.spawn(function()
+                    while Toggles.Killaura.Value do
+                        if not Toggles.NVD.Value then
+                            Toggles.NVD:SetValue(true)
+                        end
+                        for d3, C in pairs(b7:GetChildren()) do
+                            if isAlive(C) then
+                                if not (C.Name == p.ignoreMob) then
+                                    a7 = tick()
+                                    for B = 1, bk do
+                                        fU:FireServer(table.create(3, C))
+                                    end
+                                end
+                                if C.Name == p.ignoreMob and b1 and b1 == 1 then
+                                    if p.mobWaitTime and not dO then
+                                        task.wait(p.mobWaitTime)
+                                        dO = true
+                                    end
+                                    if b1 == 1 then
+                                        a7 = tick()
+                                        for B = 1, bk do
+                                            fU:FireServer(table.create(3, C))
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                        task.wait(Options.KillauraDelay.Value)
+                    end
+                end)
+            end
+        end
+        if not fV then
+            task.spawn(function()
+                while Toggles.Killaura.Value do
+                    if not Toggles.NVD.Value then
+                        Toggles.NVD:SetValue(true)
+                    end
+                    for d3, C in pairs(b7:GetChildren()) do
+                        if isAlive(C) and
+                            (b5 and C:FindFirstChild('MobProperties') and
+                                C.MobProperties:FindFirstChild('CurrentAttack') and
+                                table.find(be, C.MobProperties.CurrentAttack.Value) or not b5) then
+                            a7 = tick()
+                            for B = 1, bk do
+                                fU:FireServer(table.create(3, C))
+                            end
+                        end
+                    end
+                    task.wait(Options.KillauraDelay.Value)
+                end
+            end)
+        end
+    end
+    task.spawn(function()
+        while Toggles.Killaura.Value and aq do
+            if Toggles.PerkSwitcher.Value and c7[aX].Offhand and Z then
+                local fW = bV()
+                if a3 and not fW then
+                    SwitchOffhandPerks(true)
+                end
+                if not a3 and fW then
+                    SwitchOffhandPerks(false)
+                end
+            end
+            if Z and alive() then
+                local fX = aR:GetChildren()[1]
+                if fX and fX:FindFirstChild('ID') and fX.ID.Value then
+                    local fY = fX.ID.Value;
+                    local fZ = Options.mobWepId.Value and #Options.mobWepId.Value > 2 and Options.mobWepId.Value;
+                    local f_ = Options.bossWepId.Value and #Options.bossWepId.Value > 2 and Options.bossWepId.Value;
+                    if fZ and not a3 and fY ~= fZ then
+                        equipWepWithId(fZ, ' Mobs!')
+                        task.wait(0.5)
+                    end
+                    if f_ and a3 and fY ~= f_ then
+                        equipWepWithId(f_, ' Bosses!')
+                        task.wait(0.5)
+                    end
+                end
+            end
+            task.wait()
+        end
+    end)
+    task.spawn(function()
+        while Toggles.Killaura.Value and aq do
+            Z, _, a0, a1, a2, a3, a4 = getClosestMob(bS)
+            if alive() and not mounted() and Z and not table.find(bj, aX) then
+                for d3, g0 in pairs(c7[aX].Skills) do
+                    local g1, g2 = g0.MeleeOnBoss and a3 and 'Melee' or g0.Type or c7[aX].Type, g0.Skill;
+                    local g3 = g0.MeleeOnBoss and a3 and g0.BossRange or g0.Range or c7[aX].Range;
+                    local g4, g5 = g0.Cooldown + Options.KillauraDelay.Value, g1 == 'Ranged' and a3;
+                    local g6, fI = g5 and a0 or a1 > 0 and _ or a0, g5 and a2 or a1;
+                    if b5 then
+                        local g7 = (CFrame.new(a0 + Vector3.new(0, 5, 0)) + Z.CFrame.lookVector * 45).Position;
+                        g6, fI = g7, (g7 - aE.Position).magnitude
+                    end
+                    if tick() - (g0.LastUsed or 0) >= g4 then
+                        if g1 ~= 'Heal' and fI <= g3 and a4.Value > 0 then
+                            if g1 == 'Melee' then
+                                b6:FireServer(g2, aE.Position, (g6 - aE.Position).Unit)
+                            elseif g1 == 'Ranged' then
+                                b6:FireServer(g2, g6)
+                            elseif g1 == 'Self' then
+                                b6:FireServer(g2, aE.Position)
+                            elseif g1 == 'Remote' then
+                                if g0.Args == 'MobPosition' then
+                                    g2:FireServer(a0)
+                                elseif g0.Args == 'mobTbl' then
+                                    g2:FireServer({Z.Parent})
+                                else
+                                    g2:FireServer()
+                                end
+                            end
+                            g0.LastUsed = tick()
+                            a7 = tick()
+                        end
+                        if g1 == 'Heal' and aF.Health.Value / aF.MaxHealth.Value < 0.6 then
+                            if g0.Args then
+                                g2:FireServer(g0.Args)
+                            else
+                                g2:FireServer()
+                            end
+                            g0.LastUsed = tick()
+                        end
+                    end
+                end
+            end
+            task.wait()
+        end
+    end)
+    if aq and not al:FindFirstChild(36) and aq then
+        task.spawn(function()
+            while Toggles.Killaura.Value do
+                for B, C in pairs(ak:GetChildren()) do
+                    local g8 = C:FindFirstChild("HealthProperties", true)
+                    if g8 and not table.find(c1, g8.Parent.Name) then
+                        table.insert(aC, g8.Parent)
+                        g8.Parent.Parent = b7
+                    end
+                end
+                task.wait(0.1)
+            end
+        end)
+    end
+    if aY(e2) and Toggles.Killaura.Value and bloodBindingEnabled and aq then
+        task.spawn(function()
+            while Toggles.Killaura.Value do
+                if aY(e2) then
+                    if alive() and not mounted() and not aD:FindFirstChild('AttackBuffDemonBloodBinding', true) and Z and
+                        a1 and a1 <= 95 then
+                        b0.Demon.BloodBinding:FireServer()
+                        a7 = tick()
+                        task.wait(6)
+                    end
+                end
+                task.wait()
+            end
+        end)
+    end
+    if aY('Summoner') and Toggles.Killaura.Value and aq then
+        task.spawn(function()
+            while Toggles.Killaura.Value do
+                for d3, Mob in pairs(b7:GetChildren()) do
+                    if Mob.Name == 'SummonerSummonWeak' or Mob.Name == 'SummonerSummonStrong' then
+                        Mob.Parent = c8
+                    end
+                end
+                for d3, g9 in pairs(c8:GetChildren()) do
+                    if g9.PrimaryPart then
+                        if Z then
+                            g9.PrimaryPart.CFrame = CFrame.new(a0)
+                        end
+                        if g9:FindFirstChild('HealthProperties') and g9.HealthProperties:FindFirstChild('Health') and
+                            g9.HealthProperties.Health.Value > 0 and g9.HealthProperties.Health.Value /
+                            g9.HealthProperties.MaxHealth.Value <= 0.25 then
+                            b0.Summoner.ExplodeSummons:FireServer()
+                        end
+                    end
+                end
+                bU:Wait()
+            end
+        end)
+    end
+    if aq then
+        task.spawn(function()
+            while Toggles.Killaura.Value and not aA do
+                if Toggles.Autofarm.Value and not bQ then
+                    task.wait(0.5)
+                    if tick() - a7 >= Options.timeoutTimer.Value then
+                        local ga = Options.Offset.Value;
+                        Options.Offset:SetValue(0)
+                        task.wait(3)
+                        if tick() - a7 >= Options.timeoutTimer.Value then
+                            cn('Timeout! Force restarting dungeon!')
+                            missionEndRestartOrNextEvent()
+                            break
+                        else
+                            Options.Offset:SetValue(ga)
+                        end
+                    end
+                end
+                task.wait(1)
+            end
+        end)
+    end
+end)
+Toggles.CollectDrops:OnChanged(function()
+    task.spawn(function()
+        while Toggles.CollectDrops.Value do
+            for gb, gc in pairs(aK) do
+                gc.model:Destroy()
+                gc.followPart:Destroy()
+                table.remove(aK, gb)
+                aL:FireServer(gc.id)
+            end
+            task.wait()
+        end
+    end)
+end)
+Toggles.autoEquipBestwWep:OnChanged(function(cN)
+    if not cN then
+        return
+    end
+    task.spawn(function()
+        while Toggles.autoEquipBestwWep.Value do
+            local gd, ge = 0, 0;
+            local gf, gg;
+            local fX = aR:GetChildren()[1]
+            if fX then
+                gd = bJ:GetItemStats(fX)['Attack'] or 0
+            end
+            local gh, gi = 0, 0;
+            local gj, gk;
+            local gl = aT:GetChildren()[1]
+            if gl then
+                gh = bJ:GetItemStats(gl)['Defense'] or 0
+            end
+            for B, C in bC:GetChildren() do
+                if C:FindFirstChild('Level') and C.Level.Value <= aM.Level.Value then
+                    local gm = bI[C.Name]
+                    local gn, go = gm.Type == 'Weapon', gm.Type == 'Armor'
+                    local gp, gq = gn and bJ:GetItemStats(C)['Attack'], go and bJ:GetItemStats(C)['Defense']
+                    if gn and gp and gp > gd and gp > ge then
+                        gf = C;
+                        ge = gp;
+                        gg = gm.DisplayKey
+                    end
+                    if go and gq and gq > gh and gq > gi then
+                        gj = C;
+                        gi = gq;
+                        gk = gm.DisplayKey
+                    end
+                end
+            end
+            if gf then
+                cn('Equipped a T' .. bW:GetItemTier(gf) .. ' ' .. gg .. ' - Power: ' .. ge)
+                bK:FireServer(gf, aR)
+            end
+            if gj then
+                cn('Equipped a T' .. bW:GetItemTier(gj) .. ' ' .. gk .. ' - Defense: ' .. gi)
+                bK:FireServer(gj, aT)
+            end
+            task.wait(2)
+        end
+    end)
+end)
+local fp = require(game.ReplicatedStorage:WaitForChild("Shared"):WaitForChild("Effects"))
+local gr = fp.RenderDamageNumber;
+Toggles.NVD:OnChanged(function()
+    fp.RenderDamageNumber = function(...)
+        if Toggles.NVD.Value then
+            return
+        end
+        return gr(...)
+    end
+end)
+Options.FastSprint:OnChanged(function()
+    bN.SPRINT_WALKSPEED = Options.FastSprint.Value
+end)
+local gs = cx['Settings']:AddLeftGroupbox('Menu')
+gs:AddButton('Unload', function()
+    bi:Unload()
+end)
+gs:AddLabel('Menu bind'):AddKeyPicker('MenuKeybind', {
+    Default = 'LeftAlt',
+    NoUI = false,
+    Text = 'Menu keybind'
+})
+bi.ToggleKeybind = Options.MenuKeybind;
+cc:SetLibrary(bi)
+cd:SetLibrary(bi)
+cd:IgnoreThemeSettings()
+cd:SetIgnoreIndexes({'MenuKeybind'})
+cc:SetFolder('MyScriptHub')
+cd:SetFolder('MyScriptHub')
+cd:BuildConfigSection(cx['Settings'])
+cc:ApplyToTab(cx['Settings'])
+if aq then
+    cd:LoadAutoloadConfig()
+    if am and al:FindFirstChild(24) then
+        if Options.Offset.Value > 45 then
+            Options.Offset:SetValue(45)
+            cn('Set offset value to 45 to avoid death')
+        end
+    end
+end
+if Toggles.autoHide.Value then
+    task.wait(0.25)
+    bi:Toggle()
+end

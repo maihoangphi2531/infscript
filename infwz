@@ -1,4 +1,4 @@
-wait(17)
+wait(20)
 if game.gameId ~= 985731078 then
     return
 end

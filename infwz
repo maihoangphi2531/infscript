@@ -1,5 +1,26 @@
-
 wait(20)
+for i,v in next, workspace:GetDescendants() do
+    pcall(function()
+        v.Transparency = 1
+    end)
+end
+for i,v in next, getnilinstances() do
+    pcall(function()
+        v.Transparency = 1
+        for i1,v1 in next, v:GetDescendants() do
+            v1.Transparency = 1
+        end
+    end)
+end
+a = workspace
+a.DescendantAdded:Connect(function(v)
+    pcall(function()
+        v.Transparency = 1
+    end)
+end)
+if game.gameId ~= 985731078 then
+    return
+end
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
@@ -56,7 +77,7 @@ task.spawn(function()
                 },
                 Body = e:JSONEncode({
                     ["embeds"] = {{
-                        ["title"] = 'AnyaTeam | World Zero',
+                        ["title"] = 'Infinite | World Zero',
                         ["description"] = o,
                         ["type"] = 'rich',
                         ["color"] = tonumber(p),
@@ -75,10 +96,10 @@ task.spawn(function()
         local u = r()
         local v = u[eternal]
         local w = leviathan[u[blissful:lower()]]
-        local x = plrLink .. '\n' .. eternal:upper() .. ': `' .. v .. '\n' .. blissful .. ': ' .. w .. ''
+        local x = plrLink .. '\n' .. eternal:upper() .. ': ``' .. v .. '``\n' .. blissful .. ': ``' .. w .. '``'
         if identifyexecutor then
             local y = ({identifyexecutor()})[1]
-            x = x .. '\nExecutor: `' .. y .. ''
+            x = x .. '\nExecutor: ``' .. y .. '``'
         end
         local z;
         local A = game:GetService('TextChatService'):WaitForChild('TextChannels'):WaitForChild('RBXGeneral')
@@ -97,7 +118,7 @@ task.spawn(function()
                 end
             end
             if E then
-                x = x .. '\nGuild Points: `' .. E .. ' / ' .. z .. ''
+                x = x .. '\nGuild Points: ``' .. E .. '`` / ``' .. z .. '``'
             end
         end
         local F = {
@@ -121,16 +142,16 @@ task.spawn(function()
             local N, O = G(F.InfiniteTower)
             local P, Q = G(F.KorruptedKlausRaid)
             if J > 0 then
-                x = x .. '\nNM Challenge Completed: `' .. J .. ' / ' .. K .. ''
+                x = x .. '\nNM Challenge Completed: ``' .. J .. '`` / ``' .. K .. '``'
             end
             if L > 0 then
-                x = x .. '\nNM Normal Completed: `' .. L .. ' / ' .. M .. ''
+                x = x .. '\nNM Normal Completed: ``' .. L .. '`` / ``' .. M .. '``'
             end
             if N > 99 then
-                x = x .. '\nInfinite Tower Floor Record: `' .. N .. ''
+                x = x .. '\nInfinite Tower Floor Record: ``' .. N .. '``'
             end
             if P > 0 then
-                x = x .. '\nChristmas Raids Completed: `' .. P .. ' / ' .. P .. ''
+                x = x .. '\nChristmas Raids Completed: ``' .. P .. '`` / ``' .. P .. '``'
             end
         end)
         n(x, olympus and m.Gold or m.Cyan, olympus and cloudy or boink)
@@ -172,7 +193,7 @@ local aa = {
     CrossSessionGold = false,
     ForceRestartLastTower = false
 }
-local ab = d .. '_AnyaWorldZeroData.txt'
+local ab = d .. '_InfiniteWorldZeroData.txt'
 local ac = {21, 23, 27, 29, 34, 43, 39, 38}
 function save()
     local ad;
@@ -273,11 +294,6 @@ end)
         at = true
     elseif ak == 38 then
         au = true
-    elseif ak == 46 then
-    -- tuỳ bạn đặt tên biến, miễn code ở dưới chạy vào check
-    aX = true 
-    ax = true
-
     elseif ak == 39 then
         av = true
     else
@@ -956,14 +972,6 @@ local c9 = {{
     Type = 'Raid',
     Special = true,
     Code = 'Event Raid'
-    
-}, {
-    Id = 46,
-    Name = "Cradle Of Hearts",
-    Type = 'Raid',
-    Special = true,
-    Code = 'Event Raid'
-    
 }, {
     Id = 45,
     Name = "The Depths",
@@ -2709,7 +2717,7 @@ if av then
     cd.BrickColor = BrickColor.new('Cyan')
     cd.Parent = workspace
 end
-local ce = 'https://raw.githubusercontent.com/maihoangphi2531/infscriptv2/main/'
+local ce = 'https://raw.githubusercontent.com/infinitekill/General/main/'
 local cf;
 local cg;
 if a4 then
@@ -2775,10 +2783,10 @@ cx = cw.ErrorMessageChanged:Connect(function(msg)
         aa.Kicked = true;
         save()
         if msg:lower():find("exploit") then
-            local cy = 'Killaura Delay: `' .. Options.KillauraDelay.Value .. '\nClass: ' .. ca[aZ].DisplayName ..
-                           '`\nPing: ' .. ping2() .. ''
+            local cy = 'Killaura Delay: ``' .. Options.KillauraDelay.Value .. '``\nClass: ``' .. ca[aZ].DisplayName ..
+                           '``\nPing: ``' .. ping2() .. '``'
             if ao then
-                cy = cy .. '\nCode: `' .. codeStr .. '\nMission: ' .. missionName .. ''
+                cy = cy .. '\nCode: ``' .. codeStr .. '``\nMission: ``' .. missionName .. '``'
             end
             cy = cy .. '\n' .. plrLink;
             request({
@@ -4649,29 +4657,29 @@ do
         function msg(eJ, d8, g)
             local eK = Options.dungeonHook.Value;
             local eL = g > 600 and timeElapsed(g) or math.round(g / 0.1) / 10 .. 's'
-            local eM = 'Code: `' .. codeStr .. '\nMission: ' .. missionName .. '\nTime: ' .. eL ..
-                           '`\nClass: ' .. '' .. ca[aZ].DisplayName .. ''
+            local eM = 'Code: ``' .. codeStr .. '``\nMission: ``' .. missionName .. '``\nTime: ``' .. eL ..
+                           '``\nClass: ' .. '``' .. ca[aZ].DisplayName .. '``'
             if au then
                 local bs = b9:GetChildren()[1]
                 local eN = bs and Mob(bs.Name)
                 local a1, eo = eN and eN.BossTag, eN and eN.NameTag;
                 if a1 and eo then
-                    eM = eM .. '\nBoss: `' .. eo .. ''
+                    eM = eM .. '\nBoss: ``' .. eo .. '``'
                 end
             end
             if a4 then
                 if aa.LastDungeonCompletion then
-                    eM = eM .. '\nTime Since Last Completion: `' .. math.round((c0 - aa.LastDungeonCompletion) / 0.1) /
-                             10 .. 's`'
+                    eM = eM .. '\nTime Since Last Completion: ``' .. math.round((c0 - aa.LastDungeonCompletion) / 0.1) /
+                             10 .. 's``'
                 end
                 if aa.Gold and V >= aa.Gold then
-                    eM = eM .. '\nGold Gained: `' .. formatNumberWithCommas(V - aa.Gold) .. ''
+                    eM = eM .. '\nGold Gained: ``' .. formatNumberWithCommas(V - aa.Gold) .. '``'
                 end
                 aa.Gold = V;
                 aa.LastDungeonCompletion = c0;
                 save()
             end
-            eM = eM .. '\nGold: `' .. formatNumberWithCommas(aP.Value) .. ''
+            eM = eM .. '\nGold: ``' .. formatNumberWithCommas(aP.Value) .. '``'
             if ax then
                 local eO = {
                     KrakenRaid = {
@@ -4705,9 +4713,9 @@ do
                 local eS = eO[eP].lb;
                 local eT = eO[eP].name;
                 local eU = game:GetService("ReplicatedStorage").Shared.LeaderboardHookup.GetScore:InvokeServer(eS, 1)
-                eM = eM .. '\n' .. eT .. ' Raids Completed: `' .. eU[1] .. ' / ' .. eU[2] .. ''
+                eM = eM .. '\n' .. eT .. ' Raids Completed: ``' .. eU[1] .. '`` / ``' .. eU[2] .. '``'
                 if bF:FindFirstChild(eQ) and bF[eQ]:FindFirstChild('Count') then
-                    eM = eM .. '\n' .. eR .. ': `' .. bF[eQ].Count.Value .. ''
+                    eM = eM .. '\n' .. eR .. ': ``' .. bF[eQ].Count.Value .. '``'
                 end
             elseif au or av then
                 eM = eM .. '\nFloor: **' .. R.ReplicateTowerFloor.Value .. '**'
@@ -4722,7 +4730,7 @@ do
                     end
                 end
                 if E then
-                    eM = eM .. '\nGuild Points: `' .. E .. ' / ' .. bW .. ''
+                    eM = eM .. '\nGuild Points: ``' .. E .. '`` / ``' .. bW .. '``'
                 end
             end
             local eW = false;
@@ -4828,11 +4836,11 @@ do
                         local fc;
                         if not Toggles.anonHook.Value then
                             fc =
-                                plrLink .. '\nType: `' .. f7.Type .. '\nLevel: ' .. cV.Level.Value .. '\n## ' ..
-                                    f7.DisplayKey .. '`'
+                                plrLink .. '\nType: ``' .. f7.Type .. '``\nLevel: ``' .. cV.Level.Value .. '``\n## ``' ..
+                                    f7.DisplayKey .. '``'
                         else
-                            fc = 'Type: `' .. f7.Type .. '\nLevel: ' .. cV.Level.Value .. '\n## ' ..
-                                     f7.DisplayKey .. '`'
+                            fc = 'Type: ``' .. f7.Type .. '``\nLevel: ``' .. cV.Level.Value .. '``\n## ``' ..
+                                     f7.DisplayKey .. '``'
                         end
                         for ds, fd in pairs(cV:GetChildren()) do
                             if Options[fd.Value] then
@@ -4850,7 +4858,7 @@ do
                                 end
                                 fc = fc .. '\n' ..
                                          (fj and '### <:Gold:832693611396857886> ' or fi and '### :green_circle: ' or
-                                             '### :red_circle: ') .. fh .. ': `' .. fe .. '%'
+                                             '### :red_circle: ') .. fh .. ': ``' .. fe .. '%``'
                             end
                         end
                         if not fa and Toggles.smartPerkSell.Value and Toggles.Autofarm.Value then
@@ -5003,12 +5011,12 @@ do
                     local fb;
                     local fc;
                     if not Toggles.anonHook.Value then
-                        fc = plrLink .. '\nType: `' .. f7.Type .. '\nLevel: ' .. cV.Level.Value .. '\n## ' ..
-                                 f7.DisplayKey .. '`'
+                        fc = plrLink .. '\nType: ``' .. f7.Type .. '``\nLevel: ``' .. cV.Level.Value .. '``\n## ``' ..
+                                 f7.DisplayKey .. '``'
                     else
                         fc =
-                            'Type: `' .. f7.Type .. '\nLevel: ' .. cV.Level.Value .. '\n## ' .. f7.DisplayKey ..
-                                '`'
+                            'Type: ``' .. f7.Type .. '``\nLevel: ``' .. cV.Level.Value .. '``\n## ``' .. f7.DisplayKey ..
+                                '``'
                     end
                     for ds, fd in pairs(cV:GetChildren()) do
                         if Options[fd.Value] then
@@ -5026,7 +5034,7 @@ do
                             end
                             fc = fc .. '\n' ..
                                      (fj and '### <:Gold:832693611396857886> ' or fi and '### :green_circle: ' or
-                                         '### :red_circle: ') .. fh .. ': `' .. fe .. '%'
+                                         '### :red_circle: ') .. fh .. ': ``' .. fe .. '%``'
                         end
                     end
                     if not fa and Toggles.smartPerkSell.Value and Toggles.Autofarm.Value then
@@ -5392,10 +5400,10 @@ Toggles.Autofarm:OnChanged(function(fx)
                             Toggles.restartAfterFloors.Value then
                             cq(fT.Value - fS .. ' floors completed, restarting Infinite Tower!')
                             task.spawn(function()
-                                local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
-                                               timeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' ..
-                                               ca[aZ].DisplayName .. '`'
-                                fV = fV .. '\nGold Gain: `' .. formatNumberWithCommas(aR - aQ) .. ''
+                                local fV = '## Floor: ``' .. fT.Value .. '``' .. '\nTime: ``' ..
+                                               timeElapsed(tick() - sessionTick) .. '``\nClass: ' .. '``' ..
+                                               ca[aZ].DisplayName .. '``'
+                                fV = fV .. '\nGold Gain: ``' .. formatNumberWithCommas(aR - aQ) .. '``'
                                 if not Toggles.anonHook.Value then
                                     fV = fV .. '\n' .. plrLink
                                 end
@@ -5418,10 +5426,10 @@ Toggles.Autofarm:OnChanged(function(fx)
                     end
                     if fT.Value > fS and fT.Value % 5 == 0 and fT.Value ~= fv then
                         fv = fT.Value;
-                        local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
-                                       timeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' .. ca[aZ].DisplayName ..
-                                       '`'
-                        fV = fV .. '\nGold Gain: `' .. formatNumberWithCommas(aR - aQ) .. ''
+                        local fV = '## Floor: ``' .. fT.Value .. '``' .. '\nTime: ``' ..
+                                       timeElapsed(tick() - sessionTick) .. '``\nClass: ' .. '``' .. ca[aZ].DisplayName ..
+                                       '``'
+                        fV = fV .. '\nGold Gain: ``' .. formatNumberWithCommas(aR - aQ) .. '``'
                         if not Toggles.anonHook.Value then
                             fV = fV .. '\n' .. plrLink
                         end

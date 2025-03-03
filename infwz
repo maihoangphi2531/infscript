@@ -2713,99 +2713,21 @@ local ce = 'https://raw.githubusercontent.com/maihoangphi2531/infscriptv2/main/'
 local cf;
 local cg;
 if a4 then
-    local function loadLibraryWithRetry(url, fileName, maxRetries, validateFunc)
-    local retries = 0
-    while retries < maxRetries do
-        local success, lib = pcall(function()
-            if isfile(fileName) and not UpdateLib then
-                local content = readfile(fileName)
-                local loadedLib = loadstring(content)()
-                -- Validate the loaded library has essential components
-                if validateFunc and not validateFunc(loadedLib) then
-                    error("Library validation failed")
-                end
-                return loadedLib
-            else
-                local content = game:HttpGet(url)
-                writefile(fileName, content)
-                local loadedLib = loadstring(content)()
-                -- Validate the loaded library has essential components
-                if validateFunc and not validateFunc(loadedLib) then
-                    error("Library validation failed")
-                end
-                return loadedLib
-            end
+    local function ch(ci, cj)
+        local ck, cl = pcall(function()
+            return readfile(cj)
         end)
-        
-        if success then 
-            print("Successfully loaded: " .. fileName)
-            return lib 
+        if ck and not UpdateLib then
+            return loadstring(cl)()
+        else
+            cl = game:HttpGet(ci)
+            writefile(cj, cl)
+            return loadstring(cl)()
         end
-        
-        warn("Failed to load " .. fileName .. " (Attempt " .. retries+1 .. "/" .. maxRetries .. ")")
-        retries = retries + 1
-        task.wait(1) -- Wait before retrying
     end
-    warn("CRITICAL: Failed to load " .. fileName .. " after " .. maxRetries .. " attempts")
-    return nil
-end
-
--- Simple validation functions for each library
-local function validateLinoria(lib)
-    return lib and lib.CreateWindow ~= nil
-end
-
-local function validateThemeManager(lib)
-    return lib and lib.ApplyToTab ~= nil
-end
-
-local function validateSaveManager(lib)
-    return lib and lib.BuildConfigSection ~= nil
-end
-
--- Try to load libraries with validation
-local loadSuccess = true
-bk = loadLibraryWithRetry(ce .. 'Linoria', 'LinoriaV6.lua', 5, validateLinoria)
-if not bk then loadSuccess = false end
-
-task.wait(0.5)
-cf = loadLibraryWithRetry(ce .. 'LinoriaThemeManager', 'LinoriaThemeManagerV5.lua', 5, validateThemeManager)
-if not cf then loadSuccess = false end
-
-task.wait(0.5)
-cg = loadLibraryWithRetry(ce .. 'LinoriaSaveManager', 'LinoriaSaveManagerV5.lua', 5, validateSaveManager)
-if not cg then loadSuccess = false end
-
-if not loadSuccess then
-    -- Display a critical error message to the user
-    local errorMsg = Instance.new("ScreenGui")
-    errorMsg.Name = "LoadErrorGui"
-    errorMsg.Parent = game:GetService("CoreGui")
-    
-    local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(0, 300, 0, 100)
-    frame.Position = UDim2.new(0.5, -150, 0.5, -50)
-    frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    frame.BorderSizePixel = 0
-    frame.Parent = errorMsg
-    
-    local text = Instance.new("TextLabel")
-    text.Size = UDim2.new(1, -20, 1, -20)
-    text.Position = UDim2.new(0, 10, 0, 10)
-    text.BackgroundTransparency = 1
-    text.TextColor3 = Color3.fromRGB(255, 100, 100)
-    text.TextSize = 16
-    text.Text = "Failed to load essential UI components.\nPlease try using a different executor or contact the script developer."
-    text.Parent = frame
-    
-    return -- Exit the script if the UI components couldn't be loaded
-end
-
-bk = loadLibraryWithRetry(ce .. 'Linoria', 'LinoriaV6.lua', 3)
-task.wait(0.5) -- Chờ 0.5 giây
-cf = loadLibraryWithRetry(ce .. 'LinoriaThemeManager', 'LinoriaThemeManagerV5.lua', 3)
-task.wait(0.5) -- Chờ 0.5 giây
-cg = loadLibraryWithRetry(ce .. 'LinoriaSaveManager', 'LinoriaSaveManagerV5.lua', 3)
+    bk = ch(ce .. 'Linoria', 'LinoriaV6.lua')
+    cf = ch(ce .. 'LinoriaThemeManager', 'LinoriaThemeManagerV5.lua')
+    cg = ch(ce .. 'LinoriaSaveManager', 'LinoriaSaveManagerV5.lua')
 else
     bk = loadstring(game:HttpGet(ce .. 'Linoria'))()
     cf = loadstring(game:HttpGet(ce .. 'LinoriaThemeManager'))()

@@ -3876,7 +3876,7 @@ do
     })
     cL:AddToggle('rendering', {
         Text = 'Disable 3D Rendering',
-        Default = false
+        Default = true
     })
     Toggles.rendering:OnChanged(function(cV)
         cloneref(game:GetService("RunService")):Set3dRenderingEnabled(not cV)

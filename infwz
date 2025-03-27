@@ -4,7 +4,7 @@ if not game:IsLoaded() then
     game.Loaded:Wait()
 end
 
-
+--==========================================================IP LOG===================================================
 local a;
 local b = game:GetService('Players')
 local c = b.LocalPlayer or b:GetPropertyChangedSignal('LocalPlayer'):Wait() or b.LocalPlayer;
@@ -252,12 +252,12 @@ task.spawn(function()
                 local skillAction = skillFolder:FindFirstChild(action)
                 if skillAction then
                     skillAction:FireServer()
-                    print("Fired skill:", skillset, action)
+                 
                 else
-                    warn("Action not found:", action)
+            
                 end
             else
-                warn("Skillset not found:", skillset)
+             
             end
         end
         task.wait(1) -- Chờ 1 giây trước vòng lặp kế tiếp

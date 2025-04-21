@@ -1,4 +1,3 @@
-
 wait(20)
 if not game:IsLoaded() then
     game.Loaded:Wait()
@@ -628,7 +627,7 @@ local c3 = {
     'CastleGateTrigger', 'SceneTrigger', 'OutsideBossTrigger', 'Area1Trigger', 'Area2Trigger', 'Area3Trigger',
     'FinishRing', 'StartWaveDefense', 'Trigger1', 'Trigger2', 'Trigger3', 'BossCutsceneTrigger', 'FloorTrigger',
     'BossCutscene', 'BottomElevatorTrigger', 'MiddleElevatorTrigger', 'TopElevatorTrigger', 'ObbyTrigger5',
-    'MinibossExit', 'ArenaEntry0', 'ArenaEntry1', 'ArenaEntry2','Part'
+    'MinibossExit', 'ArenaEntry0', 'ArenaEntry1', 'ArenaEntry2'
 }
 
 -- Cờ kiểm tra để không thêm BossDoorTrigger trùng
@@ -672,8 +671,7 @@ if ak ~= nil then
             ProcessAllTouchInterests()
         end
     elseif not table.find({21, 23, 27, 29, 34, 43, 38, 39}, ak) then
-        if not table.find(c3, "part") then
-            table.insert(c3, "part")
+        if not table.find(c3, "BossTrigger") then  
             table.insert(c3, "BossTrigger")
             ProcessAllTouchInterests()
             print("Đã thêm part vào c3")

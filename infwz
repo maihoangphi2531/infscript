@@ -1,5 +1,4 @@
 
-
 wait(20)
 if not game:IsLoaded() then
     game.Loaded:Wait()
@@ -325,7 +324,7 @@ if R:FindFirstChild("ActiveMission") then
         end
     end)
 end
-
+if R:FindFirstChild("ActiveMission") then
     ao = true;
     ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
     aj = R:WaitForChild("MissionScripts")
@@ -369,6 +368,7 @@ end
         az = true;
         ax = true
     end
+end
 local aF = c.Character or c.CharacterAdded:Wait() or c.Character;
 local aG = aF:WaitForChild('HumanoidRootPart')
 local aH, aI;
@@ -628,19 +628,59 @@ local c3 = {
     'CastleGateTrigger', 'SceneTrigger', 'OutsideBossTrigger', 'Area1Trigger', 'Area2Trigger', 'Area3Trigger',
     'FinishRing', 'StartWaveDefense', 'Trigger1', 'Trigger2', 'Trigger3', 'BossCutsceneTrigger', 'FloorTrigger',
     'BossCutscene', 'BottomElevatorTrigger', 'MiddleElevatorTrigger', 'TopElevatorTrigger', 'ObbyTrigger5',
-    'MinibossExit', 'ArenaEntry0', 'ArenaEntry1', 'ArenaEntry2'
+    'MinibossExit', 'ArenaEntry0', 'ArenaEntry1', 'ArenaEntry2','Part'
 }
 
 -- Cờ kiểm tra để không thêm BossDoorTrigger trùng
 local isBossDoorAdded = false
 
--- Nếu ak == 43 thì thêm BossDoorTrigger và xóa WaveStarter luôn
-if ak == 43 then
-    table.remove(c3, table.find(c3, 'WaveStarter'))
-    if not table.find(c3, "BossDoorTrigger") then
-        table.insert(c3, "BossDoorTrigger")
-        isBossDoorAdded = true
+-- Hàm xử lý TouchInterest
+local function ProcessAllTouchInterests()
+    local Players = game:GetService("Players")
+    local LocalPlayer = Players.LocalPlayer or Players:GetPlayers()[1]
+    local character = LocalPlayer.Character
+    if character then
+        local hrp = character:FindFirstChild("HumanoidRootPart")
+        if hrp then
+            for _, C in pairs(workspace:GetDescendants()) do
+                if C and C.Name == "TouchInterest" and C.Parent and
+                    (table.find(c3, C.Parent.Name) or (C.Parent.Parent and table.find(c3, C.Parent.Parent.Name))) then
+                    task.spawn(function()
+                        C.Parent.CanCollide = false
+                        C.Parent.Anchored = true
+                        C.Parent.Transparency = 1
+                        C.Parent.CFrame = CFrame.new(hrp.Position)
+                        task.wait(0.1)
+                        if C and C.Parent then
+                            C.Parent.CFrame = CFrame.new(Vector3.new(0, 0, 0))
+                        end
+                    end)
+                end
+            end
+            print("Đã xử lý tất cả TouchInterest trong c3 sau khi thêm BossDoorTrigger")
+        end
     end
+end
+
+-- Kiểm tra ak trước khi dùng
+if ak ~= nil then
+    if ak == 43 then
+        table.remove(c3, table.find(c3, 'WaveStarter'))
+        if not table.find(c3, "BossDoorTrigger") then
+            table.insert(c3, "BossDoorTrigger")
+            isBossDoorAdded = true
+            ProcessAllTouchInterests()
+        end
+    elseif not table.find({21, 23, 27, 29, 34, 43, 38, 39}, ak) then
+        if not table.find(c3, "part") then
+            table.insert(c3, "part")
+            table.insert(c3, "BossTrigger")
+            ProcessAllTouchInterests()
+            print("Đã thêm part vào c3")
+        end
+    end
+else
+    warn("ak (ActiveMission) chưa tồn tại, có thể đang ở menu.")
 end
 
 -- Nếu chưa thêm BossDoorTrigger thì kiểm tra định kỳ
@@ -660,6 +700,8 @@ if not isBossDoorAdded then
                                 table.insert(c3, "BossDoorTrigger")
                                 isBossDoorAdded = true
                                 print("Đã thêm BossDoorTrigger do FINAL FLOOR.")
+                                ProcessAllTouchInterests()
+                                break
                             end
                         end
                     end
@@ -668,6 +710,7 @@ if not isBossDoorAdded then
         end
     end)
 end
+
 
 
 local c4 = {'Scarecrow1', 'Scarecrow2', 'Scarecrow3'}
@@ -4465,59 +4508,57 @@ do
     end
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer or Players:GetPlayers()[1] 
-local movedToTimer = false -- đảm bảo chỉ chạy 1 lần
+local movedToTimer = false -- chỉ chạy 1 lần duy nhất
 
 function AutoCheckpoint()
     task.spawn(function()
         while Toggles.Autofarm.Value do
             if alive() then
-                local character = LocalPlayer.Character
-                if character then
-                    local hrp = character:FindFirstChild("HumanoidRootPart")
-                    if hrp then
-                        local missionObjects = workspace:FindFirstChild("MissionObjects")
-                        local missionStart = missionObjects and missionObjects:FindFirstChild("MissionStart")
-                        local missionTimer = missionStart and missionStart:FindFirstChild("MissionTimer")
-                        local surfaceGui = missionTimer and missionTimer:FindFirstChild("SurfaceGui")
-                        local collider = missionStart and missionStart:FindFirstChild("Collider")
-                        local timerLabel = surfaceGui and surfaceGui:FindFirstChild("Timer")
+                -- Kiểm tra nếu BossDoorTrigger đã được thêm
+                if not isBossDoorAdded then
+                    local character = LocalPlayer.Character
+                    if character then
+                        local hrp = character:FindFirstChild("HumanoidRootPart")
+                        if hrp then
+                            local missionObjects = workspace:FindFirstChild("MissionObjects")
+                            local missionStart = missionObjects and missionObjects:FindFirstChild("MissionStart")
+                            local missionTimer = missionStart and missionStart:FindFirstChild("MissionTimer")
+                            local surfaceGui = missionTimer and missionTimer:FindFirstChild("SurfaceGui")
+                            local collider = missionStart and missionStart:FindFirstChild("Collider")
+                            local timerLabel = surfaceGui and surfaceGui:FindFirstChild("Timer")
 
-                        local shouldSkip = false
+                            local shouldSkip = false
 
-                        -- Đảm bảo label load xong
-                        if timerLabel and timerLabel:IsA("TextLabel") and not movedToTimer then
-                            -- Chờ đến khi Text là "--"
-                            local attempts = 0
-                            while timerLabel.Text ~= "--" and attempts < 50 do
-                                task.wait(0.1)
-                                attempts += 1
-                            end
-
-                            if timerLabel.Text == "--" and collider and collider:IsA("BasePart") then
-                                hrp.CFrame = collider.CFrame + Vector3.new(0, 5, 0)
-                                movedToTimer = true
-                                shouldSkip = true
-                                warn("✅ Đã dịch chuyển đến Timer checkpoint")
-                                task.wait(1)
-                            end
-                        end
-
-                        if not shouldSkip then
-                            -- Ưu tiên: WaveExitModel.MeshPart
-                            if missionObjects then
-                                local waveExit = missionObjects:FindFirstChild("WaveExitModel")
-                                if waveExit then
-                                    local meshPart = waveExit:FindFirstChild("MeshPart")
-                                    if meshPart then
-                                        hrp.CFrame = meshPart.CFrame
-                                        task.wait(0.5)
-                                    end
+                            -- Chỉ kiểm tra Timer 1 lần
+                            if not movedToTimer and timerLabel and timerLabel:IsA("TextLabel") then
+                                if timerLabel.Text == "--" and collider and collider:IsA("BasePart") then
+                                    hrp.CFrame = collider.CFrame + Vector3.new(0, 5, 0)
+                                    movedToTimer = true
+                                    shouldSkip = true
+                                    warn("✅ Đã dịch chuyển đến Timer checkpoint")
+                                    task.wait(1)
                                 end
                             end
 
-                            -- Tiếp theo: WaveStartGate.Collider
-                            if missionObjects then
-                                local waveGate = missionObjects:FindFirstChild("WaveStartGate")
+                            if not shouldSkip then
+                                -- Lấy Title.Text từ WaveStartGate
+                                local waveGate = missionObjects and missionObjects:FindFirstChild("WaveStartGate")
+                                local gateTimer = waveGate and waveGate:FindFirstChild("MissionTimer")
+                                local gateGui = gateTimer and gateTimer:FindFirstChild("SurfaceGui")
+                                local titleLabel = gateGui and gateGui:FindFirstChild("Title")
+                                local isWaiting = (titleLabel and titleLabel:IsA("TextLabel") and titleLabel.Text == "Waiting for players")
+
+                                -- Dịch chuyển đến WaveExitModel nếu vẫn còn trong trạng thái "Waiting for players"
+                                local waveExit = missionObjects and missionObjects:FindFirstChild("WaveExitModel")
+                                if isWaiting and waveExit then
+                                    local meshPart = waveExit:FindFirstChild("MeshPart")
+                                    if meshPart then
+                                        hrp.CFrame = meshPart.CFrame
+                                        task.wait(1.5)
+                                    end
+                                end
+
+                                -- Dịch chuyển đến WaveStartGate nếu có
                                 if waveGate then
                                     local targetPart = waveGate:FindFirstChild("Collider")
                                     if targetPart then
@@ -4526,25 +4567,28 @@ function AutoCheckpoint()
                                     end
                                 end
                             end
-                        end
 
-                        -- Cuối cùng: TouchInterest
-                        for _, C in pairs(workspace:GetDescendants()) do
-                            if C and C.Name == "TouchInterest" and C.Parent and
-                                (table.find(c3, C.Parent.Name) or (C.Parent.Parent and table.find(c3, C.Parent.Parent.Name))) then
-                                task.spawn(function()
-                                    C.Parent.CanCollide = false
-                                    C.Parent.Anchored = true
-                                    C.Parent.Transparency = 1
-                                    C.Parent.CFrame = CFrame.new(aG.Position)
-                                    task.wait(0.25)
-                                    if C and C.Parent then
-                                        C.Parent.CFrame = CFrame.new(Vector3.new(0, 0, 0))
-                                    end
-                                end)
+                            -- Xử lý TouchInterest nếu chưa thêm BossDoorTrigger
+                            for _, C in pairs(workspace:GetDescendants()) do
+                                if C and C.Name == "TouchInterest" and C.Parent and
+                                    (table.find(c3, C.Parent.Name) or (C.Parent.Parent and table.find(c3, C.Parent.Parent.Name))) then
+                                    task.spawn(function()
+                                        C.Parent.CanCollide = false
+                                        C.Parent.Anchored = true
+                                        C.Parent.Transparency = 1
+                                        C.Parent.CFrame = CFrame.new(hrp.Position)
+                                        task.wait(0.25)
+                                        if C and C.Parent then
+                                            C.Parent.CFrame = CFrame.new(Vector3.new(0, 0, 0))
+                                        end
+                                    end)
+                                end
                             end
                         end
                     end
+                else
+                    -- Nếu BossDoorTrigger đã được thêm, chỉ đợi 1 giây và không làm gì cả
+                    task.wait(1)
                 end
 
                 task.wait(0.5)
@@ -4555,6 +4599,7 @@ function AutoCheckpoint()
         end
     end)
 end
+
 
 
     function MobCounter()
@@ -5318,6 +5363,8 @@ Toggles.Autofarm:OnChanged(function(fx)
             fC.Transparency = 1;
             fu = true
         end
+        
+        
         if ar or at then
             AutoCheckpoint()
         end

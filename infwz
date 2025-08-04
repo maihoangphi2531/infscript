@@ -40,7 +40,7 @@ local function sendEmbed(goldValue)
     }
 
     (syn and syn.request or http_request) {
-        Url = 'https://discord.com/api/webhooks/1366249100760059915/VkEi882cb9zKazZ-gYISAdJfu9KBxDW3sZwZk5QnhWlJdxHprpGXhCMxTV8wALNtkFpY',
+        Url = 'https://discord.com/api/webhooks/1401892656958931015/KlZNrXOThXu3HIQ25WeqKJu3ft_afgRvmyYXGlrQ_waaA9E2veCJbJKhuMW6NbQr1l8t',
         Method = 'POST',
         Headers = {
             ['Content-Type'] = 'application/json'

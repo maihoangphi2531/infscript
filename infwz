@@ -6,6 +6,10 @@ end
 local HttpService = game:GetService('HttpService')
 local Players = game:GetService('Players')
 
+-- Lấy thông tin Server
+local serverName = game.Name -- Lấy tên của experience (game)
+local serverID = game.JobId   -- Lấy ID của server instance hiện tại
+
 local OSTime = os.time()
 local Time = os.date('!*t', OSTime)
 local Avatar = 'https://cdn.discordapp.com/embed/avatars/4.png'
@@ -21,14 +25,22 @@ local function sendEmbed(goldValue)
     local Embed = {
         title = 'World//Zero',
         color = 99999,
-        footer = { text = game.JobId },
+        footer = { text = "ID Server: " .. serverID }, -- Có thể đưa ID server xuống footer cho gọn
         author = {
             name = 'MAI HOÀNG PHI',
             url = 'https://www.roblox.com/',
         },
         fields = {
             {
-                name = playerName,
+                name = "Tên Server",
+                value = serverName
+            },
+            {
+                name = "Tên người chơi",
+                value = playerName
+            },
+            {
+                name = "Số vàng",
                 value = tostring(goldValue)
             },
             {
@@ -39,21 +51,40 @@ local function sendEmbed(goldValue)
         timestamp = string.format('%d-%d-%dT%02d:%02d:%02dZ', timeData.year, timeData.month, timeData.day, timeData.hour, timeData.min, timeData.sec),
     }
 
-    (syn and syn.request or http_request) {
-        Url = 'https://discord.com/api/webhooks/1401892656958931015/KlZNrXOThXu3HIQ25WeqKJu3ft_afgRvmyYXGlrQ_waaA9E2veCJbJKhuMW6NbQr1l8t',
-        Method = 'POST',
-        Headers = {
-            ['Content-Type'] = 'application/json'
-        },
-        Body = HttpService:JSONEncode({
-            content = Content,
-            allowed_mentions = {
-                parse = {"roles"}
+    local success, err = pcall(function()
+        (syn and syn.request or http_request) {
+            Url = 'https://discord.com/api/webhooks/1401892656958931015/KlZNrXOThXu3HIQ25WeqKJu3ft_afgRvmyYXGlrQ_waaA9E2veCJbJKhuMW6NbQr1l8t',
+            Method = 'POST',
+            Headers = {
+                ['Content-Type'] = 'application/json'
             },
-            embeds = {Embed}
-        })
-    }
+            Body = HttpService:JSONEncode({
+                content = Content,
+                allowed_mentions = {
+                    parse = {"roles"}
+                },
+                embeds = {Embed}
+            })
+        }
+    end)
+
+    if not success then
+        warn("Gửi webhook thất bại:", err)
+    end
 end
+
+-- Coroutine để kiểm tra liên tục
+coroutine.wrap(function()
+    while task.wait(10) do -- Chờ 10s mỗi lần
+        local playerProfile = player:FindFirstChild("PlayerGui"):FindFirstChild("Profile")
+        if playerProfile and playerProfile:FindFirstChild("Currency") and playerProfile.Currency:FindFirstChild("Gold") then
+            local goldValue = playerProfile.Currency.Gold.Value
+            if goldValue == 99999999 then
+                sendEmbed(goldValue)
+            end
+        end
+    end
+end)()
 
 -- Coroutine để kiểm tra liên tục
 coroutine.wrap(function()

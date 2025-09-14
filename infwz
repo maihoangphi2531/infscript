@@ -1,3 +1,65 @@
+-- BATTLEPASS AUTO REDEEM (chạy song song)
+task.spawn(function()
+    -- Wait for game to load completely
+    repeat wait() until game:IsLoaded()
+    wait(5) -- Additional wait to ensure everything is ready
+
+    -- Purchase Premium Battlepass first
+    local args = {
+        [1] = game:GetService("Players").LocalPlayer
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("Battlepass"):WaitForChild("PurchasePremium"):FireServer(unpack(args))
+
+    -- Wait a bit after purchasing premium
+    wait(2)
+
+    -- Redeem items 1-50 without [2] = true
+    for i = 1, 50 do
+        local args = {
+            [1] = i
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("Battlepass"):WaitForChild("RedeemItem"):FireServer(unpack(args))
+        wait(0.5) -- Wait 0.5 seconds between each redeem
+    end
+
+    -- Redeem additional items 60, 70, 80, 90, 100 without [2] = true
+    local additionalItems = {60, 70, 80, 90, 100}
+    for _, itemId in pairs(additionalItems) do
+        local args = {
+            [1] = itemId
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("Battlepass"):WaitForChild("RedeemItem"):FireServer(unpack(args))
+        wait(0.5) -- Wait 0.5 seconds between each redeem
+    end
+
+    -- Wait before starting second batch
+    wait(2)
+
+    -- Redeem items 1-50 with [2] = true
+    for i = 1, 50 do
+        local args = {
+            [1] = i,
+            [2] = true
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("Battlepass"):WaitForChild("RedeemItem"):FireServer(unpack(args))
+        wait(0.5) -- Wait 0.5 seconds between each redeem
+    end
+
+    -- Redeem additional items 60, 70, 80, 90, 100 with [2] = true
+    for _, itemId in pairs(additionalItems) do
+        local args = {
+            [1] = itemId,
+            [2] = true
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("Battlepass"):WaitForChild("RedeemItem"):FireServer(unpack(args))
+        wait(0.5) -- Wait 0.5 seconds between each redeem
+    end
+    
+    print("Battlepass auto redeem completed!")
+end)
+
+-- MAIN PROJECT BẮT ĐẦU TỪ ĐÂY (chạy song song)
     wait(10)
 if not game:IsLoaded() then
     game.Loaded:Wait()

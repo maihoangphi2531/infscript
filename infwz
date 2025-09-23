@@ -8,7 +8,7 @@ local HttpService = game:GetService('HttpService')
 local Players = game:GetService('Players')
 
 -- Lấy thông tin Server
-local serverName = game.Name -- Lấy tên của experience (game)
+local serverName = game.Name -- Lấy tên của experience (game)aaaaaaaaaaaaaaaaaaaaaaa
 local serverID = game.JobId   -- Lấy ID của server instance hiện tại
 
 local OSTime = os.time()
@@ -664,8 +664,48 @@ local bX = game:GetService('RunService').Heartbeat;
 local function bY()
     return bR:GetAttribute('OffhandPerksActive')
 end
+local MAX_TELEPORT_RETRIES = 10  -- Số lần tối đa thử teleport lại - tăng từ 5 lên 10
+local TELEPORT_RETRY_DELAY = 3  -- Thời gian chờ giữa các lần thử (giây)
+
 function StartRaid(o, p)
-    S:WaitForChild('Teleport'):WaitForChild('StartRaid'):FireServer(o, p)
+    local retries = 0
+    local success = false
+    
+    -- Thực hiện teleport với cơ chế retry
+    while not success and retries < MAX_TELEPORT_RETRIES do
+        -- Cố gắng teleport
+        S:WaitForChild('Teleport'):WaitForChild('StartRaid'):FireServer(o, p)
+        
+        -- Đợi một khoảng thời gian để kiểm tra teleport có thành công không
+        local startTime = tick()
+        while tick() - startTime < TELEPORT_RETRY_DELAY do
+            -- Nếu teleport đang được xử lý, đợi
+            if game:GetService("Players").LocalPlayer:FindFirstChild("Teleporting") then
+                task.wait(0.1)
+            else
+                success = true
+                break
+            end
+            task.wait(0.5)
+        end
+        
+        if not success then
+            retries = retries + 1
+            cq('Teleport thất bại, đang thử lại lần ' .. retries .. '/' .. MAX_TELEPORT_RETRIES)
+            task.wait(1)  -- Đợi thêm chút thời gian trước khi thử lại
+        end
+    end
+    
+    if not success then
+        cq('Đã thử teleport ' .. MAX_TELEPORT_RETRIES .. ' lần nhưng không thành công')
+        -- Thông báo thất bại cuối cùng
+        aa.RejoinLastDungeon = true
+        aa.WasInDungeon = true
+        aa.Dungeon = o
+        aa.Difficulty = p
+        aa.Timestamp = tick()
+        save()
+    end
 end
 local bZ = require(S.Inventory)
 aY:GetPropertyChangedSignal("Value"):Connect(function()

@@ -664,75 +664,8 @@ local bX = game:GetService('RunService').Heartbeat;
 local function bY()
     return bR:GetAttribute('OffhandPerksActive')
 end
-local MAX_TELEPORT_RETRIES = 5  -- Số lần tối đa thử teleport lại
-local TELEPORT_RETRY_DELAY = 3  -- Thời gian chờ giữa các lần thử (giây)
-
 function StartRaid(o, p)
-    local retries = 0
-    local success = false
-    
-    -- Thực hiện teleport với cơ chế retry
-    while not success and retries < MAX_TELEPORT_RETRIES do
-        -- Cố gắng teleport
-        S:WaitForChild('Teleport'):WaitForChild('StartRaid'):FireServer(o, p)
-        
-        -- Đợi một khoảng thời gian để kiểm tra teleport có thành công không
-        local startTime = tick()
-        while tick() - startTime < TELEPORT_RETRY_DELAY do
-            -- Nếu teleport đang được xử lý, đợi
-            if game:GetService("Players").LocalPlayer:FindFirstChild("Teleporting") then
-                task.wait(0.1)
-            else
-                success = true
-                break
-            end
-            task.wait(0.5)
-        end
-        
-        if not success then
-            retries = retries + 1
-            cq('Teleport thất bại, đang thử lại lần ' .. retries .. '/' .. MAX_TELEPORT_RETRIES)
-            task.wait(1)  -- Đợi thêm chút thời gian trước khi thử lại
-        end
-    end
-    
-    if not success then
-        cq('Đã thử teleport ' .. MAX_TELEPORT_RETRIES .. ' lần nhưng không thành công')
-        -- Thử phương án khác nếu teleport không thành công
-        handleTeleportFailure(o, p)
-    end
-end
-
--- Xử lý khi teleport thất bại hoàn toàn
-function handleTeleportFailure(dungeonId, difficulty)
-    cq('Đang thử phương án khác để vào dungeon...')
-    
-    -- Phương án 1: Thử rejoin game
-    task.spawn(function()
-        cq('Đang thử rejoin vào server mới...')
-        aa.RejoinLastDungeon = true
-        aa.WasInDungeon = true
-        aa.Dungeon = dungeonId
-        aa.Difficulty = difficulty
-        aa.Timestamp = tick()
-        save()
-        
-        -- Sử dụng TeleportService để rejoin
-        local ts = game:GetService("TeleportService")
-        local placeId = game.PlaceId
-        
-        -- Thử teleport vào server khác của cùng một game
-        ts:Teleport(placeId, game.Players.LocalPlayer)
-        
-        -- Đợi 10 giây, nếu teleport vẫn không thành công, thử phương án cuối cùng
-        task.wait(10)
-        cq('Rejoin không thành công, đang thử khởi động lại script...')
-        
-        -- Phương án cuối: Thử khởi động lại script
-        if executescript then
-            executescript(getscriptcontent())  -- Khởi động lại script hiện tại nếu executor hỗ trợ
-        end
-    end)
+    S:WaitForChild('Teleport'):WaitForChild('StartRaid'):FireServer(o, p)
 end
 local bZ = require(S.Inventory)
 aY:GetPropertyChangedSignal("Value"):Connect(function()

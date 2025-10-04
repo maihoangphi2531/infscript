@@ -3,7 +3,7 @@ wait(10)
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
--- WEBHOOK
+-- WEBHOOKaaaaaaaaaaaaaaa
 local HttpService = game:GetService('HttpService')
 local Players = game:GetService('Players')
 local VirtualInputManager = game:GetService("VirtualInputManager")

@@ -3,13 +3,69 @@ wait(10)
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
+
+-- Script đã được cập nhật với logic lấy server info từ UI
+print("🔄 Script Gold Detector đã được cập nhật - Sẽ lấy thông tin server thực tế từ UI!")
 -- WEBHOOK
 local HttpService = game:GetService('HttpService')
 local Players = game:GetService('Players')
+local VirtualInputManager = game:GetService("VirtualInputManager")
 
--- Lấy thông tin Server
-local serverName = game.Name -- Lấy tên của experience (game)aaaaaaaaaaaaaaaaaaaaaaa
-local serverID = game.JobId   -- Lấy ID của server instance hiện tại
+-- Hàm nhấn phím P
+local function pressKeyP()
+    pcall(function()
+        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.P, false, game)
+        task.wait(0.1)
+        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.P, false, game)
+    end)
+end
+
+-- Hàm lấy thông tin server từ UI
+local function getServerDetails()
+    local serverNameLabel
+    local success, gui = pcall(function() 
+        return Players.LocalPlayer.PlayerGui.Players.Players.Pages.Servers.Scrolling.MyServerCard.ServerName 
+    end)
+    if success and gui then serverNameLabel = gui else return nil, nil end
+    local fullText = serverNameLabel.Text
+    if not fullText or fullText == "" then return nil, nil end
+    local serverNameOnly, serverID = fullText:match("^(.-)%%s%%-%%-%%s<font[^>]*>([^<]+)</font>$")
+    if not serverNameOnly or not serverID then 
+        serverNameOnly = fullText:match("^(.-)%%s%%-%%-%%s") 
+        serverID = fullText:match(">([a-f0-9A-F]+)<") or fullText:match("([a-f0-9A-F]{3,})") 
+    end
+    if serverNameOnly then 
+        serverNameOnly = serverNameOnly:gsub("^%%s+", ""):gsub("%%s+$", ""):gsub("<[^>]*>", "") 
+    else 
+        serverNameOnly = "Không rõ" 
+    end
+    return serverNameOnly, serverID
+end
+
+-- Hàm đợi load thông tin server
+local function waitForServerInfoLoaded()
+    print("🔍 Đang kiểm tra thông tin server...")
+    local maxAttempts = 30
+    local attempts = 0
+    
+    while attempts < maxAttempts do
+        local serverName, serverID = getServerDetails()
+        
+        if serverName and serverID and serverName ~= "Không rõ" and #serverID >= 3 then
+            print(string.format("✅ Đã load thành công! Server: %s (%s)", serverName, serverID))
+            return serverName, serverID
+        end
+        
+        attempts = attempts + 1
+        print(string.format("⏳ Lần thử %d/%d - Đang nhấn phím P để mở menu Players...", attempts, maxAttempts))
+        pressKeyP()
+        
+        task.wait(1)
+    end
+    
+    print("⚠️ Không thể load thông tin server sau 30 lần thử.")
+    return "Không rõ", "Không rõ"
+end
 
 local OSTime = os.time()
 local Time = os.date('!*t', OSTime)
@@ -18,41 +74,70 @@ local Content = '<@880845879404285952> Treo Acc World//Zero AnyaTeam' -- Nội d
 local player = Players.LocalPlayer
 local playerName = player.Name
 
+-- Cache thông tin server để không phải lấy lại nhiều lần
+local cachedServerName = nil
+local cachedServerID = nil
+
 -- Hàm gửi embed
 local function sendEmbed(goldValue)
     local currentTime = os.time()
     local timeData = os.date('!*t', currentTime)
     
+    -- Lấy thông tin server thực tế (sử dụng cache nếu có)
+    local serverName, serverID
+    if not cachedServerName or not cachedServerID then
+        cachedServerName, cachedServerID = waitForServerInfoLoaded()
+    end
+    serverName, serverID = cachedServerName, cachedServerID
+    
     local Embed = {
-        title = 'World//Zero',
-        color = 99999,
-        footer = { text = "ID Server: " .. serverID }, -- Có thể đưa ID server xuống footer cho gọn
+        title = 'World//Zero - Gold Alert',
+        color = 16776960, -- Màu vàng
+        footer = { text = "Server ID: " .. (serverID or "Không rõ") },
         author = {
-            name = 'MAI HOÀNG PHI',
+            name = 'MAI HOÀNG PHI - Gold Detector',
             url = 'https://www.roblox.com/',
         },
         fields = {
             {
-                name = "Tên Server",
-                value = serverName
+                name = "🏷️ Tên Server",
+                value = serverName or "Không rõ",
+                inline = true
             },
             {
-                name = "Tên người chơi",
-                value = playerName
+                name = "👤 Tên người chơi",
+                value = playerName,
+                inline = true
             },
             {
-                name = "Số vàng",
-                value = tostring(goldValue)
+                name = "💰 Số vàng",
+                value = "**" .. tostring(goldValue) .. "** 🪙",
+                inline = true
             },
             {
-                name = 'NGÀY VÀ GIỜ',
-                value = os.date('%Y-%m-%d %H:%M:%S', currentTime)
+                name = '📅 NGÀY VÀ GIỜ',
+                value = os.date('%Y-%m-%d %H:%M:%S', currentTime),
+                inline = false
+            },
+            {
+                name = '🎮 Game Info',
+                value = string.format("Place ID: %d\nJob ID: %s", game.PlaceId, game.JobId),
+                inline = false
             }
         },
-        timestamp = string.format('%d-%d-%dT%02d:%02d:%02dZ', timeData.year, timeData.month, timeData.day, timeData.hour, timeData.min, timeData.sec),
+        timestamp = string.format('%d-%02d-%02dT%02d:%02d:%02dZ', timeData.year, timeData.month, timeData.day, timeData.hour, timeData.min, timeData.sec),
     }
 
     local success, err = pcall(function()
+        -- Cập nhật content với thông tin server
+        local webhookContent = string.format(
+            "%s\n🌍 **Server:** %s (%s)\n💰 **Gold Alert:** %s", 
+            Content, 
+            serverName or "Không rõ", 
+            serverID or "Không rõ", 
+            tostring(goldValue)
+        )
+        
         (syn and syn.request or http_request) {
             Url = 'https://discord.com/api/webhooks/1401892656958931015/KlZNrXOThXu3HIQ25WeqKJu3ft_afgRvmyYXGlrQ_waaA9E2veCJbJKhuMW6NbQr1l8t',
             Method = 'POST',
@@ -60,7 +145,7 @@ local function sendEmbed(goldValue)
                 ['Content-Type'] = 'application/json'
             },
             Body = HttpService:JSONEncode({
-                content = Content,
+                content = webhookContent,
                 allowed_mentions = {
                     parse = {"roles"}
                 },
@@ -397,24 +482,38 @@ if R:FindFirstChild("ActiveMission") then
                 if action == "Infuse" then
                     local currentTime = tick()
                     if currentTime - lastInfuseTime < (customCooldown or 1) then
-                        continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
+                        -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
                     else
                         lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
+                        
+                        local skillFolder = game:GetService("ReplicatedStorage")
+                            :WaitForChild("Shared")
+                            :WaitForChild("Combat")
+                            :WaitForChild("Skillsets")
+                            :FindFirstChild(skillset)
+                            
+                        if skillFolder then
+                            local skillAction = skillFolder:FindFirstChild(action)
+                            if skillAction then
+                                skillAction:FireServer()
+                            end
+                        end
+                    end
+                else
+                    local skillFolder = game:GetService("ReplicatedStorage")
+                        :WaitForChild("Shared")
+                        :WaitForChild("Combat")
+                        :WaitForChild("Skillsets")
+                        :FindFirstChild(skillset)
+                        
+                    if skillFolder then
+                        local skillAction = skillFolder:FindFirstChild(action)
+                        if skillAction then
+                            skillAction:FireServer()
+                        end
                     end
                 end
-                
-                local skillFolder = game:GetService("ReplicatedStorage")
-                    :WaitForChild("Shared")
-                    :WaitForChild("Combat")
-                    :WaitForChild("Skillsets")
-                    :FindFirstChild(skillset)
-                    
-                if skillFolder then
-                    local skillAction = skillFolder:FindFirstChild(action)
-                    if skillAction then
-                        skillAction:FireServer()
-                    end
-                end
+
             end
             task.wait(1) -- Vẫn chờ 1 giây trước vòng lặp kế tiếp cho các kỹ năng khác
         end

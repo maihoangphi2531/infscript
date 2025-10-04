@@ -41,6 +41,7 @@ end
 
 -- Hàm đợi load thông tin server
 local function waitForServerInfoLoaded()
+    print("🔍 Đang kiểm tra thông tin server...")
     local maxAttempts = 30
     local attempts = 0
     
@@ -48,15 +49,19 @@ local function waitForServerInfoLoaded()
         local serverName, serverID = getServerDetails()
         
         if serverName and serverID and serverName ~= "Không rõ" and #serverID >= 3 then
+            print(string.format("✅ Đã load thành công! Server: %s (%s)", serverName, serverID))
             return serverName, serverID
         end
         
         attempts = attempts + 1
+        print(string.format("⏳ Lần thử %d/%d - Đang nhấn phím P để mở menu Players...", attempts, maxAttempts))
         pressKeyP()
+        
         task.wait(1)
     end
     
-    return "Không rõ", "Không rõ"
+    print("⚠️ Không thể load thông tin server sau 30 lần thử.")
+    return nil, nil
 end
 
 -- Lấy thông tin Server

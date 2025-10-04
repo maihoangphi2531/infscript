@@ -92,10 +92,10 @@ local function sendEmbed(goldValue)
     
     local Embed = {
         title = 'World//Zero - Gold Alert',
-        color = 16776960, -- Màu vàng
+        color = 16761084, -- Màu vàng
         footer = { text = "Server ID: " .. (serverID or "Không rõ") },
         author = {
-            name = 'MAI HOÀNG PHI - Gold Detector',
+            name = '🌸Anya - Gold Detector🌸',
             url = 'https://www.roblox.com/',
         },
         fields = {

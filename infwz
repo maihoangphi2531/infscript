@@ -1,8 +1,42 @@
+-- 🧱 Hàm chờ toàn bộ game và player sẵn sàng
+local function WaitForFullLoad()
+    -- Đợi game container load
+    if not game:IsLoaded() then
+        repeat task.wait() until game:IsLoaded()
+    end
 
-wait(18)
-if not game:IsLoaded() then
-    game.Loaded:Wait()
+    -- Đợi các service quan trọng
+    local Players = game:GetService("Players")
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local RunService = game:GetService("RunService")
+    local Workspace = game:GetService("Workspace")
+
+    -- Đợi LocalPlayer
+    local player = Players.LocalPlayer
+    while not player do
+        task.wait()
+        player = Players.LocalPlayer
+    end
+
+    -- Đợi Character
+    if not player.Character or not player.Character.Parent then
+        player.CharacterAdded:Wait()
+    end
+
+    -- Đợi ReplicatedStorage và Workspace thật sự có trong game
+    while not (ReplicatedStorage:IsDescendantOf(game) and Workspace:IsDescendantOf(game)) do
+        task.wait()
+    end
+
+    -- Đợi 1 frame nữa để chắc chắn tất cả GUI/Remotes sẵn sàng
+    RunService.RenderStepped:Wait()
 end
+
+-- Gọi trước khi code chính chạy
+WaitForFullLoad()
+
+print("✅ Game đã tải hoàn toàn, tất cả service sẵn sàng!")
+
 -- WEBHOOKaaaaaaaaaaaaaaa
 local HttpService = game:GetService('HttpService')
 local Players = game:GetService('Players')
@@ -160,12 +194,9 @@ coroutine.wrap(function()
     end
 end)()
 
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-
 local Player = Players.LocalPlayer
 local Executor = identifyexecutor and identifyexecutor() or "Unknown"
+local UserInputService = game:GetService("UserInputService")
 
 -- Safe http req
 local function SafeHttpGet(url)
@@ -453,26 +484,30 @@ if R:FindFirstChild("ActiveMission") then
             for _, skill in ipairs(skills) do
                 local skillset, action, customCooldown = skill[1], skill[2], skill[3]
                 
-                -- Nếu là kỹ năng Infuse và chưa đến thời gian chờ
+                -- Kiểm tra cooldown cho Infuse
+                local shouldSkip = false
                 if action == "Infuse" then
                     local currentTime = tick()
                     if currentTime - lastInfuseTime < (customCooldown or 1) then
-                        continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
+                        shouldSkip = true -- Bỏ qua kỹ năng này
                     else
                         lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
                     end
                 end
                 
-                local skillFolder = game:GetService("ReplicatedStorage")
-                    :WaitForChild("Shared")
-                    :WaitForChild("Combat")
-                    :WaitForChild("Skillsets")
-                    :FindFirstChild(skillset)
-                    
-                if skillFolder then
-                    local skillAction = skillFolder:FindFirstChild(action)
-                    if skillAction then
-                        skillAction:FireServer()
+                -- Chỉ thực hiện khi không bỏ qua
+                if not shouldSkip then
+                    local skillFolder = game:GetService("ReplicatedStorage")
+                        :WaitForChild("Shared")
+                        :WaitForChild("Combat")
+                        :WaitForChild("Skillsets")
+                        :FindFirstChild(skillset)
+                        
+                    if skillFolder then
+                        local skillAction = skillFolder:FindFirstChild(action)
+                        if skillAction then
+                            skillAction:FireServer()
+                        end
                     end
                 end
             end
@@ -4701,7 +4736,6 @@ do
             end
         end)
     end
-local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer or Players:GetPlayers()[1] 
 local movedToTimer = false -- chỉ chạy 1 lần duy nhất
 

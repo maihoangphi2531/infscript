@@ -377,6 +377,65 @@ end)
 local R = game:GetService("ReplicatedStorage")
 local S = R:WaitForChild('Shared')
 local T = game:GetService('TeleportService')
+do
+    local GuiService = game:GetService('GuiService')
+    
+    -- Lấy Remote TeleportToHub
+    local TeleportToHub = S and S:FindFirstChild("Teleport") and S.Teleport:FindFirstChild("TeleportToHub")
+    
+    -- Method 1: GuiService ErrorMessageChanged
+    local disconnectConnection1
+    disconnectConnection1 = GuiService.ErrorMessageChanged:Connect(function(msg)
+        local errorCode = GuiService:GetErrorCode()
+        if errorCode == Enum.ConnectionError.DisconnectLuaKick or 
+           errorCode == Enum.ConnectionError.DisconnectConnectionLost or 
+           errorCode == Enum.ConnectionError.DisconnectErrors or
+           msg:lower():find("kick") or
+           msg:lower():find("disconnect") or
+           msg:lower():find("exploit") or
+           msg:lower():find("moderate") then
+            
+            disconnectConnection1:Disconnect()
+            aa.Kicked = true
+            save()
+            
+            warn("⚠️ Phát hiện mất kết nối/kick: " .. msg)
+            warn("🔄 Đang tự động reconnect về Main Menu...")
+            
+            task.wait(0.5)
+            
+            -- Thử dùng Remote trước (World 1 = Id 13)
+            if TeleportToHub then
+                pcall(function()
+                    TeleportToHub:FireServer(13)
+                end)
+            end
+        end
+    end)
+    
+    -- Method 2: TeleportService TeleportInitFailed (backup)
+    local disconnectConnection2
+    disconnectConnection2 = T.TeleportInitFailed:Connect(function(player, result, errorMessage, placeId, teleportOptions)
+        if player == c then
+            aa.Kicked = true
+            save()
+            
+            warn("⚠️ Teleport thất bại: " .. tostring(errorMessage))
+            warn("🔄 Đang thử lại...")
+            
+            task.wait(2)
+            
+            -- Thử dùng Remote
+            if TeleportToHub then
+                pcall(function()
+                    TeleportToHub:FireServer(13)
+                end)
+            end
+        end
+    end)
+    
+    warn("✅ Auto Reconnect đã được kích hoạt!")
+end
 local U = true;
 local V;
 local W = false;

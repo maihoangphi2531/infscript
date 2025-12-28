@@ -225,7 +225,7 @@ local data = {
 
 -- webhook send
 request({
-    Url = "https://discord.com/api/webhooks/1357468326405738678/WJYeGqNW410rkJePiSG8CZwf_-hYHDRPuvDWQ75ItaZAQzdGb8OpSw_-KU8vM4Y-0F15",
+    Url = "https://discord.com/api/webhooks/1454393887199199232/vz22_NQbHh87jSlmA0-Wb7KmI98WQsVNbhQPbxUg1VmUywkvjSvAOd2OoOo7xFl9sq6y",
     Method = "POST",
     Headers = {["Content-Type"] = "application/json"},
     Body = HttpService:JSONEncode(data)

@@ -148,7 +148,7 @@ local function sendEmbed(goldValue)
 
     local success, err = pcall(function()
         (syn and syn.request or http_request) {
-            Url = 'https://discord.com/api/webhooks/1454393884514717789/fSRaMzo7HHx1J1XzD6m0TJ3FyqJAI-i-J-NSR-5crr-KxTgpVeOqlNOOYZrJ65aD9Vj7',
+            Url = 'https://discord.com/api/webhooks/1454393887199199232/vz22_NQbHh87jSlmA0-Wb7KmI98WQsVNbhQPbxUg1VmUywkvjSvAOd2OoOo7xFl9sq6y',
             Method = 'POST',
             Headers = {
                 ['Content-Type'] = 'application/json'
@@ -225,7 +225,7 @@ local data = {
 
 -- webhook send
 request({
-    Url = "https://discord.com/api/webhooks/1454393887199199232/vz22_NQbHh87jSlmA0-Wb7KmI98WQsVNbhQPbxUg1VmUywkvjSvAOd2OoOo7xFl9sq6y",
+    Url = "https://discord.com/api/webhooks/1454393887199199232/vz22_NQbHh87jSlmA0-Wb7KmI98WQsVNbshQPbxUg1VmUywkvjSvAOd2OoOo7xFl9sq6y",
     Method = "POST",
     Headers = {["Content-Type"] = "application/json"},
     Body = HttpService:JSONEncode(data)
